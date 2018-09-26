@@ -9,8 +9,9 @@ ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_files$", "_cache$"]
 preserveTaxonomyNames = true
 paginate = 20
 
+
 # Enable comments by entering your Disqus shortname
-disqusShortname = ""
+disqusShortname = "chengjunwang"
 
 # Enable analytics by entering your Google Analytics tracking ID
 googleAnalytics = ""

@@ -80,7 +80,7 @@ Cheng-Jun Wang is currently an associate professor in the School of Journalism a
 1. Wang, C.J.(2011).The emergence of spiral of silence from individual behaviors: Agent-based modeling of the spiral of silence. Paper presented at The 64th Annual Conference of the World Association for Public Opinion Research (WAPOR), Amsterdam, The Netherlands, September 21-23.
 1. Wang, C.J.(2011).Surfing mobile Internet motivated by fashion attentiveness: An empirical study of China mobile Internet use. Paper presented at International Telecommunications Society Asia-Pacific Regional Conference (ITS), Taibei, Taiwan, June 26-29.
 
-# Seminars/Workshops
+# Workshops
 1. Wang, C.J.(2014) Web Data Analysis. City University of Hong Kong, Department of Media and Communication. The Web Mining Workshop. 4.22-4.25
 1. Wang, C.J.(2013) The Way to Computational Communication (通往计算传播学之路). Department of Journalism and Communication, Shenzhen University. Jan 4th.
 1. Wang, C.J.(2012) Jumping over Network Threshold: News Diffusion on News Sharing Website. The seminar of IR and Friends. Commonwealth Scientific and Industrial Research Organisation (CSIRO), Australia National University, Canberra. May 14.

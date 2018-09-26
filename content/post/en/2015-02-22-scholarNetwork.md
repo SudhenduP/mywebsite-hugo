@@ -1,6 +1,17 @@
----
-title: "scholarNetwork: Visualizing Google Scholar Network"
----
+
++++
+highlight = true
+math = false
+date = "2017-10-29"
+title = "scholarNetwork: Visualizing Google Scholar Network"
+tags = ["news"]
+
+summary = """scholarNetwork is a python package for crawling and visualizing the co-author network of Google Scholar.
+"""
+[header]
+image = "headers/bike.svg"
+caption = "Image credit: [**Academic**](https://github.com/gcushen/hugo-academic/)"
++++
 
 
 #scholarNetwork

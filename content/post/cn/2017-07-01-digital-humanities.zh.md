@@ -7,7 +7,7 @@ tags = ["news"]
 summary = """2017年7月1日—2日南京大学数字人文大会在仙林校区国际会议中心召开。此次大会主题为“数字人文：大数据时代学术前沿与探索”。“数字人文”是目前国际最具潜力的新兴学科和前沿研究领域，具有创新性强、多学科交叉、研究者年轻化的特点。
 """
 [header]
-image = "headers/bird3.svg"
+image = "headers/bullet.svg"
 caption = "Image credit: [**Academic**](https://github.com/gcushen/hugo-academic/)"
 
 +++

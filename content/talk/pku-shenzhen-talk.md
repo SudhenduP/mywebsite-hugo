@@ -22,6 +22,7 @@ caption = "My caption :smile:"
 +++
 
 
-![sz-talk](http://oaf2qt3yk.bkt.clouddn.com/06ac05ad66faaaea73ade02ec4bdd608.png)
+<img src="/img/headers/404.png" width = 800px/>
+
 
 讲座：计算传播学的起源、概念与应用

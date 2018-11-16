@@ -7,7 +7,7 @@ enableEmoji = true
 footnotereturnlinkcontents = "<sup>^</sup>"
 ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_files$", "_cache$"]
 preserveTaxonomyNames = true
-paginate = 20
+paginate = 10
 
 
 # Enable comments by entering your Disqus shortname
@@ -52,10 +52,10 @@ defaultContentLanguageInSubdir = false
   avatar = "chengjun.jpg"
   #avatar = "portrait.jpg"  # Specify an avatar image (in `static/img/` folder) or delete value to disable avatar.
   email = "wangchengjun@nju.edu.cn"
-  address = "Room A307, Feiyimin Building, 22 Gulou District, Nanjing University, Jiangsu, 210093, China"
-  address_cn = "中国江苏省南京市鼓楼区22号费彝民楼A307，邮编210093"
-  office_hours_cn = "每周二下午14：00-17：00或者邮件预约"
-  office_hours = "Tuesday 14:00 to 17:00 or email for appointment"
+  address = "Room A307, School of Journalism and Communication, Nanjing University, Xianlin Road 163, Qixia District,  Nanjing, Jiangsu, China (210093)"
+  address_cn = "中国江苏省南京市栖霞区仙林大道163号南京大学新闻传播学院A307，邮编210093"
+  office_hours_cn = "每周一上午09：00-12：00或者邮件预约"
+  office_hours = "Monday 9:00 to 12:00 or email for appointment"
   phone = "+86 025-83686110"
   #skype = "echo123"
   #telegram = ""
@@ -69,6 +69,7 @@ defaultContentLanguageInSubdir = false
 
   # Diplay a logo in navigation bar rather than title (optional).
   #   To enable, place an image in `static/img/` and reference its filename below. To disable, set the value to "".
+  # logo = "chengjun.jpg"
   logo = ""
 
   # Enable Google Maps by entering your API key, latitude, and longitude.
@@ -246,6 +247,11 @@ defaultContentLanguageInSubdir = false
     name = "Publications"
     url = "/#publications_selected"
     weight = 2
+
+  [[menu.main]]
+    name = "Talks"
+    url = "/#talks"
+    weight = 3
 
   [[menu.main]]
     name = "Projects"

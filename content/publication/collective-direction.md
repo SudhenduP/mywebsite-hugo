@@ -16,10 +16,6 @@ url_project = "/project/attention-networks/"
 url_slides = "#"
 url_video = "#"
 
-[[url_custom]]
-name = "Custom Link"
-url = "http://chengjun.github.io"
-
 # Optional featured image (relative to `static/img/` folder).
 [header]
 image = "headers/direction.png"

@@ -86,18 +86,19 @@ Cheng-Jun Wang is currently an associate professor in the School of Journalism a
 1. Wang, C.J.(2012) Jumping over Network Threshold: News Diffusion on News Sharing Website. The seminar of IR and Friends. Commonwealth Scientific and Industrial Research Organisation (CSIRO), Australia National University, Canberra. May 14.
 
 # Book Review, Translation, and Chapters
-1. 王成军、吴令飞(2017)空间约束的人类行为. 胡泳、王俊秀（编）《连接之后: 公共空间重建与权力再分配》.北京:人民邮电出版社. pp. 262-271
-1. 许小可、胡海波、张伦、王成军 （2015）社交网络上的计算传播学. 北京：中国科学出版社.
-1. 王薇、王成军、王颖、刘璟 （翻译） (2013). 社会网络分析：方法与实践. 北京：机械工业出版社. [Translation of the book Social Network Analysis for Startups: Finding connections on the Social Web., by Maksim Tsvetovat & Alexander Kouznetsov. (2011). O’Reilly Media]
-1. 王成军. (2012, Aug 17). 爆发：人类行为在时间尺度上的特征. 中国科学报, 06. [Review of the book Bursts: The Hidden Pattern Behind Everything We Do., by Albert-Laszlo Barabasi].
-1. 王成军. (2012, Jul 03). 人类 90%的行为是可以预测的. 中国图书商报, 1857.[Review of the book Bursts: The Hidden Pattern Behind Everything We Do., by Albert-Laszlo Barabasi].
+1. 张伦、王成军、许小可（2018）《计算传播学导论》. 北京：北京师范大学出版社.
+1. 王成军、吴令飞 (2017) 空间约束的人类行为. 胡泳、王俊秀（编）《连接之后: 公共空间重建与权力再分配》.北京:人民邮电出版社. pp. 262-271
+1. 许小可、胡海波、张伦、王成军 （2015）《社交网络上的计算传播学》. 北京：中国科学出版社.
+1. 王薇、王成军、王颖、刘璟 （翻译）(2013). 《社会网络分析：方法与实践》. 北京：机械工业出版社. [Translation of the book Social Network Analysis for Startups: Finding connections on the Social Web., by Maksim Tsvetovat & Alexander Kouznetsov. (2011). O’Reilly Media]
+1. 王成军 (2012, Aug 17). 爆发：人类行为在时间尺度上的特征. 中国科学报, 06. [Review of the book Bursts: The Hidden Pattern Behind Everything We Do., by Albert-Laszlo Barabasi].
+1. 王成军 (2012, Jul 03). 人类 90%的行为是可以预测的. 中国图书商报, 1857.[Review of the book Bursts: The Hidden Pattern Behind Everything We Do., by Albert-Laszlo Barabasi].
 
 # Teaching
 My teaching interests focus on social networks and new communication technologies, communication theory, and quantitative research methods (e.g., Network analysis). I teach the following courses:
 
-1. Introduction to Computational Communiation (计算传播学工作坊). Semester B 2014-2015, Nanjing University
-1. Data Journalism (数据新闻). Semester A 2015-2016, Nanjing University
-1. Computational Communiation & Advertising (计算传播与广告). Semester A 2015-2016, Nanjing University
+1. Introduction to Python Programming for Data Science (数据科学Python编程基础). Semester A, Nanjing University
+1. Data Journalism (数据新闻). Semester B, Nanjing University
+1. Big Data Mining and Analysis (大数据挖掘与分析). Semester B 2015-2016, Nanjing University
 
 I worked as a TA for the following courses:
 

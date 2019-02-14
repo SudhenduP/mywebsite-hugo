@@ -32,7 +32,7 @@ https://chengjunwang.com/data/miguo.html
 
 ## 宝华卫生院
 
-![宝华卫生院](http://oaf2qt3yk.bkt.clouddn.com/957e47189f14eba13fdf8b6b77a78dc8.png)
+![宝华卫生院](/img/qiniu/957e47189f14eba13fdf8b6b77a78dc8.png)
 [地图链接](http://j.map.baidu.com/scsII)
 
 需要找一个打预防针和体检的地方。4月18日，我打车去了宝华卫生院，在二楼妇产科办理了`回执卡`，但是没有去后面的楼预约打预防针，而满月后第一周就要打针了。
@@ -126,7 +126,7 @@ https://chengjunwang.com/data/miguo.html
 
 ## 米果的做法
 
-![米果](http://oaf2qt3yk.bkt.clouddn.com/c9d73c9c817ba742d08ca68de6ff1516.png)
+![米果](/img/qiniu/c9d73c9c817ba742d08ca68de6ff1516.png)
 
 米果是一种以米为主要原料制成的点心。在松阳一般称米果，糕是甜的，而米果是不甜的，在乡下，米果还是用人工锤打出来的，因此称打米果。
 

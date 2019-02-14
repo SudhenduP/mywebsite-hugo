@@ -8,8 +8,8 @@ tags = ["news"]
 summary = """计算传播学是传播学研究者对于传播学研究方向的一次新的探索。
 """
 [header]
-image = "headers/dragon.svg"
-caption = "Image credit: [**Academic**](https://github.com/gcushen/hugo-academic/)"
+image = "headers/hero.svg"
+caption = "Image credit: [**赤颜犬**](https://www.douban.com/photos/photo/2537689823/)"
 +++
 
 

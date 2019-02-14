@@ -64,7 +64,7 @@ date: 2014-07-21
     dev.off()
 
 
-![](http://chengjun.qiniudn.com/all_color.png)
+![](/img/qiniu/all_color.png)
 
 数据的可视化表明：
 
@@ -88,4 +88,4 @@ date: 2014-07-21
 - 扩张的过程围绕着那些著名高校为中心进行。
 
 
-本文提供[汇总的数据](http://chengjun.qiniudn.com/friends_university_top100_by_all.txt)下载，供感兴趣的同学玩。
+本文提供[汇总的数据](/img/qiniu/friends_university_top100_by_all.txt)下载，供感兴趣的同学玩。

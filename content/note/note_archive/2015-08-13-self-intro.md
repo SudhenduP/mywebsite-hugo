@@ -6,7 +6,7 @@ date: 2017-09-13
 <!--more-->
 
 
-![pic](http://oaf2qt3yk.bkt.clouddn.com/9a9fb654d7fda814f7120820149af236.png)
+![pic](/img/qiniu/9a9fb654d7fda814f7120820149af236.png)
 
 
 Cheng-Jun Wang (Nanjing University)
@@ -77,7 +77,7 @@ Dr. Cheng-Jun Wang got his Ph.D degree of Media and Communication from City Univ
 
 # 简历
 
-![近照](http://oaf2qt3yk.bkt.clouddn.com/b8f013d97c7b8b40e69ea94d1029855a.png)
+![近照](/img/qiniu/b8f013d97c7b8b40e69ea94d1029855a.png)
 
 王成军，博士，南京大学新闻传播学院助理研究员。奥美数据科学实验室主任、计算传播学实验中心研究员、香港城市大学互联网数据挖掘实验室研究员、集智俱乐部核心成员。参与翻译《社会网络分析：方法与实践》(2013)、合著《社交网络上的计算传播学》（2015）。致力于采用计算社会科学视角研究人类传播行为，其研究成果发表于SSCI/SCI期刊，例如Scientific Reports、PloS ONE、Physica A、Cyberpsychology和Journal of Social and Personal Relationships。
 

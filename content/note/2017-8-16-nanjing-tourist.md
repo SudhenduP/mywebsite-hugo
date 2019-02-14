@@ -32,7 +32,7 @@ http://gjj.nanjing.gov.cn/wsbsdt/
 
 # 中山陵景区
 
-![三大景区](http://oaf2qt3yk.bkt.clouddn.com/9a27ce30009a0f6fd1328fd96cb5e822.png)
+![三大景区](/img/qiniu/9a27ce30009a0f6fd1328fd96cb5e822.png)
 
 - [景区图](http://zschina.nanjing.gov.cn/zsljq/tyjq/201412/W020151019406156956262.jpg)
 - [携程网介绍](http://you.ctrip.com/sight/nanjing9/1655.html)
@@ -45,7 +45,7 @@ http://gjj.nanjing.gov.cn/wsbsdt/
 5. 官方微信号：zschina_nj （南京钟山风景名胜区），可享受免费语音导览。
 
 
-![观光车路线图](http://oaf2qt3yk.bkt.clouddn.com/0246fc8ac524e2fca6898bf05a033ab1.png)
+![观光车路线图](/img/qiniu/0246fc8ac524e2fca6898bf05a033ab1.png)
 
 如图所示，三大景区从西到东依次是明孝陵、中山陵和灵谷寺。
 

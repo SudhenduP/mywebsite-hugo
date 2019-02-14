@@ -8,7 +8,7 @@ tags = ["news"]
 summary = """　基本完成数据收集方案，获取1千万新浪微博用户的数据信息，建立新浪微博舆论扩散数据库；收集了占领华尔街这一主题的推特数据库；收集了Digg新闻扩散数据库。
 """
 [header]
-image = "headers/bird2.svg"
+image = "headers/cat2.svg"
 caption = "Image credit: [**Academic**](https://github.com/gcushen/hugo-academic/)"
 +++
 

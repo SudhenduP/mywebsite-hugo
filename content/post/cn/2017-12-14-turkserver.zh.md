@@ -8,7 +8,7 @@ tags = ["news"]
 summary = """TurkServer is a framework based on the JavaScript app platform Meteor that makes it easy to build interactive web-based user experiments for deployment on Amazon Mechanical Turk.
 """
 [header]
-image = "headers/bird3.svg"
+image = "headers/monk.svg"
 caption = "Image credit: [**Academic**](https://github.com/gcushen/hugo-academic/)"
 +++
 

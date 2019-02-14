@@ -26,7 +26,7 @@ caption = "Image credit: [**Academic**](https://github.com/gcushen/hugo-academic
 - 健腹轮
 - 牵拉深蹲
 
-![牵拉深蹲](http://oaf2qt3yk.bkt.clouddn.com/6ab3006cd0dde5d7ea18ca2fd0f924fb.png)
+![牵拉深蹲](/img/qiniu/6ab3006cd0dde5d7ea18ca2fd0f924fb.png)
 
 
 

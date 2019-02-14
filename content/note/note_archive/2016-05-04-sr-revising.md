@@ -54,7 +54,7 @@ Scientific Reports 是：
 根据[南京大学超一流、学科群一流、SCI A 区和 B 区期刊目录](http://www.docin.com/p-1309834502.html)，Scientific reports属于SCI索引期刊的A区。2016年公布的Scientific Reports 影响因子5.228*
 *2015 Journal Citation Reports® Science Edition (Thomson Reuters, 2016)
 
-![SR](http://oaf2qt3yk.bkt.clouddn.com/5e1e31a8ec89e5fa3374b23baa8eadde.png)
+![SR](/img/qiniu/5e1e31a8ec89e5fa3374b23baa8eadde.png)
 
 南京大学关于Scientific Reports论文发表的新闻：
 [http://news.nju.edu.cn/searchsite.php?r=scientific%20reports](http://news.nju.edu.cn/searchsite.php?r=scientific%20reports)
@@ -148,10 +148,10 @@ Current Stage:	Decision Started (1 days)
 
 关于cross fingers的解释如下图：
 
-![cross_fingers](http://oaf2qt3yk.bkt.clouddn.com/99886fb7ed981357171ef53f332a1ac3.png)
+![cross_fingers](/img/qiniu/99886fb7ed981357171ef53f332a1ac3.png)
 
 这一张图片更有爱！
-![cross_fingers_girl](http://oaf2qt3yk.bkt.clouddn.com/5d47fa9f9d4e6f775c5f68aec81f7452.png)
+![cross_fingers_girl](/img/qiniu/5d47fa9f9d4e6f775c5f68aec81f7452.png)
 
 到现在快有一个月了，还是这个状态：没有消息就是好消息。不要杞人忧天，庸人自扰。
 

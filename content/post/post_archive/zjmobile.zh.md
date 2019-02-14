@@ -8,7 +8,7 @@ summary = """
 
 """
 [header]
-  image = ""
+  image = "headers/dragon5.svg"
   caption = ""
 
 +++

@@ -20,7 +20,7 @@ caption = "Image credit: [**Academic**](https://github.com/gcushen/hugo-academic
 
 找一个novelty的点，需要一个narrow down的concrete的research question。要避免一开始要有一个想法，somehow connect to something, 挖来挖去做出来很多unconnected的findings。apparent team不是真实的team， 我们想要找到real team， 因此可以去分析workload distribution and skill set overlapped，及其对于impact的影响。我们想要找一个metric to correct team size. team的**充水**程度。story！为什么充了水的team的impact更大？what is a real team is research topic。怎么定义水分就靠近hypothesis。
 
-![water team](http://oaf2qt3yk.bkt.clouddn.com/64335d80b0fc78f1bdaef76612e11750.png)
+![water team](/img/qiniu/64335d80b0fc78f1bdaef76612e11750.png)
 
 我之前说的一大堆只是想说一个论点：因为我们不是duncan watts，所以我们还是要用正轨的research道路。define topics, narrow it down, implement, provide prospects四部曲的方式。令飞之前说的“什么样是真正有效的合作，从技能的重合度和贡献量来衡量”是research topic, 不是一篇文章的research question。从workload的分布定义一个metric，core team size or effective team size
 
@@ -125,7 +125,7 @@ plt.xlabel(r't');plt.ylabel(r'log(c(t+1)-c(t))')
 plt.show()
 ```
 
-![tau](http://oaf2qt3yk.bkt.clouddn.com/19d58b4deb8a292c287dc692898a89af.png)
+![tau](/img/qiniu/19d58b4deb8a292c287dc692898a89af.png)
 
 
 To-do:
@@ -137,13 +137,13 @@ To-do:
 
 尽快确定一下最大代码贡献者和最频繁贡献者的重合率，感觉这个还是比较影响整个故事走向的。另外，试一下最大代码出现时间的分布。
 
-![overlap rate](http://oaf2qt3yk.bkt.clouddn.com/bd3743ee8842b10dcd0e33142af77b5e.png)
+![overlap rate](/img/qiniu/bd3743ee8842b10dcd0e33142af77b5e.png)
 
-![overlap rate single size](http://oaf2qt3yk.bkt.clouddn.com/c315dfd9d7cbab768b9c5615813d00df.png)
+![overlap rate single size](/img/qiniu/c315dfd9d7cbab768b9c5615813d00df.png)
 
 结论：随着团队规模增加，团队内部的确变得多元化，有人频繁参与，有人则高强度参与，二者未必相同。的确可能出现大象🐘和老鼠🐭并存的情况。按照`“固定”任务空间`的假设，在位者有累积优势（经验、任务分配、责任心），但人多了竞争激烈，也会给在位者带来冲击，尤其是大象的进入，他们可以靠少数的push，贡献大量的代码。
 
-![water](http://oaf2qt3yk.bkt.clouddn.com/71219d7043e62aed77d1761afceb73cf.png)
+![water](/img/qiniu/71219d7043e62aed77d1761afceb73cf.png)
 
 水分不仅在活跃次数衡量的有效团队中发挥作用，同样在代码量衡量的有效团队中发挥作用，应该有点深刻的东西在这里。Lakhani (2011)发表在Management Science上的文章要回答一个问题[^Lakhani]，像Netflix 这样的竞赛，团队多好还是少好？传统经济学理论认为参与团队越多，单个团队获奖概率越低，团队越没有积极性，平均表现越差。他们分析数据发现，扩大参赛团队数后，平均表现变差，但最强团队的表现变好。
 

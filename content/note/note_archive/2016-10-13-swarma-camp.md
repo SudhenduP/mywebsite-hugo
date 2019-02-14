@@ -8,7 +8,7 @@ image = "headers/dachs.svg"
 caption = "Image credit: [**Academic**](https://github.com/gcushen/hugo-academic/)"
 +++
 
-![缪斯](http://oaf2qt3yk.bkt.clouddn.com/ed6c9d46333416093c4d0fd0e9712dc4.png)
+![缪斯](/img/qiniu/ed6c9d46333416093c4d0fd0e9712dc4.png)
 
 
 

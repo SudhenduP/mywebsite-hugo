@@ -4,7 +4,7 @@ date = "2017-06-14"
 tags = [""]
 
 [header]
-image = "headers/jaguar.svg"
+image = "headers/school.svg"
 caption = "Image credit: [**Academic**](https://github.com/gcushen/hugo-academic/)"
 
 +++
@@ -15,7 +15,7 @@ caption = "Image credit: [**Academic**](https://github.com/gcushen/hugo-academic
 
 <!--more-->
 
-![紫金楼](http://oaf2qt3yk.bkt.clouddn.com/a7bebcfc69fce0b45bb6c304e76ef6f0.png)
+![紫金楼](/img/qiniu/a7bebcfc69fce0b45bb6c304e76ef6f0.png)
 
 > 根据中共江苏省委宣传部与南京大学签订的共建新闻传播学院协议，经教育部可研评估批复，南京大学新闻传播学院楼已完成开工前手续办理，于近日正式开工建设。
 
@@ -25,6 +25,6 @@ caption = "Image credit: [**Academic**](https://github.com/gcushen/hugo-academic
 
 
 
-![示意图](http://oaf2qt3yk.bkt.clouddn.com/fd096961204e0a0039e7e902db0f89ec.png)
+![示意图](/img/qiniu/fd096961204e0a0039e7e902db0f89ec.png)
 
-![示意图](http://oaf2qt3yk.bkt.clouddn.com/e370fd20ef0c33d7bf17948903164b29.png)
+![示意图](/img/qiniu/e370fd20ef0c33d7bf17948903164b29.png)

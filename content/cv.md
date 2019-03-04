@@ -17,6 +17,7 @@ Cheng-Jun Wang is currently an associate professor in the School of Journalism a
 - Computational Communication Collaboratory, School of Journalism and Communication, Nanjing University.
 - Room A306, Feiyimin Building, 22 Hankou Road, Gulou District, Nanjing. China (210093).
 - Email: wangchj04 at gmail.com
+- ORCID: [0000-0002-9507-2888](http://orcid.org/0000-0002-9507-2888)
 
 # Education
 - Ph.D, City University of Hong Kong, Hong Kong. Department of Media and Communication (September, 2010-November, 2014).
@@ -35,7 +36,7 @@ Cheng-Jun Wang is currently an associate professor in the School of Journalism a
 
 # Research Projects
 1. Bringing Back the Reference Group: Agent-based Modeling of Spiral of Silence. National postdoc grant (￥50000, 2015M571722) 中国博士后科学基金面上项目（第57批), 找回失落的参考群体:对“沉默的螺旋”进行多主体建模，2015/01-2018/01, 5万元，主持
-2. The Network Threshold of the Formation and Diffusion of Public Opinion. National Social Science Fundation for Young Scholars(￥200'000, 15CXW017) 国家社会科学基金青年项目, 15CXW017, 媒体融合背景下舆论形成与扩散的网络门槛研究，2015/07-2018/12, 20万元，主持
+2. The Network Threshold of the Formation and Diffusion of Public Opinion. The National Social Science Foundation of China (￥200'000, 15CXW017) 国家社会科学基金青年项目, 15CXW017, 媒体融合背景下舆论形成与扩散的网络门槛研究，2015/07-2018/12, 20万元，主持
 3. 互联网上的集体注意力流研究，国家自然科学基金（常规面上项目），61673070，2017/01-2020/12,￥655200, 参与
 
 # Journal Articles

@@ -1,8 +1,8 @@
 +++
 url_slides = ""
 url_dataset = ""
-url_pdf = ""
-math = false
+url_pdf = "https://doi.org/10.1016/j.tele.2019.03.001"
+math = true
 abstract = "Based on collaborative information filtering and information aggregation services, the social news website carries out a collective gatekeeping function, supplying an empirical ground to test the bandwagon effect on information diffusion. Modeling the interpersonal effect and bandwagon effect in collective gatekeeping with threshold models, we confirm the bandwagon effect of collective gatekeeping on news diffusion with two novel datasets. The results demonstrate that the bandwagon of collective gatekeepers is the primary driver for online news diffusion. Interestingly, the bandwagon effect of collective gatekeeping is moderated by the strength of interpersonal effects. The theoretical generalizations of this research contribute to our understanding about the impact of collective gatekeeping on information diffusion."
 abstract_short = ""
 url_code = ""
@@ -24,8 +24,17 @@ selected = true
 
 +++
 
-Jumping onto the Bandwagon of Collective Gatekeepers: Testing the Bandwagon Effect of Information Diffusion on Social News Website
+**Jumping onto the Bandwagon of Collective Gatekeepers: Testing the Bandwagon Effect of Information Diffusion on Social News Website**
 
+Cheng-Jun Wang $ ^{a,b}$ * , Jonathan J.H. Zhu ${^b}$
+
+$^a$ Computational Communication Collaboratory, School of Journalism and Communication, Nanjing University, Nanjing, China
+
+$^b$ Web Mining Lab, Department of Media and Communication, City University of Hong Kong, Hong Kong, China
+
+## Keywords
+
+Information Diffusion; Collective Gatekeeping; Interpersonal Effects; Bandwagon Effects; Threshold Model
 
 ## Highlights
 
@@ -35,11 +44,13 @@ Jumping onto the Bandwagon of Collective Gatekeepers: Testing the Bandwagon Effe
 4. The bandwagon effect of collective gatekeeping is moderated by the strength of interpersonal effects.
 
 
-Article reference `TELE1215`
-
 Telematics and Informatics
 
 - Received at Editorial Office 2 Jul 2018
 - Article 3rd revised 19 Feb 2019
 - Article accepted for publication
 3 Mar 2019
+
+Please cite this article as:
+
+> Wang, C-J. * , Zhu, J.J.H., Jumping onto the Bandwagon of Collective Gatekeepers: Testing the Bandwagon Effect of Information Diffusion on Social News Website, Telematics and Informatics (2019), doi: https://doi.org/10.1016/j.tele.2019.03.001

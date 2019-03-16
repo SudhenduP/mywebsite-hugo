@@ -1,6 +1,6 @@
 +++
 abstract = "Introduction to Computational Communication (In Chinese 计算传播学导论) now available on dangdang.com for pre-order! http://product.dangdang.com/25581097.html. With the development of digital media, data-driven journalism, computational advertising, and media recommendation systems become a worldwide trend. At the same time, the study of information flow in online social networks has attracted a lot of attention; machine learning, as well as data science have made a big leap forward. Put together, all of these factors discussed above speed up the tide of computational communication research."
-authors = ["Lun Zhang", "Cheng-Jun Wang",  "Xiaoke Xu"]
+authors = ["张伦", "王成军",  "许小可"]
 date = "2018-10-17"
 image_preview = ""
 math = true

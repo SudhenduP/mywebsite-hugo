@@ -41,16 +41,17 @@ Cheng-Jun Wang is currently an associate professor in the School of Journalism a
 
 # Journal Articles
  \* denotes corresponding author
-
+1. **Wang, C-J.** * , Zhu, J.J.H.(2019) Jumping onto the Bandwagon of Collective Gatekeepers: Testing the Bandwagon Effect of Information Diffusion on Social News Website, Telematics and Informatics. 41:34-45, [doi:10.1016/j.tele.2019.03.001](https://doi.org/10.1016/j.tele.2019.03.001)
 1. **Wang, C.J.**, Wu, L*, Zhang, J., Janssen, M. (2016) The Collective Direction of Attention Diffusion. Scientific Reports. 6: 34059. [doi:10.1038/srep34059](http://www.nature.com/articles/srep34059)
 1. Wu, L., **Wang, C.J.** * (2016) Tracing the Attention of Moving Citizens. Scientific Reports. 6, 33103. [doi: 10.1038/srep33103](http://www.nature.com/articles/srep33103)
 1. **Wang, C.J.**, Wu, L.*(2016) The Scaling of Attention Networks. Physica A: Statistical Mechanics and its Applications.448:196–204, [doi: 10.1016/j.physa.2015.12.081](http://dx.doi.org/10.1016/j.physa.2015.12.081)
 1. Chandra, Y.*, Jiang, C.L., **Wang, C.J.** (2016) Mining Social Entrepreneurship Strategies Using Topic Modeling, PLOS ONE, 11(3):e0151342, [doi: 10.1371/journal.pone.0151342](http://dx.doi.org/10.1371/journal.pone.0151342)
 1. Jiang, C.L*, Yang, M, **Wang, C.J.** (2017) Self-Disclosure to Parents in Emerging Adulthood: Examining the Roles of Perceived Parental Responsiveness and Separation-Individuation. Journal of Social and Personal Relationships. 34(4): 425-445. [doi: 10.1177 /0265407516640603](http://journals.sagepub.com/doi/full/10.1177/0265407516640603)
 1. **Wang, C.J.** *, Wang, P.P, Zhu, J.J.H (2013). Discussing Occupy Wall Street on Twitter: Longitudinal network analysis of equality, emotion, and stability of public discussion. Cyberpsychology, Behavior, and Social Networking, 16(9): 679-685. [doi:10.1089/cyber.2012.0409](http://online.liebertpub.com/doi/abs/10.1089/cyber.2012.0409). [SSCI, Ranking 4/72 in Communication by 5-year IF].
-1. **王成军** (2017).[计算社会科学视野下的新闻学研究：挑战与机遇](http://kns.cnki.net/kcms/detail/detail.aspx?filename=XWDX201704006&dbcode=CJFQ). 新闻大学, 4:26-32
-7. 杜骏飞, 曲飞帆, **王成军**（2016）[2015年中国新闻传播学论著评析](http://kns.cnki.net/KCMS/detail/detail.aspx?dbcode=CJFQ&dbname=CJFDPREP&filename=YANJ201612007). 新闻与传播研究，12:108-119
-7. 王成军 (2016) [大数据计算与《纸牌屋》生成](http://kns.cnki.net/KCMS/detail/detail.aspx?dbcode=CJFQ&dbname=CJFDLAST2016&filename=SJXW201605024). 传媒评论. 5:63-66
+1. **王成军**，党明辉，杜骏飞 (2019) [找回失落的参考群体:对沉默的螺旋理论的边界条件的考察](http://mall.cnki.net/magazine/Article/XWDX201904005.htm). 新闻大学. 156:13-29.
+1. **王成军** (2017).[计算社会科学视野下的新闻学研究：挑战与机遇](http://kns.cnki.net/kcms/detail/detail.aspx?filename=XWDX201704006&dbcode=CJFQ). 新闻大学, 4:26-32.
+7. 杜骏飞, 曲飞帆, **王成军**（2016）[2015年中国新闻传播学论著评析](http://kns.cnki.net/KCMS/detail/detail.aspx?dbcode=CJFQ&dbname=CJFDPREP&filename=YANJ201612007). 新闻与传播研究，12:108-119.
+7. 王成军 (2016) [大数据计算与《纸牌屋》生成](http://kns.cnki.net/KCMS/detail/detail.aspx?dbcode=CJFQ&dbname=CJFDLAST2016&filename=SJXW201605024). 传媒评论. 5:63-66.
 8. 王成军 (2016) [计算传播学的起源、概念与应用](http://kns.cnki.net/KCMS/detail/detail.aspx?dbcode=CJFQ&dbname=CJFDLAST2016&filename=BJXZ201603016). 编辑学刊,3:59-64.
 9. 王成军（2015）[计算传播学: 作为计算社会科学的传播学](http://kns.cnki.net/KCMS/detail/detail.aspx?dbcode=CFJD&dbname=CJFDLASN2015&filename=ZWCY201400013).中国网络传播研究,8:193-208.
 1. 王成军（2015）[“今日头条”的技术逻辑: 网络爬虫+矩阵筛选](http://kns.cnki.net/KCMS/detail/detail.aspx?dbcode=CJFQ&dbname=CJFDLAST2015&filename=SJXW201510017).传媒评论,10:34-37.

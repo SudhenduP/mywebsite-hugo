@@ -53,4 +53,4 @@ Telematics and Informatics
 
 Please cite this article as:
 
-> Wang, C-J. * , Zhu, J.J.H., Jumping onto the Bandwagon of Collective Gatekeepers: Testing the Bandwagon Effect of Information Diffusion on Social News Website, Telematics and Informatics (2019), doi: https://doi.org/10.1016/j.tele.2019.03.001
+> Wang, C-J. * , Zhu, J.J.H.(2019) Jumping onto the Bandwagon of Collective Gatekeepers: Testing the Bandwagon Effect of Information Diffusion on Social News Website, Telematics and Informatics. 41:34-45, doi: https://doi.org/10.1016/j.tele.2019.03.001

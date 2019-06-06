@@ -1,9 +1,9 @@
 +++
-title = "找回失落的参考群体：对“沉默的螺旋”进行多主体建模"
-url_pdf = ""
+title = "找回失落的参考群体：对沉默的螺旋理论的边界条件的考察"
+url_pdf = "http://mall.cnki.net/magazine/Article/XWDX201904005.htm"
 image_preview = ""
 url_code = ""
-authors = ["王成军*", "党明辉"]
+authors = ["王成军*", "党明辉", "杜骏飞"]
 url_project = ""
 url_video = ""
 publication_types = ["3"]
@@ -13,7 +13,7 @@ selected = false
 math = false
 publication_short = ""
 url_slides = ""
-publication = "Work in progress"
+publication = "《新闻大学》"
 url_dataset = ""
 highlight = true
 date = "2017-02-18T22:20:24+08:00"
@@ -26,3 +26,5 @@ date = "2017-02-18T22:20:24+08:00"
 
 Abstract：The purpose of this study is threefold: first, to bring reference groups back into the framework of spiral of silence (SOS) by proposing an integrated framework of dual opinion climate; second, to investigate the boundary conditions of SOS; third, to identify the characteristics of SOS in terms of spatial variation and temporal evolution. Modeling SOS with agent-based models, the findings suggest that there is no guarantee of SOS with reference groups being brought back; the stable existence of SOS is contingent upon the comparative strength of mass media over reference groups; SOS is size-dependent upon reference groups and the population; the growth rate of SOS decreases over time. Thus, this research presents an extension of the SOS theory.                                                                   
 Key Words: spiral of silence; willingness to express; agent-based model; reference group; size-dependent
+
+王成军，党明辉，杜骏飞 (2019) 找回失落的参考群体:对沉默的螺旋理论的边界条件的考察. 新闻大学. 156:13-29. http://mall.cnki.net/magazine/Article/XWDX201904005.htm

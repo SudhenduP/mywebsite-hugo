@@ -52,6 +52,8 @@ Cheng-Jun Wang is currently an associate professor in the School of Journalism a
 1. **王成军**，党明辉，杜骏飞 (2019) [找回失落的参考群体:对沉默的螺旋理论的边界条件的考察](http://mall.cnki.net/magazine/Article/XWDX201904005.htm). 新闻大学. 156:13-29.
 1. **王成军** (2017).[计算社会科学视野下的新闻学研究：挑战与机遇](http://kns.cnki.net/kcms/detail/detail.aspx?filename=XWDX201704006&dbcode=CJFQ). 新闻大学, 4:26-32.
 7. 杜骏飞, 曲飞帆, **王成军**（2016）[2015年中国新闻传播学论著评析](http://kns.cnki.net/KCMS/detail/detail.aspx?dbcode=CJFQ&dbname=CJFDPREP&filename=YANJ201612007). 新闻与传播研究，12:108-119.
+1. 张晓雨,**王成军** *(2016)[数据可视化报道在数据新闻中的实践——以《卫报》和财新网为例](http://zwcy.cbpt.cnki.net/WKD/WebPublication/paperDigest.aspx?paperID=3d061ce4-e195-4428-8707-33d8a622115e).中国网络传播研究.(01):283-308.
+1. 陈志聪,秦强,**王成军** *(2016)[作为社会动员过程的互联网众筹公益——以腾讯乐捐为例](http://zwcy.cbpt.cnki.net/WKD/WebPublication/paperDigest.aspx?paperID=056e5263-bc9e-4c6a-a1e8-bb35a80bd5bd).中国网络传播研究.(01):173-190.
 7. 王成军 (2016) [大数据计算与《纸牌屋》生成](http://kns.cnki.net/KCMS/detail/detail.aspx?dbcode=CJFQ&dbname=CJFDLAST2016&filename=SJXW201605024). 传媒评论. 5:63-66.
 8. 王成军 (2016) [计算传播学的起源、概念与应用](http://kns.cnki.net/KCMS/detail/detail.aspx?dbcode=CJFQ&dbname=CJFDLAST2016&filename=BJXZ201603016). 编辑学刊,3:59-64.
 9. 王成军（2015）[计算传播学: 作为计算社会科学的传播学](http://kns.cnki.net/KCMS/detail/detail.aspx?dbcode=CFJD&dbname=CJFDLASN2015&filename=ZWCY201400013).中国网络传播研究,8:193-208.

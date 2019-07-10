@@ -10,7 +10,7 @@ caption = "Image credit: [**Academic**](https://github.com/gcushen/hugo-academic
 
 
 
-Cheng-Jun Wang is currently an associate professor in the School of Journalism and Communication, Nanjing University. He is also the director of Ogilvy Data Science Lab, Computational Communication Collaboratory. His research on computational communication appears in both SSCI and SCI indexed journals, such as Scientific Reports, PloS ONE, Physica A, Cyberpsychology, and Journal of Social and Personal Relationships.
+Cheng-Jun Wang is currently an associate professor in the School of Journalism and Communication, Nanjing University. He is also the director of Computational Communication Collaboratory. His research on computational communication appears in both SSCI and SCI indexed journals, such as Scientific Reports, PloS ONE, Physica A, Cyberpsychology, and Journal of Social and Personal Relationships.
 
 
 # Contact Information

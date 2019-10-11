@@ -15,7 +15,7 @@ Cheng-Jun Wang is currently an associate professor in the School of Journalism a
 
 # Contact Information
 - Computational Communication Collaboratory, School of Journalism and Communication, Nanjing University.
-- Room A306, Feiyimin Building, 22 Hankou Road, Gulou District, Nanjing. China (210093).
+- 307 Zijin Building, Nanjing University (Xianlin Campus), 163 Xianlin Road, Qixia District, Nanjing, Jiangsu, China (210023).
 - Email: wangchj04 at gmail.com
 - ORCID: [0000-0002-9507-2888](http://orcid.org/0000-0002-9507-2888)
 

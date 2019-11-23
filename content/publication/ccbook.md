@@ -1,13 +1,13 @@
 +++
-abstract = "My ebook Elements of Computational Communication (In Chinese 计算传播基础）is now available online, enjoy! http://computational-class.github.io/ccbook/. "
-authors = ["王成军"]
+abstract = "My ebook Elements of Computational Communication (In Chinese 计算传播基础）is now [available online](http://computational-class.github.io/ccbook/), enjoy! "
+authors = ["Wang, C.J"]
 date = "2019-10-01"
 image_preview = ""
 math = true
 publication_types = ["4"]
-publication = "Ebook"
+publication = "Jupyter Book"
 publication_short = ""
-selected = true
+featured = false
 title = "Elements of Computational Communication"
 url_code = "https://computational-class.github.io/ccbook"
 url_dataset = ""

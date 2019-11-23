@@ -3,7 +3,7 @@ url_slides = ""
 url_dataset = ""
 url_pdf = "https://doi.org/10.1016/j.tele.2019.03.001"
 math = true
-abstract = "Based on collaborative information filtering and information aggregation services, the social news website carries out a collective gatekeeping function, supplying an empirical ground to test the bandwagon effect on information diffusion. Modeling the interpersonal effect and bandwagon effect in collective gatekeeping with threshold models, we confirm the bandwagon effect of collective gatekeeping on news diffusion with two novel datasets. The results demonstrate that the bandwagon of collective gatekeepers is the primary driver for online news diffusion. Interestingly, the bandwagon effect of collective gatekeeping is moderated by the strength of interpersonal effects. The theoretical generalizations of this research contribute to our understanding about the impact of collective gatekeeping on information diffusion."
+abstract = "Based on collaborative information filtering and information aggregation services, the social news website carries out a collective gatekeeping function, supplying an empirical ground to test the bandwagon effect on information diffusion. Modeling the interpersonal effect and bandwagon effect in collective gatekeeping with threshold models, we confirm the bandwagon effect of collective gatekeeping on news diffusion with two novel datasets. "
 abstract_short = ""
 url_code = ""
 publication_types = ["2"]
@@ -16,7 +16,7 @@ publication_short = ""
 publication = "Telematics and Informatics"
 image_preview = ""
 highlight = true
-selected = true
+featured = true
 
 [header]
   caption = "Jumping onto the Bandwagon of Collective Gatekeepers"
@@ -35,6 +35,8 @@ $^b$ Web Mining Lab, Department of Media and Communication, City University of H
 ## Keywords
 
 Information Diffusion; Collective Gatekeeping; Interpersonal Effects; Bandwagon Effects; Threshold Model
+
+The results demonstrate that the bandwagon of collective gatekeepers is the primary driver for online news diffusion. Interestingly, the bandwagon effect of collective gatekeeping is moderated by the strength of interpersonal effects. The theoretical generalizations of this research contribute to our understanding about the impact of collective gatekeeping on information diffusion.
 
 ## Highlights
 

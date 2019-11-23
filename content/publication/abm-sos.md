@@ -30,4 +30,4 @@ authors = ["王成军"]
 
 **[Key Words]** spiral of silence; agent-based model; reference group; size-dependent; computational communication research
 
-**引用**: 王成军，党明辉，杜骏飞 (2019) 找回失落的参考群体:对沉默的螺旋理论的边界条件的考察. 新闻大学. 156:13-29. http://mall.cnki.net/magazine/Article/XWDX201904005.htm
+**引用**: 王成军，党明辉，杜骏飞 (2019) 找回失落的参考群体:对沉默的螺旋理论的边界条件的考察. 新闻大学. 156:13-29. http://mall.cnki.net/magazine/Article/XWDX201904005.htm （入选人大复印资料新闻与传播2019年第8期）

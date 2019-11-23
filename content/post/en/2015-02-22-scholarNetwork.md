@@ -14,7 +14,7 @@ caption = "Image credit: [**Academic**](https://github.com/gcushen/hugo-academic
 +++
 
 
-#scholarNetwork
+# scholarNetwork
 
 Developed by Cheng-Jun Wang & Lingfei Wu
 
@@ -59,8 +59,8 @@ or
 
 
 
-![1](http://chengjun.qiniudn.com/example.png)
+![1](/img/qiniu/example.png)
 
 Of course, you can get a much larger graph to see what's happening around you, just to change the value of Nmax. However, you have to be patient to wait for much longer time.
 
-![](http://chengjun.qiniudn.com/ego300large.png)
+![](/img/qiniu/ego300large.png)

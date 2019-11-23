@@ -42,6 +42,7 @@ Cheng-Jun Wang is currently an associate professor in the School of Journalism a
 # Journal Articles
  \* denotes corresponding author
 
+1. Xu H, Zhang Z, Wu L*, **Wang C.J.** * (2019) The Cinderella Complex: Word embeddings reveal gender stereotypes in movies and books. PLoS ONE 14(11): e0225385. [doi:10.1371/journal.pone.0225385](https://doi.org/10.1371/journal.pone.0225385)
 1. **Wang, C.J.** * , Zhu, J.J.H.(2019) Jumping onto the Bandwagon of Collective Gatekeepers: Testing the Bandwagon Effect of Information Diffusion on Social News Website, Telematics and Informatics. 41:34-45, [doi:10.1016/j.tele.2019.03.001](https://doi.org/10.1016/j.tele.2019.03.001)
 1. **Wang, C.J.**, Wu, L*, Zhang, J., Janssen, M. (2016) The Collective Direction of Attention Diffusion. Scientific Reports. 6: 34059. [doi:10.1038/srep34059](http://www.nature.com/articles/srep34059)
 1. Wu, L., **Wang, C.J.** * (2016) Tracing the Attention of Moving Citizens. Scientific Reports. 6, 33103. [doi: 10.1038/srep33103](http://www.nature.com/articles/srep33103)
@@ -49,8 +50,8 @@ Cheng-Jun Wang is currently an associate professor in the School of Journalism a
 1. Chandra, Y.*, Jiang, C.L., **Wang, C.J.** (2016) Mining Social Entrepreneurship Strategies Using Topic Modeling, PLOS ONE, 11(3):e0151342, [doi: 10.1371/journal.pone.0151342](http://dx.doi.org/10.1371/journal.pone.0151342)
 1. Jiang, C.L*, Yang, M, **Wang, C.J.** (2017) Self-Disclosure to Parents in Emerging Adulthood: Examining the Roles of Perceived Parental Responsiveness and Separation-Individuation. Journal of Social and Personal Relationships. 34(4): 425-445. [doi: 10.1177 /0265407516640603](http://journals.sagepub.com/doi/full/10.1177/0265407516640603)
 1. **Wang, C.J.** *, Wang, P.P, Zhu, J.J.H (2013). Discussing Occupy Wall Street on Twitter: Longitudinal network analysis of equality, emotion, and stability of public discussion. Cyberpsychology, Behavior, and Social Networking, 16(9): 679-685. [doi:10.1089/cyber.2012.0409](http://online.liebertpub.com/doi/abs/10.1089/cyber.2012.0409). [SSCI, Ranking 4/72 in Communication by 5-year IF].
-1. **王成军**，党明辉，杜骏飞 (2019) [找回失落的参考群体:对沉默的螺旋理论的边界条件的考察](http://mall.cnki.net/magazine/Article/XWDX201904005.htm). 新闻大学. 156:13-29.
-1. **王成军** (2017).[计算社会科学视野下的新闻学研究：挑战与机遇](http://kns.cnki.net/kcms/detail/detail.aspx?filename=XWDX201704006&dbcode=CJFQ). 新闻大学, 4:26-32.
+1. **王成军**，党明辉，杜骏飞 (2019) [找回失落的参考群体:对沉默的螺旋理论的边界条件的考察](http://mall.cnki.net/magazine/Article/XWDX201904005.htm). 新闻大学. 156:13-29. （入选人大复印资料新闻与传播2019年第8期）
+1. **王成军** (2017).[计算社会科学视野下的新闻学研究：挑战与机遇](http://kns.cnki.net/kcms/detail/detail.aspx?filename=XWDX201704006&dbcode=CJFQ). 新闻大学, 4:26-32. （入选人大复印资料新闻与传播2017年第10期）
 7. 杜骏飞, 曲飞帆, **王成军**（2016）[2015年中国新闻传播学论著评析](http://kns.cnki.net/KCMS/detail/detail.aspx?dbcode=CJFQ&dbname=CJFDPREP&filename=YANJ201612007). 新闻与传播研究，12:108-119.
 1. 张晓雨,**王成军** *(2016)[数据可视化报道在数据新闻中的实践——以《卫报》和财新网为例](http://zwcy.cbpt.cnki.net/WKD/WebPublication/paperDigest.aspx?paperID=3d061ce4-e195-4428-8707-33d8a622115e).中国网络传播研究.(01):283-308.
 1. 陈志聪,秦强,**王成军** *(2016)[作为社会动员过程的互联网众筹公益——以腾讯乐捐为例](http://zwcy.cbpt.cnki.net/WKD/WebPublication/paperDigest.aspx?paperID=056e5263-bc9e-4c6a-a1e8-bb35a80bd5bd).中国网络传播研究.(01):173-190.
@@ -93,7 +94,7 @@ Cheng-Jun Wang is currently an associate professor in the School of Journalism a
 # Book Review, Translation, and Chapters
 1. 张伦、王成军、许小可（2018）《计算传播学导论》. 北京：北京师范大学出版社.
 1. 王成军、吴令飞 (2017) 空间约束的人类行为. 胡泳、王俊秀（编）《连接之后: 公共空间重建与权力再分配》.北京:人民邮电出版社. pp. 262-271
-1. 许小可、胡海波、张伦、王成军 （2015）《社交网络上的计算传播学》. 北京：中国科学出版社.
+1. 许小可、胡海波、张伦、王成军 （2015）《社交网络上的计算传播学》. 北京：高等教育出版社.
 1. 王薇、王成军、王颖、刘璟 （翻译）(2013). 《社会网络分析：方法与实践》. 北京：机械工业出版社. [Translation of the book Social Network Analysis for Startups: Finding connections on the Social Web., by Maksim Tsvetovat & Alexander Kouznetsov. (2011). O’Reilly Media]
 1. 王成军 (2012, Aug 17). 爆发：人类行为在时间尺度上的特征. 中国科学报, 06. [Review of the book Bursts: The Hidden Pattern Behind Everything We Do., by Albert-Laszlo Barabasi].
 1. 王成军 (2012, Jul 03). 人类 90%的行为是可以预测的. 中国图书商报, 1857.[Review of the book Bursts: The Hidden Pattern Behind Everything We Do., by Albert-Laszlo Barabasi].

@@ -1,0 +1,113 @@
+# Languages
+#   Create a `[X]` block for each language you want, where X is the language ID.
+#   Refer to https://sourcethemes.com/academic/docs/language/
+
+[[menu.main]]
+  name = "Home"
+  url = "/#about"
+  weight = 1
+
+[[menu.main]]
+  name = "Publications"
+  url = "/#publications_selected"
+  weight = 2
+
+[[menu.main]]
+  name = "Talks"
+  url = "/#talks"
+  weight = 3
+
+[[menu.main]]
+  name = "Projects"
+  url = "/#projects"
+  weight = 3
+
+[[menu.main]]
+  name = "News"
+  url = "/#posts"
+  weight = 4
+
+[[menu.main]]
+  name = "Teaching"
+  url = "/#teaching"
+  weight = 5
+
+[[menu.main]]
+  name = "Contact"
+  url = "/#contact"
+  weight = 6
+
+# Configure the English version of the site.
+# [en]
+#   languageCode = "en-us"
+#   #contentDir = "content/en"  # Uncomment for multi-lingual sites, and move English content into `en` sub-folder.
+#   [[en.menu.main]]
+#     name = "Home"
+#     url = "/#about"
+#     weight = 1
+#
+#   [[en.menu.main]]
+#     name = "Publications"
+#     url = "/#publications_selected"
+#     weight = 2
+#
+#   [[en.menu.main]]
+#     name = "Talks"
+#     url = "/#talks"
+#     weight = 3
+#
+#   [[en.menu.main]]
+#     name = "Projects"
+#     url = "/#projects"
+#     weight = 3
+#
+#   [[en.menu.main]]
+#     name = "News"
+#     url = "/#posts"
+#     weight = 4
+#
+#   [[en.menu.main]]
+#     name = "Teaching"
+#     url = "/#teaching"
+#     weight = 5
+#
+#   [[en.menu.main]]
+#     name = "Contact"
+#     url = "/#contact"
+#     weight = 6
+# Uncomment the lines below to configure your website in a second language.
+# [zh]
+#  languageCode = "zh-Hans"
+#  contentDir = "content/zh"
+#  title = "王成军"
+#  [zh.params]
+#    description = "王成军的中文网站"
+#  [[zh.menu.main]]
+#    name = "王成军"
+#    url = "#about"
+#    weight = 1
+#
+#  [[zh.menu.main]]
+#    name = "关于"
+#    url = "/zh/#about"
+#    weight = 1
+#
+#  [[zh.menu.main]]
+#    name = "新闻"
+#    url = "/zh/#posts"
+#    weight = 2
+#
+#  [[zh.menu.main]]
+#    name = "教学"
+#    url = "/zh/#teaching"
+#    weight = 3
+#
+#  [[zh.menu.main]]
+#    name = "项目"
+#    url = "/zh/#projects"
+#    weight = 4
+#
+#  [[zh.menu.main]]
+#    name = "联系"
+#    url = "/zh/#contact"
+#    weight = 5

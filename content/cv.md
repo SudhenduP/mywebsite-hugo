@@ -4,7 +4,7 @@ title = "Cheng-Jun Wang"
 slug= "cv"
 disable_comments = true
 [header]
-image = "headers/cheetah.svg"
+image = "headers/party.svg"
 caption = "Image credit: [**Academic**](https://github.com/gcushen/hugo-academic/)"
 +++
 

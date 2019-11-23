@@ -21,7 +21,7 @@
    # To get your coordinates, right-click on Google Maps and choose "What's here?". The coords will show up at the bottom.
    coordinates = {latitude = "32.12191", longitude = "118.9544"}
    # Directions for visitors to locate you.
-   directions = "南京大学（仙林校区）新闻传播学院405"
+   directions = "南京大学（仙林校区）新闻传播学院450"
 
  [[zh.menu.main]]
    name = "简介"

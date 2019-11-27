@@ -1,7 +1,7 @@
 +++
 date = "2017-02-19T00:00:00"
 title = "Cheng-Jun Wang"
-slug= "cv2"
+slug= "cv"
 widget = "blank"  # See https://sourcethemes.com/academic/docs/page-builder/
 disable_comments = true
 [header]

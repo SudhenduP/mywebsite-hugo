@@ -4781,9 +4781,9 @@ Lazer等一批学者2009年在Science上发表题为“计算社会科学”的�
     
     <item>
       <title>Cheng-Jun Wang</title>
-      <link>https://chengjunwang.com/cv2/</link>
+      <link>https://chengjunwang.com/cv/</link>
       <pubDate>Sun, 19 Feb 2017 00:00:00 +0000</pubDate>
-      <guid>https://chengjunwang.com/cv2/</guid>
+      <guid>https://chengjunwang.com/cv/</guid>
       <description>
 
 &lt;p&gt;&lt;img src=&#34;https://chengjunwang.com/img/headers/chengjunwang2.png&#34; alt=&#34;Cheng-Jun Wang&#34; /&gt;&lt;/p&gt;
@@ -9141,6 +9141,14 @@ $ git log --pretty=oneline --abbrev-commit --decorate HEAD..upstream/master
 
 &lt;p&gt;Released under the &lt;a href=&#34;https://github.com/gcushen/hugo-academic/blob/master/LICENSE.md&#34; target=&#34;_blank&#34;&gt;MIT&lt;/a&gt; license.&lt;/p&gt;
 </description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>https://chengjunwang.com/zh/home/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://chengjunwang.com/zh/home/</guid>
+      <description></description>
     </item>
     
     <item>

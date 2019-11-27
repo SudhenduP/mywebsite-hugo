@@ -5,7 +5,7 @@
 # Configure the English version of the site.
 [en]
   languageCode = "en-us"
-  # contentDir = "content/en"  # Uncomment for multi-lingual sites, and move English content into `en` sub-folder.
+  #contentDir = "content/en"  # Uncomment for multi-lingual sites, and move English content into `en` sub-folder.
 
 # Uncomment the lines below to configure your website in a second language.
 [zh]
@@ -35,20 +35,20 @@
 
 
 # Uncomment the lines below to configure your website in a second language.
-[cv]
-languageCode = "en-us"
-contentDir = "content/cv"
-title = "Cheng-Jun Wang"
-[cv.params]
-  description = "Site description in Chinese..."
-  # For country_code, use the 2-letter ISO code (see https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2 )
-  address = {street = "163 Xianlin Street", city = "Nanjing", region = "Jiangsu Province", postcode = "210093", country = "China", country_code = "CN"}
-
-  # Geographic coordinates
-  # To get your coordinates, right-click on Google Maps and choose "What's here?". The coords will show up at the bottom.
-
-  coordinates = {latitude = "32.12191", longitude = "118.9544"}
-
-
-  # Directions for visitors to locate you.
-  directions = "Room 450, School of Journalism and Communication, Nanjing University (Xianlin Campus)"
+# [cv]
+# languageCode = "en-us"
+# contentDir = "content/cv"
+# title = "Cheng-Jun Wang"
+# [cv.params]
+#   description = "Site description in Chinese..."
+#   # For country_code, use the 2-letter ISO code (see https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2 )
+#   address = {street = "163 Xianlin Street", city = "Nanjing", region = "Jiangsu Province", postcode = "210093", country = "China", country_code = "CN"}
+#
+#   # Geographic coordinates
+#   # To get your coordinates, right-click on Google Maps and choose "What's here?". The coords will show up at the bottom.
+#
+#   coordinates = {latitude = "32.12191", longitude = "118.9544"}
+#
+#
+#   # Directions for visitors to locate you.
+#   directions = "Room 450, School of Journalism and Communication, Nanjing University (Xianlin Campus)"

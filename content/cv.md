@@ -1,14 +1,16 @@
 +++
 date = "2017-02-19T00:00:00"
 title = "Cheng-Jun Wang"
-slug= "cv"
+slug= "cv2"
+widget = "blank"  # See https://sourcethemes.com/academic/docs/page-builder/
 disable_comments = true
 [header]
-image = "headers/party.svg"
-caption = "Image credit: [**Academic**](https://github.com/gcushen/hugo-academic/)"
+#image = "headers/chengjunwang4.png"
+#caption = "Image credit: [**Heng Lu**](https://github.com/gcushen/hugo-academic/)"
 +++
 
 
+![Cheng-Jun Wang](/img/headers/chengjunwang2.png)
 
 Cheng-Jun Wang is currently an associate professor in the School of Journalism and Communication, Nanjing University. He is also the director of Computational Communication Collaboratory. His research on computational communication appears in both SSCI and SCI indexed journals, such as Scientific Reports, PloS ONE, Physica A, Cyberpsychology, and Journal of Social and Personal Relationships.
 

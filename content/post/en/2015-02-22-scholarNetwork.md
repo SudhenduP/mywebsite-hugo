@@ -36,7 +36,7 @@ or
 
 	     easy_install scholarNetwork
 
-##Use
+## Use
 
     	from scholarNetwork import scholarNetwork
     	import matplotlib.pyplot as plt

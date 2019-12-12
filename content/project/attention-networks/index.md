@@ -14,7 +14,7 @@ image_preview = "tracing.jpg"
 
 # Tags: can be used for filtering projects.
 # Example: `tags = ["machine-learning", "deep-learning"]`
-tags = ["computational-communication"]
+tags = ["attention-networks"]
 
 # Optional external URL for project (replaces project detail page).
 external_link = ""

@@ -8,11 +8,6 @@
   </url>
   
   <url>
-    <loc>https://chengjunwang.com/authors/cheng-jun-wang/</loc>
-    <lastmod>2019-11-14T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
     <loc>https://chengjunwang.com/publication_types/2/</loc>
     <lastmod>2019-11-14T00:00:00+00:00</lastmod>
   </url>
@@ -55,6 +50,11 @@
                 hreflang="en"
                 href="https://chengjunwang.com/"
                 />
+  </url>
+  
+  <url>
+    <loc>https://chengjunwang.com/authors/cheng-jun-wang/</loc>
+    <lastmod>2019-11-14T00:00:00+00:00</lastmod>
   </url>
   
   <url>
@@ -608,7 +608,7 @@
   </url>
   
   <url>
-    <loc>https://chengjunwang.com/project/computational-communication/</loc>
+    <loc>https://chengjunwang.com/project/attention-networks/</loc>
     <lastmod>2016-04-27T00:00:00+00:00</lastmod>
   </url>
   
@@ -618,7 +618,7 @@
   </url>
   
   <url>
-    <loc>https://chengjunwang.com/project/attention-networks/</loc>
+    <loc>https://chengjunwang.com/project/computational-communication/</loc>
     <lastmod>2016-04-27T00:00:00+00:00</lastmod>
   </url>
   
@@ -897,6 +897,10 @@
   </url>
   
   <url>
+    <loc>https://chengjunwang.com/zh/authors/admin/</loc>
+  </url>
+  
+  <url>
     <loc>https://chengjunwang.com/post/en/2013-08-03-bloging-with-markdown-on-octopress/</loc>
   </url>
   
@@ -1001,6 +1005,10 @@
   
   <url>
     <loc>https://chengjunwang.com/post/en/2011-12-11-visualize-with-googlevis/</loc>
+  </url>
+  
+  <url>
+    <loc>https://chengjunwang.com/zh/</loc>
   </url>
   
 </urlset>

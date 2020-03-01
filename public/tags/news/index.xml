@@ -5,12 +5,2423 @@
     <link>https://chengjunwang.com/tags/news/</link>
       <atom:link href="https://chengjunwang.com/tags/news/index.xml" rel="self" type="application/rss+xml" />
     <description>news</description>
-    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>All rights © reserved 2019</copyright><lastBuildDate>Sun, 29 Oct 2017 00:00:00 +0000</lastBuildDate>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><copyright>All rights © reserved 2020</copyright><lastBuildDate>Thu, 13 Feb 2020 00:00:00 +0000</lastBuildDate>
     <image>
       <url>https://chengjunwang.com/img/headers/deer.webp</url>
       <title>news</title>
       <link>https://chengjunwang.com/tags/news/</link>
     </image>
+    
+    <item>
+      <title>2019确诊人数最多的小区是哪一个？</title>
+      <link>https://chengjunwang.com/%E8%AE%A1%E7%AE%97%E6%96%B0%E9%97%BB/2019ncov%E7%A1%AE%E8%AF%8A%E4%BA%BA%E6%95%B0%E6%9C%80%E5%A4%9A%E7%9A%84%E5%B0%8F%E5%8C%BA%E6%98%AF%E5%93%AA%E4%B8%80%E4%B8%AA/</link>
+      <pubDate>Thu, 13 Feb 2020 00:00:00 +0000</pubDate>
+      <guid>https://chengjunwang.com/%E8%AE%A1%E7%AE%97%E6%96%B0%E9%97%BB/2019ncov%E7%A1%AE%E8%AF%8A%E4%BA%BA%E6%95%B0%E6%9C%80%E5%A4%9A%E7%9A%84%E5%B0%8F%E5%8C%BA%E6%98%AF%E5%93%AA%E4%B8%80%E4%B8%AA/</guid>
+      <description>&lt;p&gt; &lt;/p&gt;
+
+&lt;p&gt;来回答一个&lt;strong&gt;问题&lt;/strong&gt;：已经开放的数据当中，确诊人数最多的小区是哪一个？&lt;/p&gt;
+
+&lt;p&gt;前文介绍了akshare的安装和简单使用，本文介绍使用akshare获取细化到每个小区的确诊人数数据。腾讯提供了一个公开的数据，可以供查询。为此，我们将使用到akshare的epidemic_area_detail接口。&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;epidemic_area_detail()
+     细化到每个小区的确诊人数
+    需要遍历每个页面, 如非必要, 请勿运行
+    &lt;a href=&#34;https://ncov.html5.qq.com/community?channelid=1&amp;amp;from=singlemessage&amp;amp;isappinstalled=0&#34; target=&#34;_blank&#34;&gt;https://ncov.html5.qq.com/community?channelid=1&amp;amp;from=singlemessage&amp;amp;isappinstalled=0&lt;/a&gt;
+    :return: 全国每个小区的确诊人数
+    :rtype: pandas.DataFrame&lt;/pre&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;pre&gt;&lt;code&gt;import akshare as ak
+epidemic_area_detail_df = ak.epidemic_area_detail()
+print(epidemic_area_detail_df)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;一共1070, 要等待一会儿。&lt;/p&gt;
+
+&lt;p&gt;下载完成后，我们可以看一下江苏的数据：&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://upload-images.jianshu.io/upload_images/38934-2001461b03bc2d80.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240&#34; alt=&#34;image.png&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;先看一下每个小区的确诊人数：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;epidemic_area_detail_df[&#39;cnt_sum_certain&#39;].unique()
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;array([&amp;lsquo;2&amp;rsquo;, &amp;lsquo;4&amp;rsquo;, &amp;lsquo;1&amp;rsquo;, &amp;lsquo;-1&amp;rsquo;, &amp;lsquo;3&amp;rsquo;, &amp;lsquo;5&amp;rsquo;, &amp;lsquo;7&amp;rsquo;, &amp;lsquo;10&amp;rsquo;, &amp;lsquo;6&amp;rsquo;, &amp;lsquo;8&amp;rsquo;, &amp;lsquo;9&amp;rsquo;, &amp;lsquo;12&amp;rsquo;,
+       &amp;lsquo;14&amp;rsquo;, &amp;lsquo;19&amp;rsquo;, &amp;lsquo;13&amp;rsquo;, &amp;lsquo;11&amp;rsquo;, &amp;lsquo;256&amp;rsquo;, &amp;lsquo;119&amp;rsquo;, &amp;lsquo;31&amp;rsquo;, &amp;lsquo;15&amp;rsquo;, &amp;lsquo;22&amp;rsquo;, &amp;lsquo;16&amp;rsquo;, &amp;lsquo;39&amp;rsquo;,
+       &amp;lsquo;17&amp;rsquo;, &amp;lsquo;23&amp;rsquo;], dtype=object)&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;strong&gt;发现&lt;/strong&gt;：1. 数据是字符串格式；2.含有 ‘-1’，应该是不详。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;import numpy as np
+
+vlist = []
+for i in epidemic_area_detail_df[&#39;cnt_sum_certain&#39;]:
+    if i != &#39;-1&#39;:
+        vlist.append(int(i))
+    else:
+        vlist.append(np.nan)
+
+epidemic_area_detail_df[&#39;cnt_sum_certain&#39;] = vlist
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;来看一下除掉人数不详的情况，本数据共有多少人确诊：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;np.nansum(vlist)
+# 7229.0
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;确认人数最大值是多少？是哪一个小区？&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;epidemic_area_detail_df[epidemic_area_detail_df[&#39;cnt_sum_certain&#39;]==np.nanmax(vlist)]
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://upload-images.jianshu.io/upload_images/38934-1bbcca55326970fb.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240&#34; alt=&#34;揭晓答案&#34; /&gt;&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Causal Inference: 电子书、代码、数据</title>
+      <link>https://chengjunwang.com/%E8%AE%A1%E7%AE%97%E6%96%B0%E9%97%BB/causal-inferencewhat-if-%E7%94%B5%E5%AD%90%E4%B9%A6%E4%BB%A3%E7%A0%81%E6%95%B0%E6%8D%AE/</link>
+      <pubDate>Thu, 13 Feb 2020 00:00:00 +0000</pubDate>
+      <guid>https://chengjunwang.com/%E8%AE%A1%E7%AE%97%E6%96%B0%E9%97%BB/causal-inferencewhat-if-%E7%94%B5%E5%AD%90%E4%B9%A6%E4%BB%A3%E7%A0%81%E6%95%B0%E6%8D%AE/</guid>
+      <description>
+
+&lt;p&gt; &lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://upload-images.jianshu.io/upload_images/38934-f6dbf120d4032f36.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240&#34; alt=&#34;image.png&#34; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&#34;causal-inference-book&#34;&gt;Causal Inference Book&lt;/h3&gt;
+
+&lt;p&gt;来源：&lt;a href=&#34;https://www.hsph.harvard.edu/miguel-hernan/causal-inference-book/&#34; target=&#34;_blank&#34;&gt;https://www.hsph.harvard.edu/miguel-hernan/causal-inference-book/&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;Miguel Hernan &amp;amp; Jamie Robinshave written a book that provides a cohesive presentation of concepts of, and methods for, causal inference. Much of this material is currently scattered across journals in several disciplines or confined to technical articles. We expect that the book will be of interest to anyone interested in causal inference, e.g., epidemiologists, statisticians, psychologists, economists, sociologists, political scientists, computer scientists… The book is divided in 3 parts of increasing difficulty: causal inference without models, causal inference with models, and causal inference from complex longitudinal data.&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;Hernán MA, Robins JM (2020). Causal Inference: What If. Boca Raton: Chapman &amp;amp; Hall/CRC.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;The components of the book can be accessed by clicking on the links below:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://cdn1.sph.harvard.edu/wp-content/uploads/sites/1268/2020/02/ci_hernanrobins_21feb20.pdf&#34; target=&#34;_blank&#34;&gt;The Causal Inference book&lt;/a&gt; (updated 21 February 2020)&lt;/li&gt;
+&lt;li&gt;NHEFS data
+
+&lt;ul&gt;
+&lt;li&gt;In &lt;a href=&#34;https://cdn1.sph.harvard.edu/wp-content/uploads/sites/1268/2012/10/nhefs_sas.zip&#34; target=&#34;_blank&#34;&gt;SAS&lt;/a&gt;, &lt;a href=&#34;https://cdn1.sph.harvard.edu/wp-content/uploads/sites/1268/2012/10/nhefs_stata.zip&#34; target=&#34;_blank&#34;&gt;Stata&lt;/a&gt;, &lt;a href=&#34;https://cdn1.sph.harvard.edu/wp-content/uploads/sites/1268/2017/01/nhefs_excel.zip&#34; target=&#34;_blank&#34;&gt;MS Excel&lt;/a&gt;, and &lt;a href=&#34;https://cdn1.sph.harvard.edu/wp-content/uploads/sites/1268/1268/20/nhefs.csv&#34; target=&#34;_blank&#34;&gt;CSV&lt;/a&gt; formats&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://cdn1.sph.harvard.edu/wp-content/uploads/sites/1268/2012/10/NHEFS_Codebook.xls&#34; target=&#34;_blank&#34;&gt;Codebook&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;Computer code
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://cdn1.sph.harvard.edu/wp-content/uploads/sites/1268/2019/01/sas_part2.zip&#34; target=&#34;_blank&#34;&gt;SAS&lt;/a&gt; by Roger Logan&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://cdn1.sph.harvard.edu/wp-content/uploads/sites/1268/2019/11/stata_part2.zip&#34; target=&#34;_blank&#34;&gt;Stata&lt;/a&gt; by Eleanor Murray and Roger Logan&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://cdn1.sph.harvard.edu/wp-content/uploads/sites/1268/1268/20/Rcode_CIpart2.zip&#34; target=&#34;_blank&#34;&gt;R&lt;/a&gt; by Joy Shi and Sean McGrath. &lt;a href=&#34;https://remlapmot.github.io/cibookex-r/&#34; target=&#34;_blank&#34;&gt;Rendered version&lt;/a&gt; by Tom Palmer.&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/jrfiedler/causal_inference_python_code&#34; target=&#34;_blank&#34;&gt;Python&lt;/a&gt; by James Fiedler&lt;/li&gt;
+&lt;li&gt;Parametric g-formula software in &lt;a href=&#34;https://github.com/CausalInference/gfoRmula&#34; target=&#34;_blank&#34;&gt;R&lt;/a&gt; and &lt;a href=&#34;https://github.com/CausalInference/GFORMULA-SAS&#34; target=&#34;_blank&#34;&gt;SAS&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;Warning: At this stage, we may still revise and correct errors without documenting the changes. Please make sure you use the most updated version of the book posted here.&lt;/p&gt;
+&lt;/blockquote&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Covid-19数据来源（更新当中）</title>
+      <link>https://chengjunwang.com/%E8%AE%A1%E7%AE%97%E6%96%B0%E9%97%BB/covid-19%E6%95%B0%E6%8D%AE%E6%9D%A5%E6%BA%90%E4%B8%8D%E6%96%AD%E6%95%B4%E7%90%86%E5%BD%93%E4%B8%AD/</link>
+      <pubDate>Thu, 13 Feb 2020 00:00:00 +0000</pubDate>
+      <guid>https://chengjunwang.com/%E8%AE%A1%E7%AE%97%E6%96%B0%E9%97%BB/covid-19%E6%95%B0%E6%8D%AE%E6%9D%A5%E6%BA%90%E4%B8%8D%E6%96%AD%E6%95%B4%E7%90%86%E5%BD%93%E4%B8%AD/</guid>
+      <description>
+
+&lt;p&gt; &lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://upload-images.jianshu.io/upload_images/38934-2026094daa22ebae.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240&#34; alt=&#34;image.png&#34; /&gt;&lt;/p&gt;
+
+&lt;h1 id=&#34;数据来源&#34;&gt;数据来源&lt;/h1&gt;
+
+&lt;p&gt;不断更新当中：&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/CSSEGISandData/COVID-19&#34; target=&#34;_blank&#34;&gt;https://github.com/CSSEGISandData/COVID-19&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/data-journalism/WuHan2019nCov&#34; target=&#34;_blank&#34;&gt;https://github.com/data-journalism/WuHan2019nCov&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/AaronWard/covid-19-analysis&#34; target=&#34;_blank&#34;&gt;https://github.com/AaronWard/covid-19-analysis&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/839-Studio&#34; target=&#34;_blank&#34;&gt;澎湃 839-Studio&lt;/a&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/839-Studio/Noval-Coronavirus-763-Cases&#34; target=&#34;_blank&#34;&gt;Noval-Coronavirus-763-Cases&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/839-Studio/Novel-Coronavirus-Updates&#34; target=&#34;_blank&#34;&gt;Novel-Coronavirus-Updates&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id=&#34;可视化&#34;&gt;可视化&lt;/h1&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;http://vis.pku.edu.cn/ncov/home.html&#34; target=&#34;_blank&#34;&gt;http://vis.pku.edu.cn/ncov/home.html&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://upload-images.jianshu.io/upload_images/38934-e0d3a8d954aa5ad5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240&#34; alt=&#34;image.png&#34; /&gt;&lt;/p&gt;
+
+&lt;h1 id=&#34;538数据新闻项目&#34;&gt;538数据新闻项目&lt;/h1&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/fivethirtyeight/data&#34; target=&#34;_blank&#34;&gt;fivethirtyeight/data&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Covid-19细颗粒度历史数据</title>
+      <link>https://chengjunwang.com/%E8%AE%A1%E7%AE%97%E6%96%B0%E9%97%BB/2019ncov%E7%BB%86%E9%A2%97%E7%B2%92%E5%BA%A6%E5%8E%86%E5%8F%B2%E6%95%B0%E6%8D%AE/</link>
+      <pubDate>Thu, 13 Feb 2020 00:00:00 +0000</pubDate>
+      <guid>https://chengjunwang.com/%E8%AE%A1%E7%AE%97%E6%96%B0%E9%97%BB/2019ncov%E7%BB%86%E9%A2%97%E7%B2%92%E5%BA%A6%E5%8E%86%E5%8F%B2%E6%95%B0%E6%8D%AE/</guid>
+      <description>
+
+&lt;p&gt; &lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;epidemic_hist_all()
+    NCP细化到地市的细颗粒数据
+    &lt;a href=&#34;https://github.com/norratek/Ncov2020HistoryData&#34; target=&#34;_blank&#34;&gt;https://github.com/norratek/Ncov2020HistoryData&lt;/a&gt;
+    &lt;a href=&#34;https://docs.google.com/spreadsheets/d/1JNQnFYJpR7PxQo5K5lwXTuE0F6jprhMXuy7DPnV9H90/edit#gid=0&#34; target=&#34;_blank&#34;&gt;https://docs.google.com/spreadsheets/d/1JNQnFYJpR7PxQo5K5lwXTuE0F6jprhMXuy7DPnV9H90/edit#gid=0&lt;/a&gt;
+    :return: 返回每日的历史数据
+    :rtype: pandas.DataFrame&lt;/pre&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;pre&gt;&lt;code&gt;import akshare as ak
+import pylab as plt
+plt.style.use(&#39;fivethirtyeight&#39;)
+
+epidemic_hist_all_df = ak.epidemic_hist_all()
+
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;提取江苏省的历史数据&#34;&gt;提取江苏省的历史数据&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code&gt;epidemic_hist_all_df = epidemic_hist_all_df.sort_values(by=&#39;date&#39;)
+js = epidemic_hist_all_df[epidemic_hist_all_df[&#39;Province&#39;]==&#39;江苏省&#39;]
+js.head()
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://upload-images.jianshu.io/upload_images/38934-9d77dfc7f7017353.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240&#34; alt=&#34;江苏历史数据&#34; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;看一下南京市的数据&#34;&gt;看一下南京市的数据&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code&gt;plt.figure(figsize=(12, 6), dpi = 200)
+i = &#39;南京&#39;
+df = js[js[&#39;City&#39;]==i]
+plt.plot(df[&#39;date&#39;], df[&#39;Confirmed&#39;],
+         &#39;r-s&#39;, label = &#39;累计确诊&#39;)
+plt.plot(df[&#39;date&#39;], df[&#39;Cured&#39;],
+         &#39;g-o&#39;, label = &#39;累计治愈&#39;)
+plt.title(i, fontsize =20)
+plt.legend()
+# plt.yscale(&#39;log&#39;)
+plt.xticks(rotation=60)
+plt.ylabel(&#39;数量&#39;, fontsize = 20)
+plt.show()
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://upload-images.jianshu.io/upload_images/38934-35ffdf5545111033.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240&#34; alt=&#34;南京市&#34; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;江苏所有地级市数据&#34;&gt;江苏所有地级市数据&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code&gt;cols =  [ &#39;#bd2309&#39;, &#39;#bbb12d&#39;, &#39;#1480fa&#39;, &#39;#14fa2f&#39;, &#39;#000000&#39;,
+              &#39;#faf214&#39;, &#39;#2edfea&#39;, &#39;#ea2ec4&#39;, &#39;#ea2e40&#39;, &#39;#cdcdcd&#39;,
+              &#39;#577a4d&#39;, &#39;#2e46c0&#39;, &#39;#f59422&#39;, &#39;#219774&#39;, &#39;#8086d9&#39; ]
+
+plt.figure(figsize=(12, 6), dpi = 200)
+for k, i in enumerate(js[&#39;City&#39;].unique()):
+    df = js[js[&#39;City&#39;]==i]
+    plt.plot(df[&#39;date&#39;], df[&#39;Confirmed&#39;], color= cols[k], marker=&#39;o&#39;, linestyle=&#39;-&#39;,
+              label = i)
+plt.title(&#39;江苏省&#39;, fontsize =20)
+plt.legend()
+# plt.yscale(&#39;log&#39;)
+plt.xticks(rotation=60)
+plt.ylabel(&#39;累计确诊数量&#39;, fontsize = 20)
+plt.show()
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://upload-images.jianshu.io/upload_images/38934-3928a50dae64878b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240&#34; alt=&#34;江苏所有地级市&#34; /&gt;&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Pygame内置小游戏：外星人</title>
+      <link>https://chengjunwang.com/%E8%AE%A1%E7%AE%97%E6%96%B0%E9%97%BB/pygame%E5%86%85%E7%BD%AE%E5%B0%8F%E6%B8%B8%E6%88%8F%E5%A4%96%E6%98%9F%E4%BA%BA/</link>
+      <pubDate>Thu, 13 Feb 2020 00:00:00 +0000</pubDate>
+      <guid>https://chengjunwang.com/%E8%AE%A1%E7%AE%97%E6%96%B0%E9%97%BB/pygame%E5%86%85%E7%BD%AE%E5%B0%8F%E6%B8%B8%E6%88%8F%E5%A4%96%E6%98%9F%E4%BA%BA/</guid>
+      <description>
+
+&lt;p&gt; &lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://upload-images.jianshu.io/upload_images/38934-584148e546eaf513.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240&#34; alt=&#34;pygame 卡哇伊！&#34; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;安装pygame&#34;&gt;安装pygame&lt;/h2&gt;
+
+&lt;p&gt;首先尝试：
+&amp;gt; pip install pygame -i &lt;a href=&#34;http://pypi.douban.com/simple&#34; target=&#34;_blank&#34;&gt;http://pypi.douban.com/simple&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;如果出错，尝试
+&amp;gt; pip install pygame -i &lt;a href=&#34;http://pypi.douban.com/simple&#34; target=&#34;_blank&#34;&gt;http://pypi.douban.com/simple&lt;/a&gt; &amp;ndash;trusted-host pypi.douban.com&lt;/p&gt;
+
+&lt;h2 id=&#34;开始玩游戏&#34;&gt;开始玩游戏！&lt;/h2&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://www.pygame.org/&#34; target=&#34;_blank&#34;&gt;https://www.pygame.org/&lt;/a&gt;&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;python3 -m pygame.examples.aliens&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://upload-images.jianshu.io/upload_images/38934-c7cec7899b328580.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240&#34; alt=&#34;逃跑现场&#34; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;想要学习更多东西&#34;&gt;想要学习更多东西？&lt;/h2&gt;
+
+&lt;p&gt;Below are unofficial tutorials and guides. Anything with wrong install instructions is not allowed.&lt;/p&gt;
+
+&lt;h3 id=&#34;general-tutorials-https-www-pygame-org-wiki-tutorials-general-20tutorials-permalink-to-this-definition&#34;&gt;General Tutorials[](&lt;a href=&#34;https://www.pygame.org/wiki/tutorials#General%20Tutorials&#34; target=&#34;_blank&#34;&gt;https://www.pygame.org/wiki/tutorials#General%20Tutorials&lt;/a&gt; &amp;laquo;Permalink to this definition&amp;raquo;)&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://dr0id.bitbucket.io/legacy/pygame_tutorials.html&#34; target=&#34;_blank&#34;&gt;Tutorials by DR0ID&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://pygametutorials.wikidot.com/tutorials-basic&#34; target=&#34;_blank&#34;&gt;PyGame object oriented tutorials&lt;/a&gt; by przemo_li&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://thepythongamebook.com/en:pygame:start&#34; target=&#34;_blank&#34;&gt;Thepythongamebook tutorial about Pygame&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&#34;pygame-tutorials-on-specific-topics-https-www-pygame-org-wiki-tutorials-pygame-20tutorials-20on-20specific-20topics-permalink-to-this-definition&#34;&gt;Pygame Tutorials on Specific Topics[](&lt;a href=&#34;https://www.pygame.org/wiki/tutorials#Pygame%20Tutorials%20on%20Specific%20Topics&#34; target=&#34;_blank&#34;&gt;https://www.pygame.org/wiki/tutorials#Pygame%20Tutorials%20on%20Specific%20Topics&lt;/a&gt; &amp;laquo;Permalink to this definition&amp;raquo;)&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;http://www.scriptedfun.com/about/&#34; target=&#34;_blank&#34;&gt;Screencasts and tutorials at Scriptedfun&lt;/a&gt;, making an arkanoid type game&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://qq.readthedocs.org/&#34; target=&#34;_blank&#34;&gt;A tutorial on making a top-down tile-based game&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://www.youtube.com/watch?v=7AKatTpNSNQ&amp;amp;list=PLE3D1A71BB598FEF6&#34; target=&#34;_blank&#34;&gt;PyGame Physics Youtube Tutorials&lt;/a&gt; by maaack&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.youtube.com/playlist?list=PLQVvvaa0QuDdLkP8MrOXLe_rKuf6r80KO&#34; target=&#34;_blank&#34;&gt;YouTube series creating a top down racing game with Python 3&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>《石头汤》</title>
+      <link>https://chengjunwang.com/%E8%AE%A1%E7%AE%97%E6%96%B0%E9%97%BB/%E7%9F%B3%E5%A4%B4%E6%B1%A4%E8%A1%8C%E5%8A%A8%E5%92%8C%E5%88%86%E4%BA%AB%E7%9A%84%E5%8A%9B%E9%87%8F/</link>
+      <pubDate>Thu, 13 Feb 2020 00:00:00 +0000</pubDate>
+      <guid>https://chengjunwang.com/%E8%AE%A1%E7%AE%97%E6%96%B0%E9%97%BB/%E7%9F%B3%E5%A4%B4%E6%B1%A4%E8%A1%8C%E5%8A%A8%E5%92%8C%E5%88%86%E4%BA%AB%E7%9A%84%E5%8A%9B%E9%87%8F/</guid>
+      <description>
+
+&lt;p&gt; &lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://upload-images.jianshu.io/upload_images/38934-2100f040addfa8eb.jpeg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240&#34; alt=&#34;幸福原来如此简单&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;来源： &lt;a href=&#34;https://mp.sohu.com/profile?xpt=aWU4ODg4ODlAc29odS5jb20=&amp;amp;_f=index_pagemp_1&amp;amp;spm=smpc.content.author.2.15823436662028hdQv9K&#34; target=&#34;_blank&#34;&gt;麦田亲子悦读&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;《石头汤》是凯迪克大奖得主琼·穆特代表作，2007年度全国十佳童书，全数百所知名小学、幼儿园指定必读书！作者琼•穆特以优美恬静的画风在美术及插画创作领域享有盛名，他运用华丽的水彩画，引领读者去深思故事背后的蕴涵。他把自己对禅宗和东方文化的热爱，融入到这个古老的巧计故事当中，以此弘扬慷慨好施的力量。这是一个来自欧洲的古老传说，被各个国家的作者演绎成不同的版本。中国版的《石头汤》作者是一个美国人，但他对中国文化和元素非常的了解，连绘本画风色调都是国画风格，完全符合中国人的审美。&lt;/p&gt;
+
+&lt;h2 id=&#34;这也是一个奇怪的故事&#34;&gt;这也是一个奇怪的故事！&lt;/h2&gt;
+
+&lt;p&gt;石头也能用来煮汤吗？鸡可以煮汤，鸭可以煮汤，冬瓜火腿、番茄和鸡蛋都可以用来煮汤，但石头怎么能煮汤呢？&lt;/p&gt;
+
+&lt;h2 id=&#34;如何摆脱困境&#34;&gt;如何摆脱困境？&lt;/h2&gt;
+
+&lt;p&gt;这个故事说的正是用石头煮汤，三个和尚阿福、阿禄、阿寿在旅行的路途中，边走边聊着猫的胡须、太阳的颜色和一个人怎样才能得到快乐。正说着，他们来到了一个村庄。这是一个历经了很多苦难的村庄，洪水、战争……村民们被折磨得苦不堪言，对世界再也没有信心，对生活丧失了热情，邻居之间彼此猜忌，缺乏信任，更别提陌生人了。这个村庄和石头汤之间产生了什么联系，又发生了什么故事呢？&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://upload-images.jianshu.io/upload_images/38934-4b74694c18481db3.jpeg&#34; alt=&#34;四处讨饭的和尚&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;三个和尚来到村子里，并没有人迎接，反而家家户户门窗紧闭。&lt;/p&gt;
+
+&lt;h1 id=&#34;行动和分享&#34;&gt;行动和分享&lt;/h1&gt;
+
+&lt;p&gt;三个和尚不疾不徐地在一块空地上捡柴火、生火，架起一口锅，开始煮石头汤。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://upload-images.jianshu.io/upload_images/38934-0addd5e5af30b91e.jpeg&#34; alt=&#34;开始行动&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://upload-images.jianshu.io/upload_images/38934-8504ea904e99bfd9.jpeg&#34; alt=&#34;让人好奇的石头&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://upload-images.jianshu.io/upload_images/38934-2b66ff1c8ad84e4f.jpeg&#34; alt=&#34;好奇的女孩&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;画面中一直有一位黄衣女孩在关注着和尚们的动向，终于她鼓起勇气去问和尚们在做什么了。和尚们说，他们要煮石头汤，可是这么小的锅，恐怕煮不出很多，于是小女孩自告奋勇地回家取锅。&lt;/p&gt;
+
+&lt;p&gt;这个线索人物——黄衣女孩。黄色更像是一抹阳光，照进了每一个村民心中，驱散了大家心头的阴霾。也是这样一抹阳光，在推动着整个故事向前发展。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://upload-images.jianshu.io/upload_images/38934-4c958cf59b193d7c.jpeg&#34; alt=&#34;开始行动&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;小女孩的母亲很好奇她拿这么大的锅要做什么，小女孩回答：那三个和尚要用大锅来煮石头汤。此言一出，犹如一颗石子投入一池春水，惊起了水花。大家都很好奇，用石头怎么煮汤呢？&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;琼·穆特说，书中小女孩衣服的颜色是太阳的颜色。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;怪不得，她看起来那么与众不同。在每个人都紧锁心门时，她没有一点犹豫和怀疑地去信任三个和尚，给了他们最多的帮助。是她带领着村民尝到了石头汤的甜美，品味到了分享带给人的满足。这份单纯美好特别珍贵。其实每个孩子都拥有纯净的心灵，大人所要做的，就是保护好他们内心的纯净。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://upload-images.jianshu.io/upload_images/38934-52a3dd57b1b09407.jpeg&#34; alt=&#34;蝴蝶效应&#34; /&gt;&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;第一枚多米诺骨牌被推倒了，蝴蝶效应随之发生。大家纷纷走出家门，围观三个和尚煮石头汤。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://upload-images.jianshu.io/upload_images/38934-9f5e91f126fc5113.jpeg&#34; alt=&#34;一起参与&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;三个和尚一边搅动大锅里的水，一边自言自语到，上次我们煮这种材质的石头汤，还放了些盐和胡椒粉，可惜我们没带。于是，就有秀才从自己家里拿来这些调料，接下来不断地又村民从家里拿出食材加入到锅中，锅中的食材越来越多，香气弥散在空中。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://upload-images.jianshu.io/upload_images/38934-92daaec6e7df6117.jpeg&#34; alt=&#34;一起分享&#34; /&gt;&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;当一个人付出时，就会有更多人愿意付出。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;村民贡献着自己家的各种食材，一锅材料丰富的石头汤就煮好了，全体村民因着这一锅石头汤，还进行了久违的欢宴。欢宴结束之后，大家争先恐后地邀请三个和尚到自己家里来住。&lt;/p&gt;
+
+&lt;p&gt;和尚感谢村民们的慷慨，而村民们则感谢三个和尚送给他们享用不尽的财富——分享使人更加富足。&lt;/p&gt;
+
+&lt;p&gt;最后，三个和尚留下一句禅语&lt;strong&gt;“幸福就像做石头汤那样简单”&lt;/strong&gt;。&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;如果你知道往哪里走
+全世界都会为你让步
+如果你知道自己需要什么
+行动起来
+展示你的作品
+大声呐喊
+全世界都会愿意帮助你。&lt;/p&gt;
+&lt;/blockquote&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>中国经济政策不确定性数据</title>
+      <link>https://chengjunwang.com/%E8%AE%A1%E7%AE%97%E6%96%B0%E9%97%BB/%E4%B8%AD%E5%9B%BD%E7%9A%84%E7%BB%8F%E6%B5%8E%E6%94%BF%E7%AD%96%E4%B8%8D%E7%A1%AE%E5%AE%9A%E6%80%A7%E6%95%B0%E6%8D%AE/</link>
+      <pubDate>Thu, 13 Feb 2020 00:00:00 +0000</pubDate>
+      <guid>https://chengjunwang.com/%E8%AE%A1%E7%AE%97%E6%96%B0%E9%97%BB/%E4%B8%AD%E5%9B%BD%E7%9A%84%E7%BB%8F%E6%B5%8E%E6%94%BF%E7%AD%96%E4%B8%8D%E7%A1%AE%E5%AE%9A%E6%80%A7%E6%95%B0%E6%8D%AE/</guid>
+      <description>
+
+&lt;p&gt; &lt;/p&gt;
+
+&lt;p&gt;数据来源：&lt;a href=&#34;http://www.policyuncertainty.com/scmp_monthly.html&#34; target=&#34;_blank&#34;&gt;http://www.policyuncertainty.com/scmp_monthly.html&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://upload-images.jianshu.io/upload_images/38934-e5e4f4bc1feddf77.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240&#34; alt=&#34;中国政策不确定性曲线&#34; /&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;import akshare as ak
+epu_index_df = ak.article_epu_index(index=&amp;quot;China&amp;quot;)  # 注意单词第一个字母大写
+epu_index_df.head()
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h1 id=&#34;文献&#34;&gt;文献&lt;/h1&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Baker, Scott, Nicholas Bloom and Steven J. Davis, &lt;a href=&#34;https://academic.oup.com/qje/article/131/4/1593/2468873&#34; target=&#34;_blank&#34;&gt;&amp;laquo;Measuring Economic Policy Uncertainty,&amp;raquo;&lt;/a&gt; Quarterly Journal of Economics, November 2016, Vol 131, Issue 4&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;We develop a new index of economic policy uncertainty (EPU) based on newspaper coverage frequency. Several types of evidence—including human readings of 12,000 newspaper articles—indicate that our index proxies for movements in policy-related economic uncertainty. Our U.S. index spikes near tight presidential elections, Gulf Wars I and II, the &lt;sup&gt;9&lt;/sup&gt;&amp;frasl;&lt;sub&gt;11&lt;/sub&gt; attacks, the failure of Lehman Brothers, the 2011 debt ceiling dispute, and other major battles over fiscal policy. Using firm-level data, we find that policy uncertainty is associated with greater stock price volatility and reduced investment and employment in policy-sensitive sectors like defense, health care, finance, and infrastructure construction. At the macro level, innovations in policy uncertainty foreshadow declines in investment, output, and employment in the United States and, in a panel vector autoregressive setting, for 12 major economies. Extending our U.S. index back to 1900, EPU rose dramatically in the 1930s (from late 1931) and has drifted upward since the 1960s.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Baker, Scott, Nicholas Bloom, Steven J. Davis, and Xiaoxi Wang, 2013. &lt;a href=&#34;https://faculty.chicagobooth.edu/steven.davis/pdf/Economic%20Policy%20Uncertainty%20in%20China,%20January%202013.pdf&#34; target=&#34;_blank&#34;&gt;&amp;laquo;Economic Policy Uncertainty in China,&amp;raquo;&lt;/a&gt; unpublished paper, University of Chicago&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>仿真模型表明媒体报道可以遏制传染病扩散</title>
+      <link>https://chengjunwang.com/%E8%AE%A1%E7%AE%97%E6%96%B0%E9%97%BB/%E4%BB%BF%E7%9C%9F%E6%A8%A1%E5%9E%8B%E8%A1%A8%E6%98%8E%E5%AA%92%E4%BD%93%E6%8A%A5%E9%81%93%E5%8F%AF%E8%83%BD%E9%99%8D%E4%BD%8E%E7%96%AB%E6%83%85%E4%BC%A0%E6%92%AD/</link>
+      <pubDate>Thu, 13 Feb 2020 00:00:00 +0000</pubDate>
+      <guid>https://chengjunwang.com/%E8%AE%A1%E7%AE%97%E6%96%B0%E9%97%BB/%E4%BB%BF%E7%9C%9F%E6%A8%A1%E5%9E%8B%E8%A1%A8%E6%98%8E%E5%AA%92%E4%BD%93%E6%8A%A5%E9%81%93%E5%8F%AF%E8%83%BD%E9%99%8D%E4%BD%8E%E7%96%AB%E6%83%85%E4%BC%A0%E6%92%AD/</guid>
+      <description>&lt;p&gt; &lt;/p&gt;
+
+&lt;p&gt;导语：量化模型显示，当媒体的报道量增加十倍，传染病的感染数将会减少33.5％。
+ 
+&amp;gt; Understanding the effect of media on disease spread can help improve epidemic forecasting and uncover preventive measures to slow the spread of disease. Most previously introduced models have approximated media effect through disease incidence, making media influence dependent on the size of epidemic. We propose an alternative approach, which relies on &lt;strong&gt;real data about disease coverage in the news&lt;/strong&gt;, allowing us to model low incidence/high interest diseases, such as SARS, Ebola or H1N1. &lt;strong&gt;We introduce a network-based model&lt;/strong&gt;, in which disease is transmitted through local interactions between individuals and &lt;em&gt;the probability of transmission is affected by media coverage&lt;/em&gt;. We assume that media attention increases self-protection (e.g. hand washing and compliance with social distancing), which, in turn, decreases disease model. &lt;strong&gt;We apply the model to the case of H1N1 transmission in Mexico City in 2009&lt;/strong&gt; and show how media influence—measured by the time series of the weekly count of news articles published on the outbreak—helps to explain the observed transmission dynamics. We show that incorporating the media attention based on the observed media coverage of the outbreak better estimates the disease dynamics from what would be predicted by using media function that approximate the media impact using the number of cases and rate of spread. &lt;strong&gt;Finally, we apply the model to a typical influenza season in Washington, DC&lt;/strong&gt; and estimate how the transmission pattern would have changed given different levels of media coverage.&lt;/p&gt;
+
+&lt;p&gt;Louis Kim ,Shannon M. Fast, Natasha Markuzon. Incorporating media data into a model of infectious disease transmission. PloS ONE. February 4, 2019. &lt;a href=&#34;https://doi.org/10.1371/journal.pone.0197646&#34; target=&#34;_blank&#34;&gt;https://doi.org/10.1371/journal.pone.0197646&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;华盛顿大学的Louis Kim教授和Shannon M. Fast, Natasha Markuzon几位科学家做过一个有意思的研究，观察媒体报道的数量与疾病传播数量之间的关系。这其中的原理在于，疾病的传播是在动态的社会活动中发生的，所以个人行动对传播有着重要的影响。媒体报道多了，大家的防范意识增强了，疾病的传播速度就会减缓。Louis Kim教授等的模型显示，当媒体的报道量增加十倍，此类疾病的感染数减少33.5％。因此，媒体可能是预防疾病传播的一个有效手段。&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;建立研究模型&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Louis Kim教授等建立了一个疾病传播模型，并在该模型中加入了对媒体报道的量化，展现媒体报道数量和传染病例数量之间的关系。该模型分为两部分，第一部分量化疾病传播概率，第二部分量化媒体的影响力。&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;（1）量化疾病传播概率&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Louis Kim教授等使用了易感-感染-康复（SIR）模型来展现疾病传播的概率。SIR模型专门模拟个人直接相互感染的情况，而非通过诸如蚊子之类的疾病媒介相互感染的情况。SIR对三种状态之间的人员流动进行建模：易感（S），感染（I）和康复（R）。这些变量代表每组中的人数。每个人在时间t的状态都由X表示。在时间t，受感染的个体以概率p（t）感染他身边的易感个体i和j。因此，如果&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://upload-images.jianshu.io/upload_images/38934-ed8515043a6a2114?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240&#34; alt=&#34;image&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://upload-images.jianshu.io/upload_images/38934-75cc092ca83dadb1?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240&#34; alt=&#34;image&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;则：&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://upload-images.jianshu.io/upload_images/38934-29b81165ac9497ae?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240&#34; alt=&#34;image&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt; 感染后，个体在T（R）时间段后恢复。因此，如果 &lt;img src=&#34;https://upload-images.jianshu.io/upload_images/38934-c83500be06bef8d8?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240&#34; alt=&#34;image&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt; 并且 &lt;img src=&#34;https://upload-images.jianshu.io/upload_images/38934-54038a164174cb5d?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240&#34; alt=&#34;image&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;则:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://upload-images.jianshu.io/upload_images/38934-8372b9c2e8ab6186?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240&#34; alt=&#34;image&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;如果考虑到疫苗的作用，并在疫苗在注射后要等d时间才生效。设η为疫苗效力。 然后，如果易感人i在时间t接种了疫苗，则： &lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://upload-images.jianshu.io/upload_images/38934-5a75bb22b2a955a8?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240&#34; alt=&#34;image&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;（2）量化媒体报道的影响力&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;这个研究假设媒体对疫情的关注会增加民众的自我保护行为，例如洗手，使用口罩和遵守社交隔离，从而减少疾病传播。具体来说，将时间t的每次接触传播概率定义为上述提到的疾病传播概率p（0）和媒体函数g的乘积： &lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://upload-images.jianshu.io/upload_images/38934-2e267bd8d679f558?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240&#34; alt=&#34;image&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;其中Mt是在时间t发布的新闻报道的数量；α是由媒体对传染概率带来的影响；λ指最近媒体宣传信息的权重。媒体函数g，会随着新闻文章数量的增加而减小，这意味着当最近有许多关于该疾病的文章发表时，疾病的传播速度会减慢。 &lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://upload-images.jianshu.io/upload_images/38934-abe9e300b97d7734?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240&#34; alt=&#34;image&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;这其中的θ为新闻文章数量的指数加权移动平均值，假设发表的文章会继续影响当前行为，但影响程度会随着时间而降低。令θt为新闻文章数量的指数加权移动平均值，参数λ∈（0，1]，代表最近和之前报道数量的权重：&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://upload-images.jianshu.io/upload_images/38934-16aed4bf1232f352.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240&#34; alt=&#34;image.png&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;墨西哥城案例和华盛顿特区案例&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Louis Kim教授等使用了两个实际案例，并把其中真实的媒体报道数据纳入了的疾病传播的模型。Louis Kim教授等发现，在疾病传播模型中，加入媒体报道数量的变量后，模型呈现出的结果和现实十分贴近。这两个案例分别是2009年墨西哥H1N1病毒的爆发，以及2014-2015年华盛顿特区2014-2015年的流感季。&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;（1）墨西哥城案例&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;2009年，墨西哥城爆发了两次H1N1流感。第一次是在4月中旬开始的。爆发规模较小，并通过社交隔离和公共宣传活动，迅速得到了控制。第二次爆发始于8月，传播范围比第一次爆发更为广泛。春季疫情的爆发引起了媒体的强烈关注，而秋季疫情的报道则相对较少。由于在春季和秋季爆发之间，H1N1病毒的感染力以及墨西哥城的社会结构，都不会发生很大的变化，因此需要通过媒体报道的差异来解释传染规模之间的差异。在该模型中，Louis Kim教授等使用上述提到的模型对春季和秋季疫情的爆发进行了模拟。H1N1的每周流感病例数的数据由墨西哥社会保障研究所提供。因为H1N1疫苗要到2009年11月下旬才面世，无法对墨西哥的疾病传播产生重大影响，所以在此分析中未考虑疫苗的接种。互联网生物监视公司HealthMap收集了在线发布的、专门提到了墨西哥城的H1N1流感爆发的文章。Louis Kim教授等发现在墨西哥城爆发的春季H1N1疫情引起了媒体的强烈兴趣。在6月1日之前，HealthMap收集了815篇突发新闻文章，从4月22日到6月1日，每天约有20篇文章。而秋季疫情中的文章数量则少很多。在9月17日至12月6日之间，HealthMap收集了66篇已发表的文章，每天少于1篇文章。可以看出，春季爆发期间由于媒体的覆盖激增，使得民众采取的保护措施，从而减缓疾病传播的速度。相比之下，秋季疫情几乎没有受到抑制，没有引起媒体的广泛关注。Louis Kim教授等使用上述加入了媒体报道变量的模型，模拟墨西哥城春季、秋季疫情的发病人数，发现模型对真实情况模拟的非常贴近，加权平均绝对误差为1243例。下图中红线是模型做出的每周病例数，黑线是真实的病例数。二者有着很好的重叠。 &lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://upload-images.jianshu.io/upload_images/38934-f380e766284aa04a?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240&#34; alt=&#34;image&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;（2）华盛顿特区案例&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;华盛顿特区2014-2015年曾爆发严重的流感疫情，美国每10万人中有51.4人因流感住院。Louis Kim教授等使用了和墨西哥城案例相似的研究方法，2014-2015年流感季节每周新的A型流感住院病例数可以从华盛顿特区卫生部获得。疫情的媒体覆盖面有限。每周的新闻文章数量在流感季节的高峰期达到顶峰，截至2015年1月1日当周收集了25篇文章。Louis Kim教授等将模型模拟出的病例数与华盛顿特区2014-2015年流感季的真实病例数进行了对比，发现加权平均绝对误差为2818例。华盛顿特区的案例表明，由于发表的新闻报道数量很少，因此媒体在2014-2015年华盛顿特区的流感季节对行为的影响有限。但是如果在模拟中，把每周新闻数量增加十倍时，媒体就会发挥更大的作用，传染病例数会减少33.5％。左图中红线是模型做出的每周病例数，黑线是真实的病例数。二者的重叠度一般，因为媒体报道的数量比较小。右图中的红线是实际的媒体报道数量，绿线是无媒体的作用，蓝线是把媒体报道数量增加十倍。右图模型显示，当媒体报道数量增加十倍时，传染病例数会减少33.5％。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://upload-images.jianshu.io/upload_images/38934-39ef0db572508464?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240&#34; alt=&#34;image&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Louis Kim教授等的研究表明，一方面，可以使用媒体报道的数量来模拟预测传染病的案例数，模型的准确度会随着媒体报道数量的增加而增加。另一方面，媒体报道对疫情覆盖的增加会减缓疾病的传播。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://upload-images.jianshu.io/upload_images/38934-58a515d5d0fdd0cf.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240&#34; alt=&#34;media effect&#34; /&gt;&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>使用akshare分析covid19微博指数</title>
+      <link>https://chengjunwang.com/%E8%AE%A1%E7%AE%97%E6%96%B0%E9%97%BB/%E4%BD%BF%E7%94%A8akshare%E5%88%86%E6%9E%902019ncov%E7%96%AB%E6%83%85%E5%BE%AE%E5%8D%9A%E6%8C%87%E6%95%B0/</link>
+      <pubDate>Thu, 13 Feb 2020 00:00:00 +0000</pubDate>
+      <guid>https://chengjunwang.com/%E8%AE%A1%E7%AE%97%E6%96%B0%E9%97%BB/%E4%BD%BF%E7%94%A8akshare%E5%88%86%E6%9E%902019ncov%E7%96%AB%E6%83%85%E5%BE%AE%E5%8D%9A%E6%8C%87%E6%95%B0/</guid>
+      <description>
+
+&lt;p&gt; &lt;/p&gt;
+
+&lt;h2 id=&#34;akshare&#34;&gt;AkShare&lt;/h2&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;AkShare 是基于 Python 的开源金融数据接口库, 目的是实现对股票, 期货, 期权, 基金, 外汇, 债券, 指数, 数字货币等金融产品的基本面数据、实时和历史行情数据、衍生数据从数据采集, 数据清洗, 到数据落地的一套开源工具, 满足金融数据科学家, 数据科学爱好者在金融数据获取方面的需求.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;AkShare 的特点是获取的是相对权威的金融数据网站公布的原始数据, 广大数据科学家可以利用原始数据进行各数据源之间的交叉验证, 进而再加工, 从而得出科学的结论.&lt;/p&gt;
+
+&lt;p&gt;针对新型冠状病毒肺炎疫情，akshare开发了事件接口，链接如下：&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://akshare.readthedocs.io/zh_CN/latest/data/event/event.html&#34; target=&#34;_blank&#34;&gt;https://akshare.readthedocs.io/zh_CN/latest/data/event/event.html&lt;/a&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;安装&#34;&gt;安装&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code&gt;pip install akshare  --upgrade
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;对于国内用户anaconda使用者，推荐使用以下方法：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;pip install akshare -i http://mirrors.aliyun.com/pypi/simple/ --trusted-host=mirrors.aliyun.com  --user  --upgrade
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;使用&#34;&gt;使用&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code&gt;import akshare as ak
+import pylab as plt
+import pandas as pd
+import seaborn as sns
+
+# 提取数据
+df_index4 = ak.weibo_index(word=&amp;quot;武汉&amp;quot;, time_type=&amp;quot;3month&amp;quot;)
+df_index6 = ak.weibo_index(word=&amp;quot;CDC&amp;quot;, time_type=&amp;quot;3month&amp;quot;)
+df_index7 = ak.weibo_index(word=&amp;quot;钟南山&amp;quot;, time_type=&amp;quot;3month&amp;quot;)
+df_index5 = ak.weibo_index(word=&amp;quot;疫情&amp;quot;, time_type=&amp;quot;3month&amp;quot;)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;然后，使用matplotlib进行可视化。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;plt.figure(figsize=(12, 6), dpi = 200)
+plt.style.use(&#39;fivethirtyeight&#39;)
+plt.plot(df_index4.index, df_index4, label = &#39;武汉&#39;, alpha = 0.5)
+plt.plot(df_index5.index, df_index5, label = &#39;疫情&#39;, alpha = 0.5)
+plt.plot(df_index6.index, df_index6, label = &#39;CDC&#39;, alpha = 0.5)
+plt.plot(df_index7.index, df_index7, label = &#39;钟南山&#39;, alpha = 0.5)
+plt.legend()
+plt.yscale(&#39;log&#39;)
+plt.xticks(rotation=60)
+plt.ylabel(&#39;微博指数&#39;, fontsize = 20)
+plt.show()
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://upload-images.jianshu.io/upload_images/38934-7c55a921745a82e0.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240&#34; alt=&#34;微博指数&#34; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;练习&#34;&gt;练习&lt;/h2&gt;
+
+&lt;p&gt;绘制下图：&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://upload-images.jianshu.io/upload_images/38934-d9e561a784f805af.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240&#34; alt=&#34;江苏和南京&#34; /&gt;&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>使用python模拟传染病模型</title>
+      <link>https://chengjunwang.com/%E8%AE%A1%E7%AE%97%E6%96%B0%E9%97%BB/%E4%BD%BF%E7%94%A8python%E6%A8%A1%E6%8B%9F%E4%BC%A0%E6%9F%93%E7%97%85%E6%A8%A1%E5%9E%8B/</link>
+      <pubDate>Thu, 13 Feb 2020 00:00:00 +0000</pubDate>
+      <guid>https://chengjunwang.com/%E8%AE%A1%E7%AE%97%E6%96%B0%E9%97%BB/%E4%BD%BF%E7%94%A8python%E6%A8%A1%E6%8B%9F%E4%BC%A0%E6%9F%93%E7%97%85%E6%A8%A1%E5%9E%8B/</guid>
+      <description>
+
+&lt;p&gt; &lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;&lt;a href=&#34;https://www.zhihu.com/people/doraemon-63-82&#34; target=&#34;_blank&#34;&gt;Doraemon&lt;/a&gt;：本文尝试使用python对经典传染病模型进行实现，因传染病模型研究属于传染病动力学研究方向，不是本人的工作范围，因此，本人只是将模型中的微分方程，用Python进行实现，想起到抛砖引玉的效果。来源： &lt;a href=&#34;https://zhuanlan.zhihu.com/p/104091330&#34; target=&#34;_blank&#34;&gt;https://zhuanlan.zhihu.com/p/104091330&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&#34;si模型&#34;&gt;SI模型&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;import scipy.integrate as spi
+import numpy as np
+import matplotlib.pyplot as plt
+
+# N为人群总数
+N = 10000
+# β为传染率系数
+beta = 0.25
+# gamma为恢复率系数
+gamma = 0
+# I_0为感染者的初始人数
+I_0 = 1
+# S_0为易感者的初始人数
+S_0 = N - I_0
+# T为传播时间
+T = 150
+
+# INI为初始状态下的数组
+INI = (S_0,I_0)
+
+
+def funcSI(inivalue,_):
+    Y = np.zeros(2)
+    X = inivalue
+    # 易感个体变化
+    Y[0] = - (beta * X[0] * X[1]) / N + gamma * X[1]
+    # 感染个体变化
+    Y[1] = (beta * X[0] * X[1]) / N - gamma * X[1]
+    return Y
+
+T_range = np.arange(0,T + 1)
+
+RES = spi.odeint(funcSI,INI,T_range)
+
+
+plt.plot(RES[:,0],color = &#39;darkblue&#39;,label = &#39;Susceptible&#39;,marker = &#39;.&#39;)
+plt.plot(RES[:,1],color = &#39;red&#39;,label = &#39;Infection&#39;,marker = &#39;.&#39;)
+plt.title(&#39;SI Model&#39;)
+plt.legend()
+plt.xlabel(&#39;Day&#39;)
+plt.ylabel(&#39;Number&#39;)
+plt.show()
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://upload-images.jianshu.io/upload_images/38934-488036d063686873.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240&#34; alt=&#34;image.png&#34; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;sis模型&#34;&gt;SIS模型&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;import scipy.integrate as spi
+import numpy as np
+import matplotlib.pyplot as plt
+
+# N为人群总数
+N = 10000
+# β为传染率系数
+beta = 0.25
+# gamma为恢复率系数
+gamma = 0.05
+# I_0为感染者的初始人数
+I_0 = 1
+# S_0为易感者的初始人数
+S_0 = N - I_0
+# T为传播时间
+T = 150
+
+# INI为初始状态下的数组
+INI = (S_0,I_0)
+
+
+def funcSIS(inivalue,_):
+    Y = np.zeros(2)
+    X = inivalue
+    # 易感个体变化
+    Y[0] = - (beta * X[0]) / N * X[1] + gamma * X[1]
+    # 感染个体变化
+    Y[1] = (beta * X[0] * X[1]) / N - gamma * X[1]
+    return Y
+
+T_range = np.arange(0,T + 1)
+
+RES = spi.odeint(funcSIS,INI,T_range)
+
+
+plt.plot(RES[:,0],color = &#39;darkblue&#39;,label = &#39;Susceptible&#39;,marker = &#39;.&#39;)
+plt.plot(RES[:,1],color = &#39;red&#39;,label = &#39;Infection&#39;,marker = &#39;.&#39;)
+plt.title(&#39;SIS Model&#39;)
+plt.legend()
+plt.xlabel(&#39;Day&#39;)
+plt.ylabel(&#39;Number&#39;)
+plt.show()
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://upload-images.jianshu.io/upload_images/38934-4160f1f9056e1d01.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240&#34; alt=&#34;image.png&#34; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;sir模型&#34;&gt;SIR模型&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;import scipy.integrate as spi
+import numpy as np
+import matplotlib.pyplot as plt
+
+# N为人群总数
+N = 10000
+# β为传染率系数
+beta = 0.25
+# gamma为恢复率系数
+gamma = 0.05
+# I_0为感染者的初始人数
+I_0 = 1
+# R_0为治愈者的初始人数
+R_0 = 0
+# S_0为易感者的初始人数
+S_0 = N - I_0 - R_0
+# T为传播时间
+T = 150
+
+# INI为初始状态下的数组
+INI = (S_0,I_0,R_0)
+
+
+def funcSIR(inivalue,_):
+    Y = np.zeros(3)
+    X = inivalue
+    # 易感个体变化
+    Y[0] = - (beta * X[0] * X[1]) / N
+    # 感染个体变化
+    Y[1] = (beta * X[0] * X[1]) / N - gamma * X[1]
+    # 治愈个体变化
+    Y[2] = gamma * X[1]
+    return Y
+
+T_range = np.arange(0,T + 1)
+
+RES = spi.odeint(funcSIR,INI,T_range)
+
+
+plt.plot(RES[:,0],color = &#39;darkblue&#39;,label = &#39;Susceptible&#39;,marker = &#39;.&#39;)
+plt.plot(RES[:,1],color = &#39;red&#39;,label = &#39;Infection&#39;,marker = &#39;.&#39;)
+plt.plot(RES[:,2],color = &#39;green&#39;,label = &#39;Recovery&#39;,marker = &#39;.&#39;)
+plt.title(&#39;SIR Model&#39;)
+plt.legend()
+plt.xlabel(&#39;Day&#39;)
+plt.ylabel(&#39;Number&#39;)
+plt.show()
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://upload-images.jianshu.io/upload_images/38934-157f138dbba55f49.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240&#34; alt=&#34;image.png&#34; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;seir模型&#34;&gt;SEIR模型&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;import scipy.integrate as spi
+import numpy as np
+import pylab as plt
+
+# N为人群总数
+N = 10000
+# β为传染率系数
+beta = 0.6
+# gamma为恢复率系数
+gamma = 0.1
+# Te为疾病潜伏期
+Te = 14
+# I_0为感染者的初始人数
+I_0 = 1
+# E_0为潜伏者的初始人数
+E_0 = 0
+# R_0为治愈者的初始人数
+R_0 = 0
+# S_0为易感者的初始人数
+S_0 = N - I_0 - E_0 - R_0
+# T为传播时间
+T = 150
+
+# INI为初始状态下的数组
+INI = (S_0,E_0,I_0,R_0)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;def funcSEIR(inivalue,_):
+    Y = np.zeros(4)
+    X = inivalue
+    # 易感个体变化
+    Y[0] = - (beta * X[0] * X[2]) / N
+    # 潜伏个体变化
+    Y[1] = (beta * X[0] * X[2]) / N - X[1] / Te
+    # 感染个体变化
+    Y[2] = X[1] / Te - gamma * X[2]
+    # 治愈个体变化
+    Y[3] = gamma * X[2]
+    return Y
+
+T_range = np.arange(0,T + 1)
+RES = spi.odeint(funcSEIR,INI,T_range)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;plt.plot(RES[:,0],color = &#39;darkblue&#39;,label = &#39;Susceptible&#39;,marker = &#39;.&#39;)
+plt.plot(RES[:,1],color = &#39;orange&#39;,label = &#39;Exposed&#39;,marker = &#39;.&#39;)
+plt.plot(RES[:,2],color = &#39;red&#39;,label = &#39;Infection&#39;,marker = &#39;.&#39;)
+plt.plot(RES[:,3],color = &#39;green&#39;,label = &#39;Recovery&#39;,marker = &#39;.&#39;)
+
+plt.title(&#39;SEIR Model&#39;)
+plt.legend()
+plt.xlabel(&#39;Day&#39;)
+plt.ylabel(&#39;Number&#39;)
+plt.show()
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://upload-images.jianshu.io/upload_images/38934-1c8fc98ac55a253e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240&#34; alt=&#34;image.png&#34; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;seirs模型&#34;&gt;SEIRS模型&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;import scipy.integrate as spi
+import numpy as np
+import matplotlib.pyplot as plt
+
+# N为人群总数
+N = 10000
+# β为传染率系数
+beta = 0.6
+# gamma为恢复率系数
+gamma = 0.1
+# Ts为抗体持续时间
+Ts = 7
+# Te为疾病潜伏期
+Te = 14
+# I_0为感染者的初始人数
+I_0 = 1
+# E_0为潜伏者的初始人数
+E_0 = 0
+# R_0为治愈者的初始人数
+R_0 = 0
+# S_0为易感者的初始人数
+S_0 = N - I_0 - E_0 - R_0
+# T为传播时间
+T = 150
+
+# INI为初始状态下的数组
+INI = (S_0,E_0,I_0,R_0)
+
+
+def funcSEIRS(inivalue,_):
+    Y = np.zeros(4)
+    X = inivalue
+    # 易感个体变化
+    Y[0] = - (beta * X[0] * X[2]) / N + X[3] / Ts
+    # 潜伏个体变化
+    Y[1] = (beta * X[0] * X[2]) / N - X[1] / Te
+    # 感染个体变化
+    Y[2] = X[1] / Te - gamma * X[2]
+    # 治愈个体变化
+    Y[3] = gamma * X[2] - X[3] / Ts
+    return Y
+
+T_range = np.arange(0,T + 1)
+
+RES = spi.odeint(funcSEIRS,INI,T_range)
+
+
+plt.plot(RES[:,0],color = &#39;darkblue&#39;,label = &#39;Susceptible&#39;,marker = &#39;.&#39;)
+plt.plot(RES[:,1],color = &#39;orange&#39;,label = &#39;Exposed&#39;,marker = &#39;.&#39;)
+plt.plot(RES[:,2],color = &#39;red&#39;,label = &#39;Infection&#39;,marker = &#39;.&#39;)
+plt.plot(RES[:,3],color = &#39;green&#39;,label = &#39;Recovery&#39;,marker = &#39;.&#39;)
+
+plt.title(&#39;SEIRS Model&#39;)
+plt.legend()
+plt.xlabel(&#39;Day&#39;)
+plt.ylabel(&#39;Number&#39;)
+plt.show()
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://upload-images.jianshu.io/upload_images/38934-1708ded28e6acb24.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240&#34; alt=&#34;image.png&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;推荐大家阅读Albert-Laszlo Barabasi的书&lt;a href=&#34;http://barabasi.com/networksciencebook/chapter/1&#34; target=&#34;_blank&#34;&gt;&lt;strong&gt;&lt;em&gt;Network Science&lt;/em&gt;&lt;/strong&gt;&lt;/a&gt;，大家可以在如下网站直接阅读传染病模型这一章：&lt;a href=&#34;http://barabasi.com/networksciencebook/chapter/10#contact-networks&#34; target=&#34;_blank&#34;&gt;http://barabasi.com/networksciencebook/chapter/10#contact-networks&lt;/a&gt;。有两个Hypothesis：1,Compartmentalization; 2, Homogenous Mixing。具体看教材。默认条件：1, closed population; 2, no births; 3, no deaths; 4, no migrations.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>使用python玩飞机大战游戏</title>
+      <link>https://chengjunwang.com/%E8%AE%A1%E7%AE%97%E6%96%B0%E9%97%BB/%E4%BD%BF%E7%94%A8python%E7%8E%A9%E9%A3%9E%E6%9C%BA%E5%A4%A7%E6%88%98%E6%B8%B8%E6%88%8F/</link>
+      <pubDate>Thu, 13 Feb 2020 00:00:00 +0000</pubDate>
+      <guid>https://chengjunwang.com/%E8%AE%A1%E7%AE%97%E6%96%B0%E9%97%BB/%E4%BD%BF%E7%94%A8python%E7%8E%A9%E9%A3%9E%E6%9C%BA%E5%A4%A7%E6%88%98%E6%B8%B8%E6%88%8F/</guid>
+      <description>
+
+&lt;p&gt; &lt;/p&gt;
+
+&lt;h2 id=&#34;安装pygame&#34;&gt;安装pygame&lt;/h2&gt;
+
+&lt;p&gt;首先尝试：
+&amp;gt; pip install pygame -i &lt;a href=&#34;http://pypi.douban.com/simple&#34; target=&#34;_blank&#34;&gt;http://pypi.douban.com/simple&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;如果出错，尝试
+&amp;gt; pip install pygame -i &lt;a href=&#34;http://pypi.douban.com/simple&#34; target=&#34;_blank&#34;&gt;http://pypi.douban.com/simple&lt;/a&gt; &amp;ndash;trusted-host pypi.douban.com&lt;/p&gt;
+
+&lt;h2 id=&#34;下载游戏代码&#34;&gt;下载游戏代码&lt;/h2&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://github.com/computational-class/aircraftbattle&#34; target=&#34;_blank&#34;&gt;https://github.com/computational-class/aircraftbattle&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;推荐使用Github Desktop下载到本机，例如我放在/github/aircraftbattle文件夹当中。&lt;/p&gt;
+
+&lt;h2 id=&#34;运行游戏&#34;&gt;运行游戏&lt;/h2&gt;
+
+&lt;p&gt;在terminal当中打开游戏所在文件夹（&lt;strong&gt;注意&lt;/strong&gt;：根据你的本地文件所在位置）&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;cd github/aircraftbattle&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://upload-images.jianshu.io/upload_images/38934-3b6a7888d729c946.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240&#34; alt=&#34;terminal&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;运行aircraftbattle.py&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;python aircraftbattle.py&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&#34;enjoy-your-game&#34;&gt;Enjoy your game!&lt;/h2&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://upload-images.jianshu.io/upload_images/38934-2b63fcfc01978124.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240&#34; alt=&#34;飞机大战游戏&#34; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;想要理解背后的代码&#34;&gt;想要理解背后的代码&lt;/h2&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://www.bilibili.com/video/av14184325?p=461&#34; target=&#34;_blank&#34;&gt;https://www.bilibili.com/video/av14184325?p=461&lt;/a&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;#导入模块
+import pygame
+import random
+from pygame.locals import *
+from os import path
+
+#######################################基本参数配置#######################################
+
+#获取图片库和声音库路径
+img_dir = path.join(path.dirname(__file__),&#39;pic&#39;)
+sound_folder = path.join(path.dirname(__file__),&#39;sounds&#39;)
+
+#定义游戏窗口、玩家血量条尺寸，游戏运行速度、炮火持续时间等参数
+WIDTH = 480
+HEIGHT = 600
+FPS = 60
+POWERUP_TIME = 5000
+BAR_LENGTH = 100
+BAR_HEIGHT = 10
+
+#定义白、黑、红、绿、蓝、黄的RGB参数
+WHITE = (255, 255, 255)
+BLACK = (0, 0, 0)
+RED = (255, 0, 0)
+GREEN = (0, 255, 0)
+BLUE = (0, 0, 255)
+YELLOW = (255, 255, 0)
+
+#初始化pygame模块，创建游戏窗口、游戏窗口命名、创建跟踪时间对象
+pygame.init()
+pygame.mixer.init()  #初始化音效
+screen = pygame.display.set_mode((WIDTH,HEIGHT))
+pygame.display.set_caption(&amp;quot;Aircraft Battle&amp;quot;)
+clock = pygame.time.Clock()
+
+#定义文本字体
+font_name = pygame.font.match_font(&#39;arial&#39;)
+
+#######################################加载图片#######################################
+
+#加载游戏进行中背景图片
+background = pygame.image.load(path.join(img_dir,&#39;starfield.png&#39;)).convert()
+background = pygame.transform.scale(background,(WIDTH,1536))
+height = -936
+
+#加载玩家图片
+player_img = pygame.image.load(path.join(img_dir,&#39;player.png&#39;)).convert()
+player_mini_img = pygame.transform.scale(player_img,(25, 19))
+player_mini_img.set_colorkey(BLACK)
+
+#加载玩家炮弹、导弹图片
+bullet_img = pygame.image.load(path.join(img_dir,&#39;bullet.png&#39;)).convert()
+missile_img = pygame.image.load(path.join(img_dir,&#39;missile.png&#39;)).convert_alpha()
+
+#加载敌机炮弹图片
+enemies_bullet_img = pygame.image.load(path.join(img_dir,&#39;enemies_bullet.png&#39;)).convert()
+
+#加载盾牌、闪电图片
+powerup_images = {}
+powerup_images[&#39;shield&#39;] = pygame.image.load(path.join(img_dir, &#39;shield.png&#39;)).convert()
+powerup_images[&#39;gun&#39;] = pygame.image.load(path.join(img_dir, &#39;bolt.png&#39;)).convert()
+
+#加载敌机和火山石图片
+enemies_images = []
+lava_images = []
+#敌机
+enemies_list = [
+    &#39;enemies1.png&#39;,
+    &#39;enemies2.png&#39;,
+    &#39;enemies3.png&#39;
+]
+#火山石
+lava_list = [
+    &#39;lava_med.png&#39;,
+    &#39;lava_small1.png&#39;,
+    &#39;lava_small2.png&#39;,
+    &#39;lava_tiny.png&#39;
+]
+for image in enemies_list:
+    enemies_img = pygame.image.load(path.join(img_dir,image)).convert()
+    enemies_img = pygame.transform.scale(enemies_img,(80, 60))
+    enemies_images.append(enemies_img)
+for image in lava_list:
+    lava_images.append(pygame.image.load(path.join(img_dir,image)).convert())
+
+#加载爆炸图片
+explosion_anim = {}
+explosion_anim[&#39;lg&#39;] = []
+explosion_anim[&#39;sm&#39;] = []
+explosion_anim[&#39;player&#39;] = []
+for i in range(9):
+    #敌机、火山石爆炸
+    filename = &#39;regularExplosion0{}.png&#39;.format(i)
+    img = pygame.image.load(path.join(img_dir,filename)).convert()
+    img.set_colorkey(BLACK)
+    #大爆炸    
+    img_lg = pygame.transform.scale(img,(75,75))
+    explosion_anim[&#39;lg&#39;].append(img_lg)
+    #小爆炸
+    img_sm = pygame.transform.scale(img,(32,32))
+    explosion_anim[&#39;sm&#39;].append(img_sm)
+    #玩家爆炸
+    filename = &#39;sonicExplosion0{}.png&#39;.format(i)
+    img = pygame.image.load(path.join(img_dir,filename)).convert()
+    img.set_colorkey(BLACK)
+    explosion_anim[&#39;player&#39;].append(img)
+
+#######################################加载声音#######################################
+
+#加载炮弹、导弹发射声音
+shooting_sound = pygame.mixer.Sound(path.join(sound_folder,&#39;pew.wav&#39;))
+missile_sound = pygame.mixer.Sound(path.join(sound_folder,&#39;rocket.ogg&#39;))
+
+#加载敌机、火山石爆炸声音
+expl_sounds = []
+for sound in [&#39;expl3.wav&#39;, &#39;expl6.wav&#39;]:
+    expl_sounds.append(pygame.mixer.Sound(path.join(sound_folder,sound)))
+#调低音量
+pygame.mixer.music.set_volume(0.2)
+
+#加载玩家爆炸声音
+player_die_sound = pygame.mixer.Sound(path.join(sound_folder,&#39;rumble1.ogg&#39;))
+
+#######################################函数区#######################################
+
+#游戏初始界面和准备开始界面函数
+def main_menu():
+    global screen
+    #加载游戏初始界面背景音乐
+    menu_song = pygame.mixer.music.load(path.join(sound_folder,&amp;quot;menu.ogg&amp;quot;))
+    #循环播放
+    pygame.mixer.music.play(-1)
+    #加载游戏初始界面背景图片
+    title = pygame.image.load(path.join(img_dir,&amp;quot;main.png&amp;quot;)).convert()
+    title = pygame.transform.scale(title,(WIDTH, HEIGHT),screen)
+    screen.blit(title,(0,0))
+    pygame.display.update()
+    #检测玩家操作事件
+    while True:
+        ev = pygame.event.poll()
+        if ev.type == pygame.KEYDOWN:
+            if ev.key == pygame.K_RETURN:
+                break
+        elif ev.type == pygame.QUIT:
+                pygame.quit()
+                quit()
+        else:
+            draw_text(screen, &amp;quot;Press [ENTER] To Begin&amp;quot;, 30, WIDTH/2, HEIGHT/2)
+            draw_text(screen, &amp;quot;[A] ←  [S] ↓  [D] →  [W] ↑&amp;quot;, 30, WIDTH/2, 2*HEIGHT/3)
+            draw_text(screen, &amp;quot;[Space] fire&amp;quot;, 30, WIDTH/2, 3*HEIGHT/4)           
+            pygame.display.update()
+    #加载准备声音
+    ready = pygame.mixer.Sound(path.join(sound_folder,&#39;getready.ogg&#39;))
+    ready.play()
+    #加载准备开始界面背景颜色和文本
+    screen.fill(BLACK)
+    draw_text(screen, &amp;quot;GET READY!&amp;quot;, 40, WIDTH/2, HEIGHT/3)
+    pygame.display.update()
+
+#设置文本属性函数
+def draw_text(surf,text,size,x,y):
+    #定义文本参数
+    font = pygame.font.Font(font_name,size)
+    text_surface = font.render(text,True,WHITE)
+    text_rect = text_surface.get_rect()
+    text_rect.midtop = (x,y)
+    surf.blit(text_surface,text_rect)
+
+#设置玩家血量条属性函数
+def draw_shield_bar(surf,x,y,pct):
+    pct = max(pct,0)
+    fill = (pct/100)*BAR_LENGTH
+    outline_rect = pygame.Rect(x,y,BAR_LENGTH,BAR_HEIGHT)
+    fill_rect = pygame.Rect(x,y,fill,BAR_HEIGHT)
+    pygame.draw.rect(surf,GREEN,fill_rect)
+    pygame.draw.rect(surf,WHITE,outline_rect,2)
+
+#设置玩家生命数量属性函数
+def draw_lives(surf,x,y,lives,img):
+    for i in range(lives):
+        img_rect = img.get_rect()
+        img_rect.x = x+30*i
+        img_rect.y = y
+        surf.blit(img,img_rect)
+
+#添加敌机函数
+def newmob():
+    mob_element = Mob()
+    all_sprites.add(mob_element)
+    mobs.add(mob_element)
+
+#添加火山石函数
+def newlava():
+    lava_element = Lava()
+    all_sprites.add(lava_element)
+    lavas.add(lava_element)
+
+#######################################类区#######################################
+
+class Explosion(pygame.sprite.Sprite):
+    &#39;&#39;&#39;创建爆炸类&#39;&#39;&#39;
+    def __init__(self,center,size):
+        pygame.sprite.Sprite.__init__(self)
+        self.size = size
+        self.image = explosion_anim[self.size][0]
+        self.rect = self.image.get_rect()
+        self.rect.center = center
+        self.frame = 0
+        self.last_update = pygame.time.get_ticks()
+        self.frame_rate = 75
+
+    def update(self):        
+        now = pygame.time.get_ticks()
+        if now - self.last_update &amp;gt; self.frame_rate:
+            self.last_update = now
+            self.frame += 1
+            if self.frame == len(explosion_anim[self.size]):
+                self.kill()
+            else:
+                center = self.rect.center
+                self.image = explosion_anim[self.size][self.frame]
+                self.rect = self.image.get_rect()
+                self.rect.center = center
+
+class Player(pygame.sprite.Sprite):
+    &#39;&#39;&#39;创建玩家类&#39;&#39;&#39;
+    def __init__(self):
+        pygame.sprite.Sprite.__init__(self)
+        self.image = pygame.transform.scale(player_img,(50, 38))
+        self.image.set_colorkey(BLACK)
+        self.rect = self.image.get_rect()
+        self.radius = 20
+        self.rect.centerx = WIDTH/2
+        self.rect.bottom = HEIGHT-10
+        self.speedx = 0
+        self.speedy = 0
+        self.shield = 100
+        self.shoot_delay = 250
+        self.last_shot = pygame.time.get_ticks()
+        self.lives = 3
+        self.hidden = False
+        self.hide_timer = pygame.time.get_ticks()
+        self.power = 1
+        self.power_timer = pygame.time.get_ticks()
+
+    def update(self):
+        if self.power &amp;gt;= 2 and pygame.time.get_ticks() - self.power_time &amp;gt; POWERUP_TIME:
+            self.power -= 1
+            self.power_time = pygame.time.get_ticks()
+        if self.hidden and pygame.time.get_ticks() - self.hide_timer &amp;gt; 1000:
+            self.hidden = False
+            self.rect.centerx = WIDTH/2
+            self.rect.bottom = HEIGHT-30
+        self.speedx = 0
+        self.speedy = 0
+        #方向控制：A控制左、D控制右、W控制上、S控制下、A+W控制左上、A+S控制左下、D+W控制右上、D+S控制右下
+        keystate = pygame.key.get_pressed()
+        if keystate[K_a]:
+            self.speedx = -5
+        if keystate[K_d]:
+            self.speedx = 5
+        if keystate[K_w]:
+            self.speedy = -5
+        if keystate[K_s]:
+            self.speedy = 5
+        #发射控制：空格
+        if keystate[pygame.K_SPACE]:
+            self.shoot()
+        #设置玩家移动边界
+        if self.rect.right &amp;gt; WIDTH:
+            self.rect.right = WIDTH
+        if self.rect.left &amp;lt; 0:
+            self.rect.left = 0
+        if self.rect.top &amp;lt; 10:
+            self.rect.top = 10
+        if self.rect.bottom &amp;gt; HEIGHT-10:
+            self.rect.bottom = HEIGHT-10
+        self.rect.x += self.speedx
+        self.rect.y += self.speedy
+
+    def shoot(self):
+        now = pygame.time.get_ticks()
+        if now-self.last_shot &amp;gt; self.shoot_delay:
+            self.last_shot = now
+            #单火力
+            if self.power == 1:
+                bullet = Bullet(self.rect.centerx, self.rect.top)
+                all_sprites.add(bullet)
+                bullets.add(bullet)
+                shooting_sound.play()
+            #双火力
+            if self.power == 2:
+                bullet1 = Bullet(self.rect.left, self.rect.centery)
+                bullet2 = Bullet(self.rect.right, self.rect.centery)
+                all_sprites.add(bullet1)
+                all_sprites.add(bullet2)
+                bullets.add(bullet1)
+                bullets.add(bullet2)
+                shooting_sound.play()
+            #三火力
+            if self.power &amp;gt;= 3:
+                bullet1 = Bullet(self.rect.left, self.rect.centery)
+                bullet2 = Bullet(self.rect.right, self.rect.centery)
+                missile1 = Missile(self.rect.centerx, self.rect.top) # 导弹
+                all_sprites.add(bullet1)
+                all_sprites.add(bullet2)
+                all_sprites.add(missile1)
+                bullets.add(bullet1)
+                bullets.add(bullet2)
+                bullets.add(missile1)
+                shooting_sound.play()
+                missile_sound.play()
+
+    def powerup(self):
+        self.power += 1
+        self.power_time = pygame.time.get_ticks()
+
+    def hide(self):
+        self.hidden = True
+        self.hide_timer = pygame.time.get_ticks()
+        self.rect.center = (WIDTH/2, HEIGHT+200)
+
+class Mob(pygame.sprite.Sprite):
+    &#39;&#39;&#39;创建敌机类&#39;&#39;&#39;
+    def __init__(self):
+        pygame.sprite.Sprite.__init__(self)
+        self.image_orig = random.choice(enemies_images)
+        self.image_orig.set_colorkey(BLACK)
+        self.image = self.image_orig.copy()
+        self.rect = self.image.get_rect()
+        self.radius = int(self.rect.width*.90/2)
+        self.rect.x = random.randrange(0, WIDTH-self.rect.width)
+        self.rect.y = random.randrange(-150,-100)       
+        self.speedy = random.randrange(5,10)
+        self.speedx = random.randrange(-3,3)
+        self.shoot_delay = 1000
+        self.last_shot = pygame.time.get_ticks()        
+
+    def update(self):
+        self.rect.x += self.speedx
+        self.rect.y += self.speedy
+        if random.randrange(10) &amp;gt;= 6:
+            self.enemies_shoot()        
+        if (self.rect.top &amp;gt; HEIGHT+10) or (self.rect.left &amp;lt; -25) or (self.rect.right &amp;gt; WIDTH+20):
+            self.rect.x = random.randrange(0,WIDTH-self.rect.width)
+            self.rect.y = random.randrange(-100,-40)
+            self.speedy = random.randrange(1,8)
+
+    def enemies_shoot(self):
+        now = pygame.time.get_ticks()
+        if now-self.last_shot &amp;gt; self.shoot_delay:
+            self.last_shot = now
+            enemies_bullet = EnemiesBullet(self.rect.centerx, self.rect.bottom)
+            all_sprites.add(enemies_bullet)
+            enemies_bullets.add(enemies_bullet)
+            shooting_sound.play()
+
+class Lava(pygame.sprite.Sprite):
+    &#39;&#39;&#39;创建火山石类&#39;&#39;&#39;
+    def __init__(self):
+        pygame.sprite.Sprite.__init__(self)
+        self.image_orig = random.choice(lava_images)
+        self.image_orig.set_colorkey(BLACK)
+        self.image = self.image_orig.copy()
+        self.rect = self.image.get_rect()
+        self.radius = int(self.rect.width*.90/2)
+        self.rect.x = random.randrange(0, WIDTH-self.rect.width)
+        self.rect.y = random.randrange(-150,-100)       
+        self.speedy = random.randrange(5,10)
+        self.speedx = random.randrange(-3,3)
+        self.rotation = 0
+        self.rotation_speed = random.randrange(-8, 8)
+        self.last_update = pygame.time.get_ticks()
+
+    #添加火山石旋转效果
+    def rotate(self):
+        time_now = pygame.time.get_ticks()
+        if time_now-self.last_update &amp;gt; 50:
+            self.last_update = time_now
+            self.rotation = (self.rotation+self.rotation_speed)%360
+            new_image = pygame.transform.rotate(self.image_orig,self.rotation)
+            old_center = self.rect.center
+            self.image = new_image
+            self.rect = self.image.get_rect()
+            self.rect.center = old_center                
+
+    def update(self):
+        self.rotate()
+        self.rect.x += self.speedx
+        self.rect.y += self.speedy               
+        if (self.rect.top &amp;gt; HEIGHT+10) or (self.rect.left &amp;lt; -25) or (self.rect.right &amp;gt; WIDTH+20):
+            self.rect.x = random.randrange(0,WIDTH-self.rect.width)
+            self.rect.y = random.randrange(-100,-40)
+            self.speedy = random.randrange(1,8)       
+
+class Bullet(pygame.sprite.Sprite):
+    &#39;&#39;&#39;创建玩家炮弹类&#39;&#39;&#39;
+    def __init__(self, x, y):
+        pygame.sprite.Sprite.__init__(self)
+        self.image = bullet_img
+        self.image.set_colorkey(BLACK)
+        self.rect = self.image.get_rect()
+        self.rect.bottom = y
+        self.rect.centerx = x
+        self.speedy = -10
+
+    def update(self):
+        self.rect.y += self.speedy
+        if self.rect.bottom &amp;lt; 0:
+            self.kill()
+
+class EnemiesBullet(pygame.sprite.Sprite):
+    &#39;&#39;&#39;创建敌机炮弹类&#39;&#39;&#39;
+    def __init__(self, x, y):
+        pygame.sprite.Sprite.__init__(self)
+        self.image = enemies_bullet_img
+        self.image.set_colorkey(BLACK)
+        self.rect = self.image.get_rect()
+        self.rect.top = y
+        self.rect.centerx = x
+        self.speedy = 10
+
+    def update(self):
+        self.rect.y += self.speedy
+        if self.rect.top &amp;gt; 600:
+            self.kill()
+
+class Missile(pygame.sprite.Sprite):
+    &#39;&#39;&#39;创建导弹类&#39;&#39;&#39;
+    def __init__(self, x, y):
+        pygame.sprite.Sprite.__init__(self)
+        self.image = missile_img
+        self.image.set_colorkey(BLACK)
+        self.rect = self.image.get_rect()
+        self.rect.bottom = y
+        self.rect.centerx = x
+        self.speedy = -10
+
+    def update(self):
+        self.rect.y += self.speedy
+        if self.rect.bottom &amp;lt; 0:
+            self.kill()
+
+class Pow(pygame.sprite.Sprite):
+    &#39;&#39;&#39;创建补给类&#39;&#39;&#39;
+    def __init__(self, center):
+        pygame.sprite.Sprite.__init__(self)
+        self.type = random.choice([&#39;shield&#39;, &#39;gun&#39;])
+        self.image = powerup_images[self.type]
+        self.image.set_colorkey(BLACK)
+        self.rect = self.image.get_rect()
+        self.rect.center = center
+        self.speedy = 4
+
+    def update(self):
+        self.rect.y += self.speedy
+        if self.rect.top &amp;gt; HEIGHT:
+            self.kill()
+
+#######################################主循环#######################################
+
+#定义游戏开始界面标识
+running = True
+menu_display = True
+
+while running:
+    if menu_display:
+        main_menu()
+        pygame.time.wait(3000)
+        pygame.mixer.music.stop()
+        pygame.mixer.music.load(path.join(sound_folder,&#39;tgfcoder-FrozenJam-SeamlessLoop.ogg&#39;))
+        pygame.mixer.music.play(-1)
+        menu_display = False
+
+        all_sprites = pygame.sprite.Group()
+        player = Player()
+        all_sprites.add(player)        
+        mobs = pygame.sprite.Group()
+        for i in range(4):
+            newmob()
+        lavas = pygame.sprite.Group()
+        for i in range(4):
+            newlava()
+        bullets = pygame.sprite.Group()
+        enemies_bullets = pygame.sprite.Group()
+        powerups = pygame.sprite.Group()
+
+        score = 0   
+
+    clock.tick(FPS)
+
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            running = False
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_ESCAPE:
+                running = False
+
+    all_sprites.update()
+
+    #敌机与玩家炮弹碰撞检测
+    hits = pygame.sprite.groupcollide(mobs,bullets,True,True)    
+    for hit in hits:
+        score += 50-hit.radius
+        random.choice(expl_sounds).play()       
+        expl = Explosion(hit.rect.center,&#39;lg&#39;)
+        all_sprites.add(expl)
+        if random.random() &amp;gt; 0.9:
+            pow = Pow(hit.rect.center)
+            all_sprites.add(pow)
+            powerups.add(pow)
+        newmob()
+
+    #火山石与玩家炮弹碰撞检测
+    hits = pygame.sprite.groupcollide(lavas,bullets,True,True)    
+    for hit in hits:
+        score += 50-hit.radius
+        random.choice(expl_sounds).play()      
+        expl = Explosion(hit.rect.center,&#39;lg&#39;)
+        all_sprites.add(expl)
+        if random.random() &amp;gt; 0.9:
+            pow = Pow(hit.rect.center)
+            all_sprites.add(pow)
+            powerups.add(pow)
+        newlava()
+
+    #玩家与敌机碰撞检测
+    hits = pygame.sprite.spritecollide(player,mobs,True,pygame.sprite.collide_circle)
+    for hit in hits:
+        player.shield -= hit.radius*2
+        expl = Explosion(hit.rect.center,&#39;sm&#39;)
+        all_sprites.add(expl)
+        newmob()
+        if player.shield &amp;lt;= 0:
+            player_die_sound.play()
+            death_explosion = Explosion(player.rect.center,&#39;player&#39;)
+            all_sprites.add(death_explosion)
+            player.hide()
+            player.lives -= 1
+            player.shield = 100
+
+    #玩家与火山石碰撞检测
+    hits = pygame.sprite.spritecollide(player,lavas,True,pygame.sprite.collide_circle)
+    for hit in hits:
+        player.shield -= hit.radius*2
+        expl = Explosion(hit.rect.center,&#39;sm&#39;)
+        all_sprites.add(expl)
+        newlava()
+        if player.shield &amp;lt;= 0:
+            player_die_sound.play()
+            death_explosion = Explosion(player.rect.center,&#39;player&#39;)
+            all_sprites.add(death_explosion)
+            player.hide()
+            player.lives -= 1
+            player.shield = 100
+
+    #玩家与敌机炮弹碰撞检测
+    hits = pygame.sprite.spritecollide(player,enemies_bullets,True,pygame.sprite.collide_circle)
+    for hit in hits:
+        player.shield -= hit.radius*2
+        expl = Explosion(hit.rect.center,&#39;sm&#39;)
+        all_sprites.add(expl)        
+        if player.shield &amp;lt;= 0:
+            player_die_sound.play()
+            death_explosion = Explosion(player.rect.center,&#39;player&#39;)
+            all_sprites.add(death_explosion)
+            player.hide()
+            player.lives -= 1
+            player.shield = 100
+
+    #玩家与补给碰撞检测
+    hits = pygame.sprite.spritecollide(player,powerups,True)
+    for hit in hits:
+        if hit.type == &#39;shield&#39;:
+            player.shield += random.randrange(10,30)
+            if player.shield &amp;gt;= 100:
+                player.shield = 100
+        if hit.type == &#39;gun&#39;:
+            player.powerup()
+
+    if player.lives == 0 and not death_explosion.alive():
+        pygame.time.wait(1000)
+        screen.fill(BLACK)
+        draw_text(screen, &amp;quot;Game Over&amp;quot;, 40, WIDTH/2, HEIGHT/3)
+        pygame.display.update()
+        pygame.time.wait(3000)
+        menu_display = True
+
+    #背景画卷向下滚动
+    screen.fill(BLACK)    
+    screen.blit(background,(0,height))
+    height += 2
+    if height &amp;gt;= -168:
+        height = -936
+
+    all_sprites.draw(screen)
+    draw_text(screen,str(score),18,WIDTH/2,10)
+    draw_shield_bar(screen,5,5,player.shield)    
+    draw_lives(screen,WIDTH-100,5,player.lives,player_mini_img)
+
+    pygame.display.flip()    
+
+pygame.quit()
+&lt;/code&gt;&lt;/pre&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>使用百度指数了解社会事件</title>
+      <link>https://chengjunwang.com/%E8%AE%A1%E7%AE%97%E6%96%B0%E9%97%BB/%E4%BD%BF%E7%94%A8%E7%99%BE%E5%BA%A6%E6%8C%87%E6%95%B0%E4%BA%86%E8%A7%A3%E5%88%86%E7%9C%81%E5%92%8C%E5%9F%8E%E5%B8%82%E7%9A%84%E7%A4%BE%E4%BC%9A%E4%BA%8B%E4%BB%B6/</link>
+      <pubDate>Thu, 13 Feb 2020 00:00:00 +0000</pubDate>
+      <guid>https://chengjunwang.com/%E8%AE%A1%E7%AE%97%E6%96%B0%E9%97%BB/%E4%BD%BF%E7%94%A8%E7%99%BE%E5%BA%A6%E6%8C%87%E6%95%B0%E4%BA%86%E8%A7%A3%E5%88%86%E7%9C%81%E5%92%8C%E5%9F%8E%E5%B8%82%E7%9A%84%E7%A4%BE%E4%BC%9A%E4%BA%8B%E4%BB%B6/</guid>
+      <description>
+
+&lt;p&gt; &lt;/p&gt;
+
+&lt;p&gt;百度指数是以百度海量网民行为数据为基础的数据分享平台。在这里,你可以研究关键词搜索趋势、洞察网民兴趣和需求、监测舆情动向、定位受众特征。&lt;/p&gt;
+
+&lt;p&gt;我以“疫情”和“口罩”两个关键词来看新冠疫情的公众关注情况。&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;http://index.baidu.com/v2/main/index.html#/trend/%E7%96%AB%E6%83%85?words=%E7%96%AB%E6%83%85,%E5%8F%A3%E7%BD%A9&#34; target=&#34;_blank&#34;&gt;http://index.baidu.com/v2/main/index.html#/trend/%E7%96%AB%E6%83%85?words=%E7%96%AB%E6%83%85,%E5%8F%A3%E7%BD%A9&lt;/a&gt;&lt;/p&gt;
+
+&lt;h1 id=&#34;趋势研究&#34;&gt;趋势研究&lt;/h1&gt;
+
+&lt;p&gt;地点选择“江苏”&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://upload-images.jianshu.io/upload_images/38934-27a8fcbeae97a57d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240&#34; alt=&#34;image.png&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;简单的百度指数，也可以借助于akshare爬取。按照&lt;a href=&#34;https://akshare.readthedocs.io/zh_CN/latest/data/event/event.html&#34; target=&#34;_blank&#34;&gt;akshare指数数据抓取部分&lt;/a&gt;的介绍，百度指数分为三部分，分别是搜索指数、资讯指数、媒体指数。具体可以操作如下：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;import akshare as ak
+cookie = &amp;quot;此处输入您在网页端登录百度指数后的 cookie 数据&amp;quot;
+index_df1 = ak.baidu_search_index(word=&amp;quot;螺纹钢&amp;quot;, start_date=&#39;2010-12-27&#39;, end_date=&#39;2019-12-01&#39;, cookie=cookie)
+index_df2 = ak.baidu_info_index(word=&amp;quot;螺纹钢&amp;quot;, start_date=&#39;2017-07-03&#39;, end_date=&#39;2019-12-01&#39;, cookie=cookie)
+index_df3 = ak.baidu_media_index(word=&amp;quot;螺纹钢&amp;quot;, start_date=&#39;2010-12-27&#39;, end_date=&#39;2019-12-01&#39;, cookie=cookie)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://upload-images.jianshu.io/upload_images/38934-d063c2ac0ab15114.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240&#34; alt=&#34;如图中游览器请求头中的蓝色选中部分内容到 cookie 即可&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;想要了解更多？
+- &lt;a href=&#34;https://github.com/jindaxiang/akshare/blob/master/akshare/index/index_weibo.py&#34; target=&#34;_blank&#34;&gt;akshare百度指数部分实现方式&lt;/a&gt;
+- &lt;a href=&#34;https://cloudcrawler.club/categories/2019%E5%B9%B4%E6%9C%AB%E9%80%86%E5%90%91%E5%A4%8D%E4%B9%A0/&#34; target=&#34;_blank&#34;&gt;云爬虫技术研究笔记&lt;/a&gt;&lt;/p&gt;
+
+&lt;h1 id=&#34;需求图谱&#34;&gt;需求图谱&lt;/h1&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://upload-images.jianshu.io/upload_images/38934-7956cab70c25ec77.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240&#34; alt=&#34;image.png&#34; /&gt;&lt;/p&gt;
+
+&lt;h1 id=&#34;人群画像&#34;&gt;人群画像&lt;/h1&gt;
+
+&lt;p&gt;点击地图，查看江苏的情况&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://upload-images.jianshu.io/upload_images/38934-14ed1226d23eb020.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240&#34; alt=&#34;image.png&#34; /&gt;&lt;/p&gt;
+
+&lt;h1 id=&#34;阅读文献&#34;&gt;阅读文献&lt;/h1&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Shuanglong Li, Yunsong Chen, Guangye He. Mapping Public Concerns About Class Immobility in China.Social Indicators Research (2019) 144:745–765. &lt;a href=&#34;https://doi.org/10.1007/s11205-019-02075-2&#34; target=&#34;_blank&#34;&gt;https://doi.org/10.1007/s11205-019-02075-2&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Ginsberg et al. (2009) “Detecting influenza epidemics using search engine query data”, Nature, &lt;a href=&#34;http://dx.doi.org/10.1038/nature07634&#34; target=&#34;_blank&#34;&gt;http://dx.doi.org/10.1038/nature07634&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Lazer et al (2014) “The Parable of Google Flu: Traps in Big Data Analysis.” Science. &lt;a href=&#34;http://dx.doi.org/10.1126/science.1248506&#34; target=&#34;_blank&#34;&gt;http://dx.doi.org/10.1126/science.1248506&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Yang et al (2015) “Accurate estimation of influenza epidemics using Google search data via ARGO”, PNAS, &lt;a href=&#34;http://dx.doi.org/10.1073/pnas.1515373112&#34; target=&#34;_blank&#34;&gt;http://dx.doi.org/10.1073/pnas.1515373112&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Lampos et al 2015 “Advances in nowcasting influenza-like illness rates using search query logs” Scientific Reports, &lt;a href=&#34;http://dx.doi.org/10.1038/srep12760&#34; target=&#34;_blank&#34;&gt;http://dx.doi.org/10.1038/srep12760&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id=&#34;练习&#34;&gt;练习&lt;/h1&gt;
+
+&lt;p&gt;搜索一下散装江苏和苏大强是如何成名的？&lt;/p&gt;
+
+&lt;p&gt;words=疫情,口罩,散装江苏,苏大强,江苏&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://upload-images.jianshu.io/upload_images/38934-8c0e58dad4abb153.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240&#34; alt=&#34;江苏各城市&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://upload-images.jianshu.io/upload_images/38934-e417dd4bac768b92.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240&#34; alt=&#34;散装江苏和苏大强&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://upload-images.jianshu.io/upload_images/38934-6171d4fbe0fe6967.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240&#34; alt=&#34;疫情&#34; /&gt;&lt;/p&gt;
+
+&lt;h1 id=&#34;问题&#34;&gt;问题&lt;/h1&gt;
+
+&lt;p&gt;请搜索城市级别的数据，回答江苏的哪一个城市更关注散装江苏？哪一个城市最关注苏大强？&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>帝国理工和西北大学估算武汉实际感染人数的模型</title>
+      <link>https://chengjunwang.com/%E8%AE%A1%E7%AE%97%E6%96%B0%E9%97%BB/%E5%B8%9D%E5%9B%BD%E7%90%86%E5%B7%A5%E5%92%8C%E8%A5%BF%E5%8C%97%E5%A4%A7%E5%AD%A6%E7%9A%84%E6%A8%A1%E5%9E%8B/</link>
+      <pubDate>Thu, 13 Feb 2020 00:00:00 +0000</pubDate>
+      <guid>https://chengjunwang.com/%E8%AE%A1%E7%AE%97%E6%96%B0%E9%97%BB/%E5%B8%9D%E5%9B%BD%E7%90%86%E5%B7%A5%E5%92%8C%E8%A5%BF%E5%8C%97%E5%A4%A7%E5%AD%A6%E7%9A%84%E6%A8%A1%E5%9E%8B/</guid>
+      <description>&lt;p&gt; &lt;/p&gt;
+
+&lt;p&gt;已有 24688 次阅读 2020-1-24 08:44 |系统分类:&lt;a href=&#34;http://blog.sciencenet.cn/home.php?mod=space&amp;amp;do=blog&amp;amp;view=all&amp;amp;uid=3075&amp;amp;catid=1&#34; target=&#34;_blank&#34;&gt;科研笔记&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;有人已经注意到了海外研究团队基于现有公开数据对武汉当地感染武汉肺炎的实际人数进行估计。目前影响比较大，大家讨论比较多的分析报告主要有两个来源：
+- 一是Alessandro Vespignani教授领衔的西北大学研究组的系列报告[1]，
+- 二是以一个帝国理工的日本妹子（Natsuko Imai博士）为第一作者的系列报告[2]。为了方便，后文称为帝国理工报告和西北大学报告。&lt;a href=&#34;https://www.imperial.ac.uk/media/imperial-college/medicine/sph/ide/gida-fellowships/2019-nCoV-outbreak-report-22-01-2020.pdf&#34; target=&#34;_blank&#34;&gt;Estimating the potential total number of novel Coronavirus in Wuhan City, China&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;两个报告采用的数据都是公开报道的武汉出境人员被确诊感染2019-nCoV的记录，但使用的方法有所不同。但是两个报告的结论惊人一致。
+1. 帝国理工报告认为武汉全市在2020年1月18日左右差不多开始出现症状的2019-nCoV实际感染人数约为&lt;strong&gt;4000人&lt;/strong&gt;，不确定性是1000-9700（通过参数敏感性分析得到的）；
+2. 西北大学报告认为武汉全市在2020年1月20日左右2019-nCoV实际感染人数约为&lt;strong&gt;4050人&lt;/strong&gt;，95%置信区间为1700-7950。估计这两天随着越南等地新确诊病例的出现，武汉感染人数的估计值还会上升。&lt;/p&gt;
+
+&lt;p&gt;两个系列报告所使用的数据其实否非常简单（他们暂未获得或者暂未使用国内传播的数据，可能是因为传播路径太复杂），就是经由国际航班出境，且在境外被确诊的2019-nCoV感染人数。但两者使用的方法不太一样。下面我尽可能用科普的方法介绍两种方法的基本思路，并分析现有方法存在的缺陷。&lt;/p&gt;
+
+&lt;p&gt;帝国理工报告的方法非常简单。Imai团队列出了一个简单的关系：&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;境外确诊的病人数 = 武汉总感染人数 * 武汉人每天坐飞机出境的概率 * 可以供武汉感染者出境且在境外才被发现的时间窗口长度（天数）。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://upload-images.jianshu.io/upload_images/38934-b259668bb5f530d2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240&#34; alt=&#34;image.png&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;只需要更新海外确诊病人数量，就可以估计武汉的实际病人数量。感兴趣的同学可以试一下：&lt;a href=&#34;https://luxxxlucy.github.io/projects/2020_wuhan/index.html&#34; target=&#34;_blank&#34;&gt;自己动手估计一下&lt;/a&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;oversea_num = range(100)
+wuhan_num = [19000000*i/(10*3301) for i in oversea_range]
+plt.plot(oversea_num, wuhan_num, color = &#39;darkblue&#39;, marker = &#39;.&#39;)
+plt.title(&#39;帝国理工估计方法&#39;)
+plt.xlabel(&#39;海外确诊数&#39;)
+plt.ylabel(&#39;武汉实际患病人数&#39;)
+plt.show()
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://upload-images.jianshu.io/upload_images/38934-d73d557af38c83d5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240&#34; alt=&#34;线性关系&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;其中，可以供武汉感染者出境且在境外才被发现的时间窗口长度（天数）就是染病潜伏未出现症状的时期（Imai等人认为是5-6天，是用的SARS[3]和MERS[4]的结果）以及出现症状到医院确诊的时期（Imai等人认为是4-5天，这个时合理的，因为防控早期，感冒发热不影响出境，大家也不当回事儿），大约为10天。武汉人每天做飞机出境的概率就用武汉每天国际航班出境人数除以武汉国际机场覆盖的人口数。&lt;/p&gt;
+
+&lt;p&gt;Imai小组用武汉总人口（含流动人口）1900万作为武汉国际机场能够覆盖的人口数（有那么多人如果出国会选择从武汉国际机场出去），武汉国际机场出境游客平均每天3301人，截止1月21日下午4点，境外确诊病例7例（泰国3，日本1，韩国1，台湾1，美国1）。如果记武汉总人数为N，就有了一个显然的关系&lt;/p&gt;
+
+&lt;p&gt;7=N*10*3301/19000000，
+得到 N = (19000000*7)/(10*3301)=4029&lt;/p&gt;
+
+&lt;p&gt;可以解出N=4029——这就是4000这个约数的来源。&lt;/p&gt;
+
+&lt;p&gt;西北大学小组的方法要复杂得多，一般而言，这个方法也更为有效和精确。他们已经在过去的研究中
+- 构建了一个全球人口分布以及不同区域之间流动性和可导致感染的接触强度的一个大型数据库
+    - 其中全球被分为3300个区域，任意两个区域之间的流动性数据都有，人口数据主要来源于一个国际合作项目（按0.25*0.25经纬度，大约25km*25km把世界划分成若干区域，估计这个区域的人口数）[5]。
+- 这套数据加上他们成熟的传染病模型已经成功用于很多真实疾病传播早期的态势感知和发展预测，效果很好。其中整体的计算框架和方法可以参考文献[6]。&lt;/p&gt;
+
+&lt;p&gt;就目前这个2019-nCoV武汉感染人数估计的问题，他们把*境外已经确诊的人数*作为证据D，*武汉待估计的感染人数*为N，则可应用&lt;strong&gt;贝叶斯定理&lt;/strong&gt;：&lt;/p&gt;
+
+&lt;p&gt;$$P(N)P(D|N)=P(D)P(N|D)$$&lt;/p&gt;
+
+&lt;p&gt;我们要估计的就是P(N|D)，既给定境外确诊人数，武汉感染人数大概多少（证据D被认为是确定的，例如1月18日D为3个人感染，1月21日D为7个人感染）。&lt;/p&gt;
+
+&lt;p&gt;Vespignani小组对N进行抽样，做大量实验（模型中先假设武汉已经有了多少感染人数，再看P(D|N)的值，抽样时N从给定的P(N)里面按概率取）。&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;尽管帝国理工报告和西北大学报告所使用的方法不同，但是得到的结论是惊人一致的！&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;这两个报告存在的共同问题就是&lt;strong&gt;数据样本太小，因此估计的不确定区间特别大&lt;/strong&gt;。因为样本特别小，还有可能存在系统性误差，例如可能喜欢吃野味的人更喜欢出境游。&lt;/p&gt;
+
+&lt;p&gt;从方法细节来讲，帝国理工小组因为没有自己的全球疾病接触紧密度数据库，所以用平均出境人数，而没有具体到去泰国、去日本、去美国等等地方的人数，会存在偏差。西北大学的数据更新不太及时，不一定能够抓住春节前中国游客出行的一些阵发特性。&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;有没有更好的数据呢？有，已有更好数据，还在协调汇总。&lt;/li&gt;
+&lt;li&gt;是否可以通过国内的感染情况做更精确的估计呢？可以。&lt;/li&gt;
+&lt;li&gt;有没有人在做呢？有，不止一个团队。&lt;/li&gt;
+&lt;li&gt;大约什么结果呢？现在不好说。&lt;/li&gt;
+&lt;li&gt;帝国理工和西北大学报告的结果有没有参考价值呢？&lt;strong&gt;有！&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;虽然我不懂也没有看到病毒学方面的详细报导，但是我个人感觉&lt;strong&gt;2019-nCoV致病能力低于SARS&lt;/strong&gt;——病的进程较缓慢，严重程度较低，致死率较低，&lt;strong&gt;但传播能力超过了SARS&lt;/strong&gt;——有更长的无症状和轻微症状时期，且接触传染能力（各种接触方式和接触强度下被感染的概率）和基本再生数（R0，疾病爆发初期平均一个人能够感染的人数）应该不会低于SARS。&lt;strong&gt;对于病毒而言，这是进化了，不是弱化了&lt;/strong&gt;，因为它们如果有知，应该目的不是杀死人而是传染更多的人。&lt;/p&gt;
+
+&lt;p&gt;我的建议是我们大家平时要戴口罩、勤洗手、少出门、不聚会，遇到疑似问题要及时报告。&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;必须要把这次武汉肺炎看作一次比SARS还厉害的对手来对付&lt;/strong&gt;[7]。&lt;/p&gt;
+
+&lt;p&gt;如果我们应对不充分，武汉肺炎将成为肆虐神州大地几十年甚至更长时间的常规性传染病，我们的下一代、再下一代、再再下一代都会一次次感染这个病。&lt;/p&gt;
+
+&lt;p&gt;[1] M. Chinazzi, et al., Series Reports Entitled “Preliminary assessment of the International Spreading Risk Associated with the 2019 novel Coronavirus (2019-nCoV) outbreak in Wuhan City”.&lt;/p&gt;
+
+&lt;p&gt;[2] N. Imai, et al., Series Reports Entitled “Estimating the potential total number of novel Coronavirus in Wuhan City, China”.&lt;/p&gt;
+
+&lt;p&gt;[3] C. A. Donnelly, et al., Epidemiological determinants of spreading of causal agent of severe acute respiratory syndrome in Hong Kong, Lancet 361 (2003) 1761-1766.&lt;/p&gt;
+
+&lt;p&gt;[4] S. Cauchemez, et al., Middle Esat respiratory syndrome coronavirus, Lancet Infect. Dis. 14 (2014) 50-56.&lt;/p&gt;
+
+&lt;p&gt;[5] The Gridded Population Project, see database from the website: sedac.ciesin.columbia.edu.&lt;/p&gt;
+
+&lt;p&gt;[6] D. Balcan, et al., Modeling the spreading of infectious diseases, Journal of Computational Science 1 (2010) 132-145.&lt;/p&gt;
+
+&lt;p&gt;[7] Editorials, Stop the Wuhan coronavirus, Nature 577 (2020) 450.&lt;/p&gt;
+
+&lt;p&gt;本文来自周涛科学网博客。链接地址：&lt;a href=&#34;http://blog.sciencenet.cn/blog-3075-1215424.html&#34; target=&#34;_blank&#34;&gt;http://blog.sciencenet.cn/blog-3075-1215424.html&lt;/a&gt;&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>微博讨论与covid19疫情的关联</title>
+      <link>https://chengjunwang.com/%E8%AE%A1%E7%AE%97%E6%96%B0%E9%97%BB/%E5%BE%AE%E5%8D%9A%E8%AE%A8%E8%AE%BA%E5%92%8C2019ncov%E7%96%AB%E6%83%85%E6%9C%89%E5%A4%9A%E5%A4%A7%E5%85%B3%E7%B3%BB/</link>
+      <pubDate>Thu, 13 Feb 2020 00:00:00 +0000</pubDate>
+      <guid>https://chengjunwang.com/%E8%AE%A1%E7%AE%97%E6%96%B0%E9%97%BB/%E5%BE%AE%E5%8D%9A%E8%AE%A8%E8%AE%BA%E5%92%8C2019ncov%E7%96%AB%E6%83%85%E6%9C%89%E5%A4%9A%E5%A4%A7%E5%85%B3%E7%B3%BB/</guid>
+      <description>
+
+&lt;p&gt; &lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;import akshare as ak
+import pylab as plt
+import numpy as np
+
+plt.style.use(&#39;fivethirtyeight&#39;)
+
+epidemic_hist_all_df = ak.epidemic_hist_all()
+df = ak.epidemic_163(indicator=&amp;quot;历史&amp;quot;)
+df.head()
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;获取每日新增数量&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;alist = df[&#39;confirm&#39;].tolist()
+daily_conf = []
+for k, i in enumerate(alist):
+    if k == 0:
+        daily_conf.append(i)
+    if k &amp;gt; 0:
+        daily_conf.append(i - alist[k-1])
+df[&#39;confirm_daily&#39;] = daily_conf  
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;获取微博指数数据&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;df_index = ak.weibo_index(word=&amp;quot;疫情&amp;quot;, time_type=&amp;quot;3month&amp;quot;)
+df_index.head()
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;合并数据&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;dat = df_index.merge(df, how=&#39;inner&#39;, left_index = True, right_index = True )
+dat.head()
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;plt.figure(figsize=(12, 6), dpi = 200)
+plt.plot(dat.index, dat[&#39;confirm_daily&#39;], label = &#39;每日新增确诊数量&#39;)
+plt.plot(dat.index, dat[&#39;疫情&#39;]/10000, label = &#39;“疫情”微博指数/10000&#39;)
+#plt.yscale(&#39;log&#39;)
+plt.legend(fontsize = 20)
+plt.show()
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://upload-images.jianshu.io/upload_images/38934-007e629c73bedbb5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240&#34; alt=&#34;时间序列&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;画一下二者的散点图&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;plt.plot(dat[&#39;疫情&#39;], dat[&#39;confirm_daily&#39;], &#39;ro&#39;)
+plt.xscale(&#39;log&#39;)
+plt.yscale(&#39;log&#39;)
+plt.xlabel(&#39;“疫情”微博指数/10000&#39;, fontsize = 20)
+plt.ylabel(&#39;每日新增确诊数量&#39;, fontsize = 20)
+plt.show()
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://upload-images.jianshu.io/upload_images/38934-99f08ac776150087.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240&#34; alt=&#34;scatter&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;算一下相关&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;np.corrcoef(dat[&#39;疫情&#39;], dat[&#39;confirm_daily&#39;])
+# 0.2384777
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h1 id=&#34;思考&#34;&gt;思考 🤔&lt;/h1&gt;
+
+&lt;p&gt;如果没有2月12日的数据剧增会怎样？&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://upload-images.jianshu.io/upload_images/38934-6b6c3ea64208348e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240&#34; alt=&#34;并未消退的疫情讨论&#34; /&gt;&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>舆论热点预测疫情感染？</title>
+      <link>https://chengjunwang.com/%E8%AE%A1%E7%AE%97%E6%96%B0%E9%97%BB/%E8%88%86%E8%AE%BA%E4%BA%8B%E4%BB%B6%E7%83%AD%E5%BA%A6%E5%AF%B9%E6%96%B0%E5%86%A0%E8%82%BA%E7%82%8E%E6%96%B0%E5%A2%9E%E7%A1%AE%E8%AF%8A%E6%95%B0%E9%87%8F%E6%9C%89%E5%BD%B1%E5%93%8D%E5%90%97/</link>
+      <pubDate>Thu, 13 Feb 2020 00:00:00 +0000</pubDate>
+      <guid>https://chengjunwang.com/%E8%AE%A1%E7%AE%97%E6%96%B0%E9%97%BB/%E8%88%86%E8%AE%BA%E4%BA%8B%E4%BB%B6%E7%83%AD%E5%BA%A6%E5%AF%B9%E6%96%B0%E5%86%A0%E8%82%BA%E7%82%8E%E6%96%B0%E5%A2%9E%E7%A1%AE%E8%AF%8A%E6%95%B0%E9%87%8F%E6%9C%89%E5%BD%B1%E5%93%8D%E5%90%97/</guid>
+      <description>
+
+&lt;p&gt; &lt;/p&gt;
+
+&lt;h1 id=&#34;问题&#34;&gt;问题&lt;/h1&gt;
+
+&lt;p&gt;RQ: 舆论事件热度对新冠肺炎新增确诊数量有影响吗？&lt;/p&gt;
+
+&lt;h1 id=&#34;数据&#34;&gt;数据&lt;/h1&gt;
+
+&lt;p&gt;我们使用知微事见的数据来理解这一研究问题。 知微事见,专注于热点事件、企业危机事件、营销事件的研究与分析。当事件符合下列标准之一时，将被收录至知微事见事件库中：1.在短时间内达到高传播量的事件；2.在长期内都保持一定传播量的事件；3.在网络社交媒体中引起热议的事件。&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;1.什么是事件影响力指数？事件影响力指数（Event Influence Index，EII）是基于全网的社交媒体和网络媒体数据，用来刻画单一事件在互联网上的传播效果的权威指标。指数的计算数据来自全网的社交媒体和网络媒体数据。事件影响力指数是根据事件在社交媒体（以微博、微信为主）和网络媒体上的传播效果进行加和，加和后的事件影响力再通过归一化运算得到范围在0 ~ 100之间的事件影响力指数。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://upload-images.jianshu.io/upload_images/38934-4b48b64f5ad6ed3a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240&#34; alt=&#34;知微事见&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;可以看到新冠肺炎依然占据舆论热点。&lt;/p&gt;
+
+&lt;p&gt;我们使用的数据来自针对新冠肺炎事件脉络的梳理：&lt;a href=&#34;http://xgml.zhiweidata.net/?from=floating#/&#34; target=&#34;_blank&#34;&gt;http://xgml.zhiweidata.net/?from=floating#/&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://upload-images.jianshu.io/upload_images/38934-6add4814a58342ca.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240&#34; alt=&#34;数据来源&#34; /&gt;&lt;/p&gt;
+
+&lt;h1 id=&#34;数据读取和可视化&#34;&gt;数据读取和可视化&lt;/h1&gt;
+
+&lt;pre&gt;&lt;code&gt;import pylab as plt
+import pandas as pd
+import seaborn as sns
+import json
+
+j = json.load(open(&#39;zhiwei_line.json&#39;))
+df = pd.DataFrame(j)
+df.tail()
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://upload-images.jianshu.io/upload_images/38934-a7cb51452028ae96.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240&#34; alt=&#34;读取数据&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;查看一下数据基本类型：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;df.info()
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;class &#39;pandas.core.frame.DataFrame&#39;&gt;
+RangeIndex: 52 entries, 0 to 51
+Data columns (total 5 columns):
+ #   Column   Non-Null Count  Dtype&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;0   time     52 non-null     object
+ 1   voice    52 non-null     object
+ 2   heat     52 non-null     object
+ 3   case     52 non-null     object
+ 4   allCase  52 non-null     object
+dtypes: object(5)
+memory usage: 2.2+ KB&lt;/p&gt;
+
+&lt;p&gt;结果发现都是object，未能被正确识别。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;# 将object转化为数值型的类型
+df[&#39;heat&#39;] = [float(i) for i in df[&#39;heat&#39;]]
+df[&#39;case&#39;] = [int(i) for i in df[&#39;case&#39;]]
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://upload-images.jianshu.io/upload_images/38934-1856cde3b875de49.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240&#34; alt=&#34;可视化&#34; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&#34;双y坐标轴可视化&#34;&gt;双y坐标轴可视化&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code&gt;# 双y坐标轴可视化
+fig = plt.figure(figsize=(12,6),dpi = 200)
+plt.style.use(&#39;fivethirtyeight&#39;)
+
+ax1=fig.add_subplot(111)
+ax1.plot(df[&#39;time&#39;],  df[&#39;heat&#39;], &#39;r-s&#39;)
+ax1.set_ylabel(&#39;舆论热度&#39;, fontsize = 16)
+ax1.tick_params(axis=&#39;x&#39;, rotation=60)
+ax1.legend((&#39;舆论热度&#39;,),loc=&#39;upper left&#39;)
+
+ax2=ax1.twinx()
+ax2.plot(df[&#39;time&#39;], df[&#39;case&#39;], &#39;g-o&#39;)
+ax2.set_ylabel(&#39;新增确诊&#39;, fontsize = 16)
+ax2.legend((&#39;新增确诊&#39;,),loc=&#39;upper right&#39;)
+
+plt.show()
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h1 id=&#34;格兰杰检验&#34;&gt;格兰杰检验&lt;/h1&gt;
+
+&lt;p&gt;接下来进行格兰杰因果检验。&lt;/p&gt;
+
+&lt;p&gt;The Null hypothesis for &lt;a href=&#34;http://www.statsmodels.org/dev/generated/statsmodels.tsa.stattools.grangercausalitytests.html&#34; target=&#34;_blank&#34;&gt;grangercausalitytests&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;H0&lt;/strong&gt;: the time series in the second column, x2, does NOT Granger cause the time series in the first column, x1.&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;Grange causality means that past values of x2 have a statistically significant effect on the current value of x1, taking past values of x1 into account as regressors. We reject the null hypothesis that x2 does not Granger cause x1 if the pvalues are below a desired size of the test.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;pre&gt;&lt;code&gt;import statsmodels.api as sm
+from statsmodels.tsa.stattools import grangercausalitytests
+import numpy as np
+
+data = df[21:][[&#39;case&#39;,&#39;heat&#39; ]].pct_change().dropna()
+data.plot();
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://upload-images.jianshu.io/upload_images/38934-d0eda257416ebbe2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240&#34; alt=&#34;image.png&#34; /&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;gc_res = grangercausalitytests(data,4)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Granger Causality
+number of lags (no zero) 1
+ssr based F test:         F=0.0800  , p=0.7796  , df_denom=26, df_num=1
+ssr based chi2 test:   chi2=0.0892  , p=0.7652  , df=1
+likelihood ratio test: chi2=0.0891  , p=0.7653  , df=1
+parameter F test:         F=0.0800  , p=0.7796  , df_denom=26, df_num=1&lt;/p&gt;
+
+&lt;p&gt;Granger Causality
+number of lags (no zero) 2
+ssr based F test:         F=7.5340  , p=0.0030  , df_denom=23, df_num=2
+ssr based chi2 test:   chi2=18.3436 , p=0.0001  , df=2
+likelihood ratio test: chi2=14.1086 , p=0.0009  , df=2
+parameter F test:         F=7.5340  , p=0.0030  , df_denom=23, df_num=2&lt;/p&gt;
+
+&lt;p&gt;Granger Causality
+number of lags (no zero) 3
+ssr based F test:         F=13.4029 , p=0.0001  , df_denom=20, df_num=3
+ssr based chi2 test:   chi2=54.2818 , p=0.0000  , df=3
+likelihood ratio test: chi2=29.7563 , p=0.0000  , df=3
+parameter F test:         F=13.4029 , p=0.0001  , df_denom=20, df_num=3&lt;/p&gt;
+
+&lt;p&gt;Granger Causality
+number of lags (no zero) 4
+ssr based F test:         F=8.8419  , p=0.0005  , df_denom=17, df_num=4
+ssr based chi2 test:   chi2=54.0915 , p=0.0000  , df=4
+likelihood ratio test: chi2=29.2519 , p=0.0000  , df=4
+parameter F test:         F=8.8419  , p=0.0005  , df_denom=17, df_num=4&lt;/p&gt;
+
+&lt;h2 id=&#34;结论&#34;&gt;结论&lt;/h2&gt;
+
+&lt;p&gt;舆论热度可以显著地导致新冠肺炎的确诊数量。&lt;/p&gt;
+
+&lt;h2 id=&#34;练习&#34;&gt;练习&lt;/h2&gt;
+
+&lt;p&gt;请使用格兰杰检验看一下反过来的问题：RQ2: 新冠肺炎确诊数量是否可以导致舆论热度？&lt;/p&gt;
+
+&lt;h2 id=&#34;思考&#34;&gt;思考 🤔&lt;/h2&gt;
+
+&lt;p&gt;Question: 这是伪相关吗？为什么？不了解伪相关，看这几个例子🌰 &lt;a href=&#34;http://www.tylervigen.com/spurious-correlations&#34; target=&#34;_blank&#34;&gt;http://www.tylervigen.com/spurious-correlations&lt;/a&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;延伸&#34;&gt;延伸&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Bertram Scheufele, Alexander Haas, Hans-Bernd Brosius （2011）Mirror or Molder? A Study of Media Coverage, Stock Prices, and Trading Volumes in Germany. &lt;em&gt;Journal of Communication&lt;/em&gt;, Volume 61, Issue 1, February 2011, Pages 48–70. &lt;a href=&#34;https://onlinelibrary.wiley.com/doi/full/10.1111/j.1460-2466.2010.01526.x&#34; target=&#34;_blank&#34;&gt;PDF&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;This article investigates the short‐term relationship between media coverage, stock prices, and trading volumes of eight listed German companies. A content analysis of news reports about the selected companies and a secondary analysis of the daily changes in closing prices and the trading volumes of these companies were combined in a time‐series design. After ARIMA‐modeling each of them, the results suggest that media coverage rather reflects than shapes the development at stock exchanges from a short‐term perspective (2 months). There were almost no hints for a widespread media effect, that is, an impact on so many investors that it will result in a measurable change in stock prices or trading volumes. Finally, theoretical and methodological consequences for exploring widespread media effects are discussed.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://upload-images.jianshu.io/upload_images/38934-9850cf8ca1a77422.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240&#34; alt=&#34;image.png&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://upload-images.jianshu.io/upload_images/38934-a7823e0149a441ae.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240&#34; alt=&#34;为什么不同步？公众为了可以提前预知？或者说为什么确诊数滞后？&#34; /&gt;&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>计算新闻在行动</title>
+      <link>https://chengjunwang.com/%E8%AE%A1%E7%AE%97%E6%96%B0%E9%97%BB/%E8%AE%A1%E7%AE%97%E6%96%B0%E9%97%BB%E5%9C%A8%E8%A1%8C%E5%8A%A8/</link>
+      <pubDate>Thu, 13 Feb 2020 00:00:00 +0000</pubDate>
+      <guid>https://chengjunwang.com/%E8%AE%A1%E7%AE%97%E6%96%B0%E9%97%BB/%E8%AE%A1%E7%AE%97%E6%96%B0%E9%97%BB%E5%9C%A8%E8%A1%8C%E5%8A%A8/</guid>
+      <description>
+
+&lt;p&gt; &lt;/p&gt;
+
+&lt;p&gt;这是南京大学《数据新闻》班级的作品展示，很多东西是半成品，欢迎提意见！&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;苏格拉底说：了解你自己！&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h1 id=&#34;疫情如火&#34;&gt;疫情如火&lt;/h1&gt;
+
+&lt;ul&gt;
+&lt;li&gt;2019年底，围绕武汉市为核心爆发了新型冠状病毒肺炎疫情。&lt;/li&gt;
+&lt;li&gt;2020年1月20日，国家卫健委高级别专家组组长、中国工程院院士、呼吸病学专家钟南山说“肯定‘人传人’。” 来源：财新网  &lt;a href=&#34;http://reporter.caixin.com/609708/%E9%99%88%E5%AE%9D%E6%88%90&#34; target=&#34;_blank&#34;&gt;陈宝成&lt;/a&gt; &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://upload-images.jianshu.io/upload_images/38934-2ec78c90e6c155b4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240&#34; alt=&#34;钟南山宣告存在人传人事实&#34; /&gt;&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;钟南山表示，判断依据就是目前的资料。他在接受央视《新闻一加一》采访时也举例称，在广东有两个病例没有去过武汉，但他们的家人去了武汉，回到家里，这两个家庭都有人染上了新型冠状病毒。经过基因病毒的检测，是一致的。因此“现在可以说，肯定有人传人现象。”&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;ul&gt;
+&lt;li&gt;武汉封城&lt;br /&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;自2020年1月23日10时起，全市城市公交、地铁、轮渡、长途客运暂停运营；无特殊原因，市民不要离开武汉，机场、火车站离汉通道暂时关闭。恢复时间另行通告。&lt;a href=&#34;https://www.sohu.com/a/368763254_100271716&#34; target=&#34;_blank&#34;&gt;更多信息&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;ul&gt;
+&lt;li&gt;返程复工&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id=&#34;数据来源&#34;&gt;数据来源&lt;/h1&gt;
+
+&lt;p&gt;不断更新当中：&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;&lt;a href=&#34;https://github.com/839-Studio&#34; target=&#34;_blank&#34;&gt;澎湃 839-Studio&lt;/a&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/839-Studio/Noval-Coronavirus-763-Cases&#34; target=&#34;_blank&#34;&gt;Noval-Coronavirus-763-Cases&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/839-Studio/Novel-Coronavirus-Updates&#34; target=&#34;_blank&#34;&gt;Novel-Coronavirus-Updates&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;a href=&#34;https://github.com/fivethirtyeight/data&#34; target=&#34;_blank&#34;&gt;fivethirtyeight/data&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id=&#34;为什么选择简书&#34;&gt;为什么选择简书？&lt;/h1&gt;
+
+&lt;h4 id=&#34;1-markdown的支持&#34;&gt;1. Markdown的支持&lt;/h4&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;import pandas ad pd
+
+print(&#39;hello world&#39;)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h4 id=&#34;2-数学公式&#34;&gt;2. 数学公式&lt;/h4&gt;
+
+&lt;p&gt;$$E = MC^2$$&lt;/p&gt;
+
+&lt;h4 id=&#34;3-直接粘贴图片&#34;&gt;3. 直接粘贴图片&lt;/h4&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://upload-images.jianshu.io/upload_images/38934-0bb2c888aaa289c4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240&#34; alt=&#34;新增确诊数量&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;更重要的是：同学们觉得知乎账号太隐私了，不适合分享个人做的东西！Orz 为师震惊了。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://upload-images.jianshu.io/upload_images/38934-4c280f232892ca5c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240&#34; alt=&#34;震惊脸：这是知乎被黑的最惨的一次！&#34; /&gt;&lt;/p&gt;
+
+&lt;h1 id=&#34;学生分组&#34;&gt;学生分组&lt;/h1&gt;
+
+&lt;h1 id=&#34;武汉加油&#34;&gt;武汉加油&lt;/h1&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://upload-images.jianshu.io/upload_images/38934-b652783a4cad4ff4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240&#34; alt=&#34;武汉加油&#34; /&gt;&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>记疫：一个数据新闻作品</title>
+      <link>https://chengjunwang.com/%E8%AE%A1%E7%AE%97%E6%96%B0%E9%97%BB/%E8%AE%B0%E7%96%AB%E4%B8%80%E4%B8%AA%E5%BE%88%E6%A3%92%E7%9A%84%E6%95%B0%E6%8D%AE%E6%96%B0%E9%97%BB%E4%BD%9C%E5%93%81/</link>
+      <pubDate>Thu, 13 Feb 2020 00:00:00 +0000</pubDate>
+      <guid>https://chengjunwang.com/%E8%AE%A1%E7%AE%97%E6%96%B0%E9%97%BB/%E8%AE%B0%E7%96%AB%E4%B8%80%E4%B8%AA%E5%BE%88%E6%A3%92%E7%9A%84%E6%95%B0%E6%8D%AE%E6%96%B0%E9%97%BB%E4%BD%9C%E5%93%81/</guid>
+      <description>&lt;p&gt; &lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;http://h5.oeeee.com/h5/v20/nCovTimeline/&#34; target=&#34;_blank&#34;&gt;http://h5.oeeee.com/h5/v20/nCovTimeline/&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://upload-images.jianshu.io/upload_images/38934-32209813c1f3b0f5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240&#34; alt=&#34;记疫&#34; /&gt;&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>学折纸、学开车</title>
+      <link>https://chengjunwang.com/zh/cn/2019-02-14-lovers-day.zh/</link>
+      <pubDate>Wed, 13 Feb 2019 00:00:00 +0000</pubDate>
+      <guid>https://chengjunwang.com/zh/cn/2019-02-14-lovers-day.zh/</guid>
+      <description>
+
+&lt;p&gt;2019年来了，农历新年过去了，今天是情人节。米粒马上四岁，米果也快要满两岁了。再过两年，牛年一到，我也要36岁了。岁月太可怕了，总以为自己还有很多时间，却似乎一转眼就要40岁了。&lt;/p&gt;
+
+&lt;p&gt;今天一早，我搭晓青公司的车去驾校，晓青去合肥出差。&lt;/p&gt;
+
+&lt;h2 id=&#34;鲜花折纸&#34;&gt;鲜花折纸&lt;/h2&gt;
+
+&lt;p&gt;很漂亮的&lt;a href=&#34;https://sv.baidu.com/videoui/page/videoland?pd=bjh&amp;amp;context={%22nid%22:%225549192849981073829%22,%22sourceFrom%22:%22bjh%22}&#34; target=&#34;_blank&#34;&gt;月季花折纸&lt;/a&gt;,简单易学,看了就会的手工DIY花朵&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://chengjunwang.com/img/2019/steps.png&#34; title=&#34;月季花折纸步骤&#34;&gt;&lt;/p&gt;
+
+&lt;p&gt;我和米粒搜索了半天，这个方法最为简单。&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;但是，因为没有粉红色的纸，我们首先用水墨的颜料将白色便签纸染成粉红。&lt;/li&gt;
+&lt;li&gt;要严格按照上图的步骤来，前三步最关键。否则，容易把花朵🌺&lt;strong&gt;剪成两半！&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;然后，按照图纸一番折腾，终于得到如下图的一朵粉红色的小花。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://chengjunwang.com/img/2019/flower.jpg&#34; title=&#34;祝晓青情人节快乐&#34;&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;学开车&#34;&gt;学开车&lt;/h2&gt;
+
+&lt;p&gt;另外，晓青强行给我在手机app上预约了三天的驾驶科目三的课程。今天谷峰驾校第一天开课，我一早8点就找到了教练。结果，驾校开会从8：30到10点多。然后，就开始练习。&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;http://www.jiakaobaodian.com/news/detail/966545.html&#34; target=&#34;_blank&#34;&gt;&lt;strong&gt;科目三考试内容&lt;/strong&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;h3 id=&#34;day-1&#34;&gt;Day 1&lt;/h3&gt;
+
+&lt;p&gt;2月14日&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;首先，上车
+
+&lt;ul&gt;
+&lt;li&gt;&lt;em&gt;从车前方走过&lt;/em&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;练习打方向盘&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;向左打到底1.5圈&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://chengjunwang.com/img/2019/direction.jpg&#34; title=&#34;方向盘&#34;&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;然后，练习启动和停车四步骤。&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;比如，启动的顺序是：
+
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;一踩&lt;/strong&gt;脚刹&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;二挂&lt;/strong&gt;前进挡D1&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;三打&lt;/strong&gt;转向灯&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;四松&lt;/strong&gt;手刹 （*注意：颠倒三、四步车会前溜，因为手刹挡不住动力系统*）&lt;/li&gt;
+&lt;li&gt;最后，松脚刹，踩油门前进。&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;停车与之相反：
+
+&lt;ul&gt;
+&lt;li&gt;一拉手刹&lt;/li&gt;
+&lt;li&gt;二停转向灯&lt;/li&gt;
+&lt;li&gt;三挂停车挡&lt;/li&gt;
+&lt;li&gt;四松脚刹&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;直行&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;目视前方30米处&lt;/li&gt;
+&lt;li&gt;在不影响驾驶的情况下，观察左、右后视镜&lt;/li&gt;
+&lt;li&gt;根据路的弯度，非常轻微转动方向盘&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;变线&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;首先，打转向灯&lt;/li&gt;
+&lt;li&gt;其次，后视镜观察，确保可以转向&lt;/li&gt;
+&lt;li&gt;如果可以转向，三秒后&lt;strong&gt;轻打方向盘&lt;/strong&gt;（非常小角度）转向&lt;/li&gt;
+&lt;li&gt;转向后，扶正方向盘&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;右转&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;确保车子在右转向道&lt;/li&gt;
+&lt;li&gt;看到倒数第二个减速标志，轻踩刹车&lt;/li&gt;
+&lt;li&gt;看到倒数最后一个减速标志，刹车停住&lt;/li&gt;
+&lt;li&gt;左顾右盼：左右转头，观察人行横道&lt;/li&gt;
+&lt;li&gt;观察红绿灯，允许转向时才可以转&lt;/li&gt;
+&lt;li&gt;根据转向角度，打方向盘，随时调整&lt;/li&gt;
+&lt;li&gt;只有当车子方向正了之后，才完全回正方向盘&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;（左）掉头&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;减速&lt;/li&gt;
+&lt;li&gt;车头偏向中间花坛&lt;/li&gt;
+&lt;li&gt;当肩膀与路中间花坛平行时，继续前进3-4米&lt;/li&gt;
+&lt;li&gt;向左打死方向盘&lt;/li&gt;
+&lt;li&gt;脚放刹车&lt;/li&gt;
+&lt;li&gt;左顾右盼&lt;/li&gt;
+&lt;li&gt;掉头后，只有当车子方向正了之后，才完全回正方向盘
+&lt;img src=&#34;https://chengjunwang.com/img/2019/diaotou.jpg&#34; title=&#34;掉头&#34;&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;轻点刹车&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;手刹&lt;/p&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;手刹&lt;/strong&gt;的专业称呼是&lt;strong&gt;辅助制动器&lt;/strong&gt;，采用钢丝拉线连接到后制动蹄上，以对车子进行制动。手刹对于小型汽车来说，有的是在变速箱后，与传动轴连接的地方有一个制动盘，类似盘式制动器的（当然也有鼓式的），然后通过钢索，将拉力传动到那，从而实现驻车制动。拉动手刹后，它利用一个液压辅缸，推动车下边的液压总缸运动，然后带动气阀，（之所以这么设计，是为了驾驶室不听到那些空气的声音），然后气阀动作之后，制动&lt;strong&gt;传动轴&lt;/strong&gt;。&lt;/p&gt;
+&lt;/blockquote&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>2019系统科学大会的计算传播学Panel</title>
+      <link>https://chengjunwang.com/zh/cn/2018-12-07-ccr-panel.zh/</link>
+      <pubDate>Thu, 06 Dec 2018 00:00:00 +0000</pubDate>
+      <guid>https://chengjunwang.com/zh/cn/2018-12-07-ccr-panel.zh/</guid>
+      <description>&lt;p&gt;第三届中国系统科学大会拟于2019年5月18-19日在湖南长沙举行。大会由上海系统科学研究院主办,国防科技大学承办,中国科学院数学与系统科学研究院系统科学研究所、北京师范大学系统科学学院、北京交通大学交通系统科学与工程研究院、中国船舶工业系统工程研究院、中国系统工程学会、中国自动化学会控制理论专业委员会等单位协办。旨在为系统科学及其相关领域的国内外专家学者提供一个学术交流平台，促进相关学科的交流、发展和融合，促进新方向、新领域的产生。会议将采取大会报告、专题研讨、会前专题讲座、分组报告等形式进行交流。
+&lt;a href=&#34;http://iss.amss.cas.cn/cssc2019/zwtz/&#34; target=&#34;_blank&#34;&gt;http://iss.amss.cas.cn/cssc2019/zwtz/&lt;/a&gt;&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;2019系统科学大会邀请组组织者，请提交一个不超过500字的邀请组申请书，并附拟邀请报告人的姓名、单位、联系信息等。每个邀请组须由8-10位报告人组成。详情参见：&lt;a href=&#34;http://cms.amss.ac.cn。&#34; target=&#34;_blank&#34;&gt;http://cms.amss.ac.cn。&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;人类和疾病的传播行为之所以难以理解主要的原因在于其中卷入了海量的异质性的个体及其相互之间的互动，而复杂系统和网络科学为理解人类信息扩散和疾病传播提供了丰富的理论视角。人类的存在无往不在各种复杂系统当中，包括但不限于社会系统、经济系统、通信系统、交通系统、生态系统等。基于数字媒体等方式可以从复杂系统当中收集的海量数据，而大数据技术和人工智能的发展则为理解各种传播现象提供了丰富的计算方法。面对纷繁复杂的重要问题，收集大规模数据，采用计算机科学的算法挖掘和分析背后的模式，采用数据科学、系统科学的视角构建模型则为我们理解模式背后的机制提供了更多的可能性。&lt;/p&gt;
+
+&lt;p&gt;狭义的计算传播是指数据驱动的、借助于可算方法所进行的传播过程，而分析计算传播现象的研究领域就是计算传播学。计算传播学主要关注人类传播行为可计算的基础问题，以传播网络分析、传播文本挖掘、数据科学等作为主要的分析工具，大规模地收集并分析人类和疾病传播行为背后的模式或法则，并分析模式背后的生成机制以及基本原理。为了更好地理解疾病扩散、假新闻的传播等计算传播问题，我们提议在系统科学年会中组织计算传播分论坛，邀请相关领域的研究者对（包括但不限于）以下研究领域进行探讨：&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;复杂系统当中的传播现象的计算基础是什么？其本身是否可以计算？是否可预测？&lt;/li&gt;
+&lt;li&gt;计算传播如何推动大问题、大理论、大数据的融合？如何帮助我们理解复杂的人类群体行为？&lt;/li&gt;
+&lt;li&gt;计算方法在计算传播研究中的应用。&lt;/li&gt;
+&lt;li&gt;计算传播的实践或者商业价值&lt;/li&gt;
+&lt;/ol&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>2017年“大事记”</title>
+      <link>https://chengjunwang.com/zh/cn/news2017.zh/</link>
+      <pubDate>Thu, 28 Dec 2017 14:32:07 +0800</pubDate>
+      <guid>https://chengjunwang.com/zh/cn/news2017.zh/</guid>
+      <description>
+
+&lt;p&gt;计算传播2017非毕业班的同学们：我8月8日登陆教务处系统录入成绩，发现系统暂时关闭了成绩录入；联系教务处（025-89682303）回复说因为系统原因，我需要开学后才能给你们录入成绩。&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://github.com/computational-class/cc2017/issues/4&#34; target=&#34;_blank&#34;&gt;https://github.com/computational-class/cc2017/issues/4&lt;/a&gt;&lt;/p&gt;
+
+&lt;h1 id=&#34;sunbelt2017社会网络分析国际研讨会&#34;&gt;SUNBELT2017社会网络分析国际研讨会&lt;/h1&gt;
+
+&lt;p&gt;2017年6月4日上午，实验中心成员王成军在北京参加了2017年XXXV|| International Network for Social Network Analysis Conference 社会网络分析国际研讨会及第十三届中国社会学会社会网与社会资本研究专业委员会年会，发表论文Leveraging the Flow of Collective Attention forComputational Communication Research，并主持社会网络与计算传播学分论坛第二场。&lt;/p&gt;
+
+&lt;h1 id=&#34;本科生论文答辩&#34;&gt;本科生论文答辩&lt;/h1&gt;
+
+&lt;ul&gt;
+&lt;li&gt;5月27日 14:00&lt;/li&gt;
+&lt;li&gt;费彝民楼A407&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id=&#34;指导学术论文&#34;&gt;指导学术论文&lt;/h1&gt;
+
+&lt;ul&gt;
+&lt;li&gt;专硕
+
+&lt;ul&gt;
+&lt;li&gt;周纬 《权威与中心:基于HITS算法的收视率分析》&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;本科生
+
+&lt;ul&gt;
+&lt;li&gt;黄浩 134056004 􏴃􏳤􏱼􏱽􏱾􏱿􏲀􏲄􏲁􏱴􏲅􏲆􏳓􏳔􏳕􏲄􏲯􏲰关于搭讪艺术家的行为动机与策略的调查报告&lt;/li&gt;
+&lt;li&gt;沈越 &lt;a href=&#34;https://data-journalism.github.io/olympic/index.html&#34; target=&#34;_blank&#34;&gt;《“梦之队”统治奥运会？》&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;曾维靓 131050038 《大学生群体对于微博原生广告的态度及其影响因素》
+􏴊􏴋􏴃􏳤􏱼􏱽􏱾􏱿􏲀􏲄􏲁􏱴􏲅􏲆􏳓􏳔􏳕􏲄􏲯􏲰􏴃􏳤􏱼􏱽􏱾􏱿􏲀􏲄􏲁􏱴􏲅􏲆􏳓&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id=&#34;云南白族扎染暑期社会实践指导&#34;&gt;云南白族扎染暑期社会实践指导&lt;/h1&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;Q: 关于实际想探究问题，我们又探究了一下，但感觉都找不到很具体的研究方向，我整理了一下我们大概的想法，麻烦老师你看看有没有哪个想法具有可研究性😶&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;ul&gt;
+&lt;li&gt;1. 民族旅游发展下的“扎染女”的生存现状与角色变迁&lt;/li&gt;
+&lt;li&gt;2.扎染工艺需要做出怎样的改变，才能继续发展?&lt;/li&gt;
+&lt;li&gt;3.当地工艺在过去是怎么发展和延续的？&lt;/li&gt;
+&lt;li&gt;4.我们可以研究当地人在怎么努力挽救这个工艺么&lt;/li&gt;
+&lt;li&gt;5.从扎染看当地经济结构的变迁？&lt;/li&gt;
+&lt;li&gt;6.探究云南白族扎染工艺当前生存状况并以白族扎染为例探究对传统手工艺的生产性方式保护.&lt;/li&gt;
+&lt;li&gt;7.探究白族扎染的工艺特色，艺术特征，在现代社会的创新运用.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;A: 首先概念化，白族扎染是一种国家非物质文化遗产，也是一种传传统手工技艺。这背后对应着什么概念？然后是寻找新的问题。白族扎染作为一种手工技艺，在传承的过程中存在什么新的问题（其它手工艺没有的）？当前产业化的趋势使部分传统扎染技艺走向消亡，原有的民间特色开始退化，污染问题日益突出，市场经营滋生了对经济利益的过度追求，植物染料板兰根供不应求。在此情势下，白族扎染技艺的传承受到困扰。产业化是手工艺凋亡的关键原因，这个解释力很强，白族扎染很难幸免。要确保找到的问题是新的问题，即明确而且有意义。如有可能，要尝试理论化，找找既有的理论如何解释传统工艺的传承。研究问题要将个体（研究者）的困惑与社会结构（问题）联系起来。你们要好好琢磨一下，面对这种手工艺，你们有什么困惑？它又反应了什么social issue？强烈建议你们首先查询相关的论文和图书。&lt;/p&gt;
+
+&lt;h1 id=&#34;华人思想库-省侨办共建智库-华智-项目讨论&#34;&gt;华人思想库-省侨办共建智库（华智）项目讨论&lt;/h1&gt;
+
+&lt;p&gt;《全球治理时代的中国新型智库》&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;陈晓晨 （人大重阳金融研究院专家）&lt;/li&gt;
+&lt;li&gt;2017-04-28 9:00 am&lt;/li&gt;
+&lt;li&gt;费彝民楼5楼圆桌会议室&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;信得过、用得着、靠得住；建设自己的报送渠道；资金来源稳定，不干涉。&lt;/p&gt;
+
+&lt;h1 id=&#34;计算传播学-用ai穿透你的注意力壁垒&#34;&gt;计算传播学——用AI穿透你的注意力壁垒&lt;/h1&gt;
+
+&lt;ul&gt;
+&lt;li&gt;集智学园简介：&lt;a href=&#34;http://campus.swarma.org/gvid=10140&#34; target=&#34;_blank&#34;&gt;http://campus.swarma.org/gvid=10140&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;时间：2017-04-12 20:00-23:00&lt;/li&gt;
+&lt;li&gt;网址：&lt;a href=&#34;http://xue.duobeiyun.com&#34; target=&#34;_blank&#34;&gt;http://xue.duobeiyun.com&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id=&#34;硕士预答辩&#34;&gt;硕士预答辩&lt;/h1&gt;
+
+&lt;ul&gt;
+&lt;li&gt;费彝民楼503&lt;/li&gt;
+&lt;li&gt;2017-03-30 16:00&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id=&#34;计算传播讲座&#34;&gt;计算传播讲座&lt;/h1&gt;
+
+&lt;p&gt;2017年3月22日 10：00-12：00， 费彝民楼A418， 王成军向2016级博士生同学介绍计算传播学研究进展，包括计算社会科学的发展状况、代表性研究成果，如何评价其理论创新问题，并对社会科学理论进入丛林的问题进行了讨论。&lt;/p&gt;
+
+&lt;h1 id=&#34;博士之家&#34;&gt;博士之家&lt;/h1&gt;
+
+&lt;ul&gt;
+&lt;li&gt;地点：费彝民楼A418&lt;/li&gt;
+&lt;li&gt;时间：3月10日 12：00-14：00&lt;/li&gt;
+&lt;li&gt;主讲者：&lt;a href=&#34;http://sociology.nju.edu.cn/teacher/social/quanzhi/350.html&#34; target=&#34;_blank&#34;&gt;吴愈晓&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;主持人：王成军&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id=&#34;创享沙龙-对话音乐与虚拟现实技术&#34;&gt;创享沙龙：对话音乐与虚拟现实技术&lt;/h1&gt;
+
+&lt;ul&gt;
+&lt;li&gt;地点：南京大学（仙林校区） 大学生活动中心南花园206&lt;/li&gt;
+&lt;li&gt;时间：2月27日 18：30-19：30&lt;/li&gt;
+&lt;li&gt;主讲者：向雪怀、王成军&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;南大新闻 &lt;a href=&#34;http://news.nju.edu.cn/show_article_4_45010&#34; target=&#34;_blank&#34;&gt;音乐人向雪怀与我校师生对话VR技术与校园音乐
+&lt;/a&gt;&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>2017年社科项目进展</title>
+      <link>https://chengjunwang.com/zh/cn/2017-11-25-cn-project.zh/</link>
+      <pubDate>Sat, 25 Nov 2017 00:00:00 +0000</pubDate>
+      <guid>https://chengjunwang.com/zh/cn/2017-11-25-cn-project.zh/</guid>
+      <description>&lt;ol&gt;
+&lt;li&gt;文献综述：采用引文分析等方法系统整理舆论扩散研究领域的论文和成果。尤其是针对舆论扩散的讨论模型进行了系统的总结，从参与者、议题、行动三个维度刻画了舆论扩散的过程。&lt;/li&gt;
+&lt;li&gt;数据获取：基本完成数据收集方案，获取1千万新浪微博用户的数据信息，建立新浪微博舆论扩散数据库；收集了占领华尔街这一主题的推特数据库；收集了Digg新闻扩散数据库。&lt;/li&gt;
+&lt;li&gt;数据分析：对这个数据进行数据清洗、分析，按照门槛模型、扩散深度等概念的要求，从多个维度对舆论扩散数据进行测量。一、尝试采用网路科学分析方法，文本挖掘的方法挖掘微博信息扩散的网络门槛与扩散规模之间的关系，发现扩散深度对于网络门槛影响的调节作用。二、对于占领华尔街的推特数据，从时间序列分析方法对数据进行分析和挖掘，有针对性地提取了舆论的讨论模型的三要素：参与者、议题、行动，建立了结构化贝叶斯模型，分析了三者对于舆论演化的整体影响；三、针对Digg数据，从注意力流动网络的角度刻画了新闻舆论扩散的过程；&lt;/li&gt;
+&lt;li&gt;整理了现阶段的研究成果，发表了一系列相关的论文，其中包括五篇英文论文和三篇中文论文，以及多篇会议论文。
+经费使用：主要用于会议、差旅和少数办公用品，共花费18735元。&lt;/li&gt;
+&lt;/ol&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>2017年黑客马拉松之turkserver</title>
+      <link>https://chengjunwang.com/zh/cn/2017-12-14-turkserver.zh/</link>
+      <pubDate>Sun, 29 Oct 2017 00:00:00 +0000</pubDate>
+      <guid>https://chengjunwang.com/zh/cn/2017-12-14-turkserver.zh/</guid>
+      <description>
+
+&lt;p&gt;turkserver&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;http://turkserver.readthedocs.io/&#34; target=&#34;_blank&#34;&gt;http://turkserver.readthedocs.io/&lt;/a&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;tutorials-quick-start&#34;&gt;Tutorials：quick start&lt;/h2&gt;
+
+&lt;p&gt;&lt;a href=&#34;http://turkserver.readthedocs.io/en/latest/quick-start.html&#34; target=&#34;_blank&#34;&gt;http://turkserver.readthedocs.io/en/latest/quick-start.html&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;TurkServer/tutorial &lt;a href=&#34;https://github.com/TurkServer/tutorial&#34; target=&#34;_blank&#34;&gt;https://github.com/TurkServer/tutorial&lt;/a&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;install meteor&lt;/li&gt;
+&lt;li&gt;sign up AWS Account, get the id and secret.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;浏览器歧视:
+- 一个可以打开 &lt;a href=&#34;http://localhost:3000/experiment&#34; target=&#34;_blank&#34;&gt;http://localhost:3000/experiment&lt;/a&gt;
+- 另一个打开 &lt;a href=&#34;http://localhost:3000/turkserver&#34; target=&#34;_blank&#34;&gt;http://localhost:3000/turkserver&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;Oops, looks like there&amp;rsquo;s no route on the client or the server for url: &amp;laquo;&lt;a href=&#34;http://localhost:3000/mturk/externalSubmit.&amp;quot;&#34; target=&#34;_blank&#34;&gt;http://localhost:3000/mturk/externalSubmit.&amp;quot;&lt;/a&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;mlab&#34;&gt;mlab&lt;/h2&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://mlab.com/&#34; target=&#34;_blank&#34;&gt;https://mlab.com/&lt;/a&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;azure&#34;&gt;azure&lt;/h2&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://portal.azure.cn/&#34; target=&#34;_blank&#34;&gt;https://portal.azure.cn/&lt;/a&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;chengjunwang@chengjunwang.partner.onmschina.cn&lt;/li&gt;
+&lt;li&gt;Datalab2017&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id=&#34;error&#34;&gt;error&lt;/h1&gt;
+
+&lt;p&gt;chengjuns-MacBook-Pro:server chengjun$ MONGO_URL=mongodb://localhost:27017/test PORT=3000 ROOT_URL=&lt;a href=&#34;http://localhost:3000&#34; target=&#34;_blank&#34;&gt;http://localhost:3000&lt;/a&gt; npm start&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;meteor-dev-bundle@0.0.0 start /Users/chengjun/GitHub/tutorial/.demeteorized/bundle/programs/server
+node ../../main&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;/Users/chengjun/GitHub/tutorial/.demeteorized/bundle/programs/server/node_modules/fibers/future.js:313
+                        throw(ex);
+                        ^&lt;/p&gt;
+
+&lt;p&gt;Error: failed to connect to [localhost:27017]
+    at Object.Future.wait (/Users/chengjun/GitHub/tutorial/.demeteorized/bundle/programs/server/node_modules/fibers/future.js:449:15)
+    at new MongoConnection (packages/mongo/mongo_driver.js:213:27)
+    at new MongoInternals.RemoteCollectionDriver (packages/mongo/remote_collection_driver.js:4:16)
+    at Object.&lt;anonymous&gt; (packages/mongo/remote_collection_driver.js:38:10)
+    at Object.defaultRemoteCollectionDriver (packages/underscore/underscore.js:750:1)
+    at new Mongo.Collection (packages/mongo/collection.js:103:40)
+    at AccountsServer.AccountsCommon (packages/accounts-base/accounts_common.js:23:18)
+    at new AccountsServer (packages/accounts-base/accounts_server.js:18:5)
+    at meteorInstall.node_modules.meteor.accounts-base.server_main.js (packages/accounts-base/server_main.js:9:12)
+    at fileEvaluate (packages/modules-runtime/.npm/package/node_modules/install/install.js:153:1)
+    - - - - -
+    at .&lt;anonymous&gt; (/Users/chengjun/GitHub/tutorial/.demeteorized/bundle/programs/server/npm/node_modules/meteor/npm-mongo/node_modules/mongodb/lib/mongodb/connection/server.js:556:25)
+    at emitThree (events.js:116:13)
+    at emit (events.js:194:7)
+    at .&lt;anonymous&gt; (/Users/chengjun/GitHub/tutorial/.demeteorized/bundle/programs/server/npm/node_modules/meteor/npm-mongo/node_modules/mongodb/lib/mongodb/connection/connection_pool.js:156:15)
+    at emitTwo (events.js:106:13)
+    at emit (events.js:191:7)
+    at Socket.&lt;anonymous&gt; (/Users/chengjun/GitHub/tutorial/.demeteorized/bundle/programs/server/npm/node_modules/meteor/npm-mongo/node_modules/mongodb/lib/mongodb/connection/connection.js:534:10)
+    at emitOne (events.js:96:13)
+    at Socket.emit (events.js:188:7)
+    at emitErrorNT (net.js:1272:8)&lt;/p&gt;
+
+&lt;p&gt;npm ERR! Darwin 17.2.0
+npm ERR! argv &amp;laquo;/usr/local/bin/node&amp;raquo; &amp;laquo;/usr/local/bin/npm&amp;raquo; &amp;laquo;start&amp;raquo;
+npm ERR! node v6.2.2
+npm ERR! npm  v3.9.5
+npm ERR! code ELIFECYCLE
+npm ERR! meteor-dev-bundle@0.0.0 start: &lt;code&gt;node ../../main&lt;/code&gt;
+npm ERR! Exit status 1
+npm ERR!
+npm ERR! Failed at the meteor-dev-bundle@0.0.0 start script &amp;lsquo;node ../../main&amp;rsquo;.
+npm ERR! Make sure you have the latest version of node.js and npm installed.
+npm ERR! If you do, this is most likely a problem with the meteor-dev-bundle package,
+npm ERR! not with npm itself.
+npm ERR! Tell the author that this fails on your system:
+npm ERR!     node ../../main
+npm ERR! You can get information on how to open an issue for this project with:
+npm ERR!     npm bugs meteor-dev-bundle
+npm ERR! Or if that isn&amp;rsquo;t available, you can get their info via:
+npm ERR!     npm owner ls meteor-dev-bundle
+npm ERR! There is likely additional logging output above.&lt;/p&gt;
+
+&lt;p&gt;npm ERR! Please include the following file with any support request:
+npm ERR!     /Users/chengjun/GitHub/tutorial/.demeteorized/bundle/programs/server/npm-debug.log
+chengjuns-MacBook&lt;/p&gt;
+</description>
+    </item>
     
     <item>
       <title>scholarNetwork: Visualizing Google Scholar Network</title>
@@ -71,6 +2482,1148 @@ Lingfei Wu wlf850927@gmail.com&lt;/p&gt;
 &lt;p&gt;Of course, you can get a much larger graph to see what&amp;rsquo;s happening around you, just to change the value of Nmax. However, you have to be patient to wait for much longer time.&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&#34;https://chengjunwang.com/img/qiniu/ego300large.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>中国大百科：计算传播学</title>
+      <link>https://chengjunwang.com/zh/cn/2017-10-29-ccr.zh/</link>
+      <pubDate>Sun, 29 Oct 2017 00:00:00 +0000</pubDate>
+      <guid>https://chengjunwang.com/zh/cn/2017-10-29-ccr.zh/</guid>
+      <description>
+
+&lt;ul&gt;
+&lt;li&gt;中文名称：计算传播学&lt;/li&gt;
+&lt;li&gt;拼音：jisuan chuanbo&lt;br /&gt;&lt;/li&gt;
+&lt;li&gt;外文名称：Computational Communication Research&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;基本概念条（长）&lt;/p&gt;
+
+&lt;h1 id=&#34;1-定义和定性叙述&#34;&gt;1.    定义和定性叙述&lt;/h1&gt;
+
+&lt;p&gt;计算传播学是计算社会科学一个重要分支，它主要关注人类传播行为可计算的基础问题，以传播网络分析、传播文本挖掘、数据科学等作为主要的分析工具，大规模地收集并分析人类传播行为背后的模式或法则，并分析模式背后的生成机制以及基本原理，可以被广泛地应用到新闻学研究、 数据新闻和计算广告等场景。狭义的计算传播是指数据驱动的、借助于可算方法所进行的传播过程，而分析计算传播现象的研究领域就是计算传播学。&lt;/p&gt;
+
+&lt;h1 id=&#34;2-名称来源-又名&#34;&gt;2.    名称来源、又名&lt;/h1&gt;
+
+&lt;p&gt;计算传播学（英文：computational communication research）起源于计算社会科学（英文：computational social science）。2009年，Lazer等一批社会科学家、计算机科学家和物理学家在《科学》杂志上发表题为 “网络中的生活:计算社会科学时代的到来”的论文，宣告计算社会科学的诞生，提出发展计算 社会科学的主要逻辑在于我们就生活在网络之中，例如发邮件、打电话、在线支付。这些网络化的行为以数字化痕迹的方式被记录下来。计算社会科学是一个正在涌现的研究领域，强调采用计算方法研究社会科学，在利用人类社会不断增强的数据收集和分析能力方面。21世纪是计算社会科学的时代。计算社会科学具备前所未有的广度、深度和规模，为研究者提供了一个理解复杂社会系统的崭新机会。毫无疑问，采用可算方法、基于大规模的互联网上的人类传播行为数据为代表的传播学研究属于计算社会科学这一研究传统。&lt;/p&gt;
+
+&lt;h1 id=&#34;3-概念形成过程&#34;&gt;3.    概念形成过程&lt;/h1&gt;
+
+&lt;p&gt;计算传播学的概念起源于是计算社会科学的发展。计算社会科学以分析社会系统的复杂性作为主要研究范式。社会系统作为一个复杂系统，本身包含了多重本体以及他们之间众多的联系，既有从微观到宏观的联系，也有从宏观到微观的影 响，这造就了社会现象所特有的复杂性。计算社会科学研究主要关注复杂社会系统中的社会现象、社会行为、社会 组织的涌现，例如居住隔离、合作、互惠、社会规范、市场、国家。计算社会科学中的“涌现” 往往表现为一种群体智慧，它是通过海量的异质性个体之间的互动而在群体层面出现的结果。作为一种崭新的研究范式，计算社会科学从数据基础和计算方法两个层面丰富了人们对于 社会现象的认识。&lt;/p&gt;
+
+&lt;p&gt;互联网上的人类传播行为是驱动计算社会科学发展的一个主要动力。与自然科学相比，社会现象卷入了海量的异质性个体的互动行为，因而异常复杂并且难以预测。通常社会科学研究的数据往往是用户报告的、静态的、小规模数据。互联网行为数据和大规模的互联网实验却提供了另外一种可能性。邓肯•瓦茨认为互联网传播数据将会变革我们对于群体人类行为的理解，并产生了一种新的社会科学，邓肯•瓦茨称之为“二十一世纪的科学”，也就是后来广为人知的“计算社会科学”。&lt;/p&gt;
+
+&lt;p&gt;Shah等人曾提出目前社交数据多为传播文本数据，并且与图形数据和视频数据相比，传播文本数据相对容易分析，因而计算社会科学将 传播文本数据作为关注焦点之一，并认为这意味着计算传播学(computational communication science)的兴起。Cohen等人2011年就提出采用计算机科学技术发展新闻学的主张。发展计算传播学研究已经成为计算社会科学在新闻传播领域主要工作。2014年祝建华等人回顾和讨论了计算社会科学在新闻传播领域的应用，按照经典的5W模型，系统介绍了计算社会科学在传播者、渠道、受众、内容、效果 五个领域的主要应用案例;(祝建华等，2014:p.3-13)。2014年，计算传播学作为一个正式的研究领域被提出，王成军从计算社会科学的视角论述了计算传播学的理论框架，强调了寻找人类传播行为“可计算的基因”作为计算传播学发展的基础，以传播网络分析和传播文本挖掘作为主要的研究方法。2015年第一本计算传播学相关的图书《社交网络上的计算传播学》出版，这本书系统总结了采用计算传播学的视角进行社交网络研究的方法、理论和进展。2015年，南京大学成立了计算传播学实验中心，2016年第一届计算传播学论坛召开。计算传播学研究社群的涌现及其建制化发展有助于建立身份认同、促进科研合作、增强 学科间对话、运用群体智慧解决现实和理论问题。&lt;/p&gt;
+
+&lt;h1 id=&#34;4-基本内容&#34;&gt;4. 基本内容&lt;/h1&gt;
+
+&lt;p&gt;一、计算传播学的定义首先强调的的人类传播行为可计算的基础。人类的传播行为、传播过程和传播技术构建了一种社会复杂系统。海量的数据和不断提升的计算能力为回答人类传播学的可计算性问题提供了重要条件。以新闻扩散研究为例， 1945年Miller 在《美国社会学评论》发表题为“一个大众传播研究笔记:我们的社区怎样知道罗斯福总统的 死讯”一文。这一研究传统经历了由盛到衰，直到社交媒体发展起来又重新复兴的过程。新闻扩散研究主要关注人们通过何种渠道获知新闻，尤其是社交和(大众)媒体在其中所扮演的角色。其中，以 Greenberg的研究最为精彩，他发现社交作用与新闻扩散规模之间存在“J”形曲线关系，即对于一些小的新闻事件，社交影响与扩散规模呈反比(可能主要靠媒体传播);对于重大的新闻，社交作用则可以促进新闻扩散。然而受到传统研究方式的限制， 研究者只能采用调查问卷的方式请受访者回忆并填写相应情况，所研究的议题也往往是总统遇 刺等突发新闻事件(往往需要被动地组织研究)，因而无论所选取的新闻事件的数量还是受访者的数量均有限，这在很大程度上限制了这一研究传统。而计算社会科学的方法和工具则可以 帮助新闻扩散研究突破选题和样本的限制。王成军利用新浪微博上的大规模信息扩散数据，采用网络门槛来度量社交影响。网络门槛起源于格兰诺维特所提出的门槛理论。门槛理论假设个体是否参加某种行为的决定主要取决于他或她的朋友参与的比例。该研究验证了“J”形曲线理论;并且发现信息扩散的深度可以调节社交作用的影响，那些扩散深度低的信息往往是局部社区的信息(无法穿透社区的束缚)，社交作用(以网络门槛度量)将限制它的扩散，例如传播一个普通人生日信息的人往往 是他或她最亲密的朋友，社交作用很强，但扩散规模很小。&lt;/p&gt;
+
+&lt;p&gt;二、计算传播学强调了对海量数据的收集、分析和挖掘。驱动计算传播的数据主要来自人类使用数字媒体时记录下来的数字痕迹或数字指纹。例如，当我们通过有线电视观看电视节目的时候、通过手机打电话的时候、通过互联网使用社交网站的时候，我们的行为都会被数字媒体详细地记录下来。这些海量的人类传播行为数据和媒体使用记录的数据构成了采用计算方法研究人类传播行为的基础。&lt;/p&gt;
+
+&lt;p&gt;三、计算传播学强调对于基于数据的清洗、分析、挖掘等计算的过程。恰如伽利略通过自己改进的天文望远镜研究天文学，计算传播学主张利用强大的计算工具研究社会问题，例如自动化信息提取、网络分析、地理空间分析、复杂性模型、社会模拟模型等。在传统的内容分析中，需要编码员人工识别文本中的信息，采用文本挖掘的方法，可以自动地提取社会事件的属性，如事件、地点、参与者、文本的主题、文本的情感等。&lt;/p&gt;
+
+&lt;p&gt;四、计算传播学强调了将大问题、大理论和大数据相结合。驱动计算传播学发展的主要力量来源于人类传播行为当中的重大问题，发展计算传播研究有助于解决新闻产业变革过程中发现的理论问题和实际困惑。就理论视角而言，计算传播学更加倾向于从复杂性的角度看待传播行为和传播过程。这种复杂性的思维方式需要研究者具备对复杂系统分析的能力和方法。值得注意的是，2017年瓦茨再次发表多篇反思计算社会科学的文章，提倡计算社会科学应该更加强调以寻找 解决方案为导向(solution-oriented)，因为社会科学存在太多的相互之间不一致的理论，而这些理论往往不能很容易地验证。寻找解决方案为导向对于新闻产业非常有价值，以新闻推荐系统为例(比如今日头 条)，如何实现更为精准的新闻推荐亟需寻找更加有价值的视角、方法和理论，可以预见经过新闻传播产业检验的理论也将具有更强的解释力和预测力。&lt;/p&gt;
+
+&lt;p&gt;五、计算传播学强调了计算社会科学在理论建构方面所追求的抽象阶梯，即一个好的研究必须是重大的社会问题驱动的，并且能够找到好的数据作为支撑(第一个阶梯);要能够从数据当中挖掘出行为的模式 (第二个阶梯);最好可以阐明模式背后对应的机制(第三个阶梯);并尝试理解背后的基本原理(第四个阶梯，往往难以企及)。从数据、模式、机制、原理这样一个不断提高的抽象的阶梯，可以衡量不同的研究所处的状态和水平，为衡量计算传播学的研究提供了一个基本的标准。&lt;/p&gt;
+
+&lt;h1 id=&#34;5-意义和影响&#34;&gt;5.    意义和影响&lt;/h1&gt;
+
+&lt;p&gt;计算传播的应用有很多，例如数据新闻、计算广告、媒体推荐系统等。计算传播学在过去的几年里，产生了深远的影响。数据新闻风靡全球，重要的国际媒体纷纷采用数据新闻，基于开放数据、数据挖掘与可视化的方式为公众提供信息和经过数据分析所发现的知识；不管是门户网站、搜索引擎、社交媒体，纷纷将计算广告作为数据变现的重要渠道，以计算方法对广告进行拍卖，实现媒体、用户、广告主三方利益的匹配；媒体推荐系统成为个性化的信息获取途径，不管是传统的社交新闻网站，还是今日头条等后起之秀，纷纷采用协同过滤的方式为用户提供信息。&lt;/p&gt;
+
+&lt;h1 id=&#34;6-参考文献&#34;&gt;6.    参考文献&lt;/h1&gt;
+
+&lt;p&gt;Watts, D.J., &amp;laquo;A twenty-first century science,&amp;raquo; Nature 445 (127) (2007):p.489.&lt;/p&gt;
+
+&lt;p&gt;Lazer, D., et al., &amp;laquo;Life in the network: The coming age of computational social science,&amp;raquo; Science 323 (5915)(2009):pp.721-723.&lt;/p&gt;
+
+&lt;p&gt;Greenberg, B.S., &amp;laquo;Person-to-Person Communication in the Diffusion of News Events,&amp;raquo; Journalism Quarterly 41 (4)(1964):pp.489-494.&lt;/p&gt;
+
+&lt;p&gt;Watts, D.J., &amp;laquo;Should social science be more solution-oriented?&amp;raquo; Nature Human Behaviour 1 (2017):p.0015.&lt;/p&gt;
+
+&lt;p&gt;王成军.计算传播学:作为计算社会科学的传播学[J].中国网络传播研究，2014，第193-206页.&lt;/p&gt;
+
+&lt;p&gt;王成军.计算传播学的起源、概念和应用[J].编辑学刊，2016(3)，第59-64页.&lt;/p&gt;
+
+&lt;p&gt;祝建华、彭泰权、梁海、王成军、秦洁、陈鹤鑫.计算社会科学在新闻传播研究中的应用[J].科研信息化技术与应用，2014(2)，第3-13页.&lt;/p&gt;
+
+&lt;p&gt;王成军 (2017).计算社会科学视野下的新闻学研究：挑战与机遇[J]. 新闻大学, 4:26-32&lt;/p&gt;
+
+&lt;h1 id=&#34;7-推荐书目&#34;&gt;7.    推荐书目&lt;/h1&gt;
+
+&lt;p&gt;许小可、胡海波、张伦、王成军 （2015）社交网络上的计算传播学. 北京：中国科学出版社.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;撰稿：王成军&lt;/li&gt;
+&lt;li&gt;审稿：巢乃鹏&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>后记</title>
+      <link>https://chengjunwang.com/zh/cn/2017-12-05-backwords.zh/</link>
+      <pubDate>Sun, 29 Oct 2017 00:00:00 +0000</pubDate>
+      <guid>https://chengjunwang.com/zh/cn/2017-12-05-backwords.zh/</guid>
+      <description>&lt;p&gt;2010年9月，我作为博士生进入到香港城市大学互联网挖掘实验室以来，切身感受到了传播学研究者在互联网时代的身份焦虑。1998年邓肯-瓦茨关于小世界网络的模型和1999年阿尔伯特-巴拉巴西关于幂律和无标度网络的研究复兴了网络科学。一石激起千层浪，在学术领域产生了深远的影响。对于万维网上的人类行为的研究也形成了一个子领域，被称之为万维网科学(Web Science);伴随着社交媒体等数字媒体的发展，对于社会学而言，社会网络分析开始受到前所未有的重视，对于传播学而言，社交网络上的信息流动网络研究也引起广泛的兴趣；与此同时，机器学习和数据科学取得了突飞猛进的发展，进一步加速了计算化的浪潮；在新闻传播产业当中，数据驱动的新闻生产、计算广告和媒体推荐系统开始成为席卷世界的潮流。面对海量的互联网数据、持续困扰人类的重大社会问题、崭新的理论视角、诱人的物理学模型，在世界大战中发展起来的新闻传播学研究会走向什么地方？这构成了困扰我们的时代问题。&lt;/p&gt;
+
+&lt;p&gt;面对这些挑战，或许很多人可以做一群鸵鸟，只盯住让自己感觉舒适的领域，当危险来的时候干脆把头埋进沙子里，但是年轻人没有逃避的理由。年轻研究者必须敢于冒险，才能走出不一样的路来。计算传播学正是回应这一时代叩问的一种尝试，它也给了传播学这个领域一个革命的火种。&lt;/p&gt;
+
+&lt;p&gt;“计算传播学”这个词的提出源于香港城市大学互联网挖掘实验室成员之间在2012年初的一次组会讨论。每周，祝建华老师都会组织实验室成员进行内部讨论，讨论的主要内容除了每个人的研究进展之外，还包括文献分享、经验见闻等内容。在我的印象里，在这次讨论当中，我们再一次讨论了2009年大卫-拉泽等人发表在科学杂志上的一篇文章《计算社会科学》。在这篇文章当中，来自社会科学、计算机科学、网络科学等领域的资深研究者们宣告了计算社会科学的诞生，它以大规模数据收集和数据分析作为主要的工具，采用网络科学作为主要的研究视角，力图揭示个体和群体行为的模式。2012年1月29日，我在新浪博客上写了一篇短文《计算传播学:宣言与版图》，强调了将寻找人类传播行为的可计算基因作为计算传播学的发展使命。这篇小文章首先在一个名为《数字媒体阅读报告》的小圈子里流传。
+在2月14日，我在与澳大利亚国立大学的指导老师Robert Ackland的邮件通信中，我提出了我想要做计算传播方面的研究的想法。2012年2月21日-23日，林武来实验室交流，分享了关于Python编程基础、数据抓取、hadoop使用等方面的知识。应该是2月21日或者2月22日，在实验室组会上，当我们再次讨论到在计算社会科学时代，我们自己期待传播学将走向什么地方这一时代问题的时候，我再次提出了计算传播（computational communication）的思路。当天晚上，吴令飞、汪臻真、我三个人在又一城散步的时候，令飞很郑重地说应该重视计算传播学的发展，在他的提议之下，2012年2月22日计算传播学谷歌邮件组建立。2月29日吴令飞在计算传播学谷歌邮件组发了第一封邮件，分享了抓取Alexa点击流网络的Python代码；2012年3月26日，计算传播学豆瓣小站正式建立。2012年底，吴令飞在多贝上发布了一系列计算传播学课程，后来更名为计算社会科学系列课程，之后他完成新书《Data Mining in Social Science》，发布在GitBook上，可免费在线阅读或者下载PDF。&lt;/p&gt;
+
+&lt;p&gt;2017年春季，在酝酿第二届计算传播学论坛暨工作坊的过程中，许小可老师、张伦老师、胡海波老师和我开始计划写一本《计算传播学导论》书。按照祝建华老师的建议，我们曾对参加了2016年第一届计算传播学论坛的研究者公开征集计算传播学工作坊的题目。经过汇总整理之后的题目包括：计算机模拟/多主体建模、社交媒体数据爬取、传播文本挖掘和主题模型分析、使用深度学习进行传播学研究、社交媒体数据的时间序列分析和空间分析、传播学研究和数据新闻的可视化方法、传播网络分析（社区识别、复杂网络与信息流动）、机器学习、意见形成、Python编程，以及如何教授新闻传播学专业的学生网络分析/数据新闻/编程。我们的想法是每年遴选两个主题组织计算传播学工作坊，系统地整理和组织工作坊教学材料，基于此形成《计算传播学导论》一书的基本材料。2017年2月22-23日，第一届计算传播学工作坊在南京大学成功举办。为期一天半，分为两个子题并行进行，分别为“信息传播的网络分析”(Network Approaches to Information Diffusion)和“文本数据处理方法”(Processing Text Data)。前者定位为高级程度，聚焦于计算传播学研究中的一个核心而又困难的题目，以探讨研究设计、理论模型、数据要求、方法选择等问题为主、操作问题为辅，适合已掌握基本方法并有一定研究经验者。后者定位为入门程度，介绍用于文本数据处理的各个步骤上的方法、工具、算法等，含有众多动手操作。这次工作坊“信息传播的网络分析”部分由张子柯和王成军主讲《网络信息传播基础》、许小可讲《网络信息传播实证研究》、胡海波和阮中远讲解《网络信息传播模型》，“文本数据处理方法”部分又张伦主讲《文本分析的基本步骤与方法》、王成军介绍《主题模型》、汪臻真主讲《情感分析》。&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>扶贫数据</title>
+      <link>https://chengjunwang.com/zh/cn/2017-11-20-poverty.zh/</link>
+      <pubDate>Sun, 29 Oct 2017 00:00:00 +0000</pubDate>
+      <guid>https://chengjunwang.com/zh/cn/2017-11-20-poverty.zh/</guid>
+      <description>&lt;p&gt;党的十九大报告再次对打赢脱贫攻坚战作出部署，明确指出重点攻克深度贫困地区脱贫任务，确保到2020年我国现行标准下农村人口实现脱贫，贫困县全部摘帽，解决区域性整体贫困，做到脱真贫、真脱贫。&lt;/p&gt;
+
+&lt;p&gt;全国6000多万贫困人口稳定脱贫，贫困发生率从10.2%下降到4%以下。精准扶贫，不仅要精准施策，而且要精准到户。&lt;/p&gt;
+
+&lt;p&gt;眼下，脱贫攻坚战的主战场正在转移到深度贫困地区。今年6月份，习近平总书记在山西考察时，深刻论述了深度贫困问题。扶贫攻坚从精准扶贫到瞄准深度贫困，既是认识的深化&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>JCR2017 for COMMUNICATION</title>
+      <link>https://chengjunwang.com/zh/cn/2017-09-06-jcr.zh/</link>
+      <pubDate>Wed, 06 Sep 2017 00:00:00 +0000</pubDate>
+      <guid>https://chengjunwang.com/zh/cn/2017-09-06-jcr.zh/</guid>
+      <description>
+
+&lt;h1 id=&#34;jcr&#34;&gt;JCR&lt;/h1&gt;
+
+&lt;p&gt;Journal Data Filtered By:  Selected JCR Year: 2016 Selected Editions: SCIE,SSCI Selected Categories: &amp;lsquo;COMMUNICATION&amp;rsquo; Selected Category Scheme: WoS&lt;/p&gt;
+
+&lt;h2 id=&#34;sci和scie&#34;&gt;SCI和SCIE&lt;/h2&gt;
+
+&lt;p&gt;SCI和SCIE（SCI Expanded）分别是科学引文索引及科学引文索引扩展版（即网络版），主要是收录自然科学、工程技术领域最具影响力的重要期刊，包括2000多种外围刊。&lt;/p&gt;
+
+&lt;h2 id=&#34;table&#34;&gt;Table&lt;/h2&gt;
+
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Rank&lt;/th&gt;
+&lt;th&gt;Full Journal  Title&lt;/th&gt;
+&lt;th&gt;Total  Cites&lt;/th&gt;
+&lt;th&gt;Journal Impact  Factor&lt;/th&gt;
+&lt;th&gt;Eigenfactor  Score&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;1&lt;/td&gt;
+&lt;td&gt;NEW  MEDIA &amp;amp; SOCIETY&lt;/td&gt;
+&lt;td&gt;3,592&lt;/td&gt;
+&lt;td&gt;4.180&lt;/td&gt;
+&lt;td&gt;0.009310&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;2&lt;/td&gt;
+&lt;td&gt;Journal  of Computer-Mediated Communication&lt;/td&gt;
+&lt;td&gt;4,011&lt;/td&gt;
+&lt;td&gt;4.113&lt;/td&gt;
+&lt;td&gt;0.005010&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;3&lt;/td&gt;
+&lt;td&gt;JOURNAL  OF COMMUNICATION&lt;/td&gt;
+&lt;td&gt;5,579&lt;/td&gt;
+&lt;td&gt;3.914&lt;/td&gt;
+&lt;td&gt;0.008400&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;4&lt;/td&gt;
+&lt;td&gt;MEDIA  PSYCHOLOGY&lt;/td&gt;
+&lt;td&gt;1,264&lt;/td&gt;
+&lt;td&gt;3.125&lt;/td&gt;
+&lt;td&gt;0.001440&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;5&lt;/td&gt;
+&lt;td&gt;COMMUNICATION  RESEARCH&lt;/td&gt;
+&lt;td&gt;3,459&lt;/td&gt;
+&lt;td&gt;3.021&lt;/td&gt;
+&lt;td&gt;0.004410&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;6&lt;/td&gt;
+&lt;td&gt;JOURNAL  OF ADVERTISING&lt;/td&gt;
+&lt;td&gt;3,425&lt;/td&gt;
+&lt;td&gt;2.896&lt;/td&gt;
+&lt;td&gt;0.001740&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;7&lt;/td&gt;
+&lt;td&gt;COMMUNICATION  THEORY&lt;/td&gt;
+&lt;td&gt;1,834&lt;/td&gt;
+&lt;td&gt;2.773&lt;/td&gt;
+&lt;td&gt;0.002080&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;8&lt;/td&gt;
+&lt;td&gt;Information  Communication &amp;amp; Society&lt;/td&gt;
+&lt;td&gt;2,005&lt;/td&gt;
+&lt;td&gt;2.692&lt;/td&gt;
+&lt;td&gt;0.006010&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;9&lt;/td&gt;
+&lt;td&gt;PUBLIC  UNDERSTANDING OF SCIENCE&lt;/td&gt;
+&lt;td&gt;2,007&lt;/td&gt;
+&lt;td&gt;2.552&lt;/td&gt;
+&lt;td&gt;0.003150&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;10&lt;/td&gt;
+&lt;td&gt;POLITICAL  COMMUNICATION&lt;/td&gt;
+&lt;td&gt;1,645&lt;/td&gt;
+&lt;td&gt;2.467&lt;/td&gt;
+&lt;td&gt;0.002930&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;11&lt;/td&gt;
+&lt;td&gt;International  Journal of Advertising&lt;/td&gt;
+&lt;td&gt;1,308&lt;/td&gt;
+&lt;td&gt;2.451&lt;/td&gt;
+&lt;td&gt;0.001150&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;12&lt;/td&gt;
+&lt;td&gt;Comunicar&lt;/td&gt;
+&lt;td&gt;641&lt;/td&gt;
+&lt;td&gt;2.212&lt;/td&gt;
+&lt;td&gt;0.000650&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;13&lt;/td&gt;
+&lt;td&gt;IEEE  TRANSACTIONS ON PROFESSIONAL COMMUNICATION&lt;/td&gt;
+&lt;td&gt;515&lt;/td&gt;
+&lt;td&gt;2.184&lt;/td&gt;
+&lt;td&gt;0.000470&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;14&lt;/td&gt;
+&lt;td&gt;TECHNICAL  COMMUNICATION&lt;/td&gt;
+&lt;td&gt;615&lt;/td&gt;
+&lt;td&gt;2.100&lt;/td&gt;
+&lt;td&gt;0.000340&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;15&lt;/td&gt;
+&lt;td&gt;JOURNAL  OF ADVERTISING RESEARCH&lt;/td&gt;
+&lt;td&gt;2,514&lt;/td&gt;
+&lt;td&gt;2.034&lt;/td&gt;
+&lt;td&gt;0.000920&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;16&lt;/td&gt;
+&lt;td&gt;Journalism  Studies&lt;/td&gt;
+&lt;td&gt;1,335&lt;/td&gt;
+&lt;td&gt;1.927&lt;/td&gt;
+&lt;td&gt;0.002760&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;17&lt;/td&gt;
+&lt;td&gt;RESEARCH  ON LANGUAGE AND SOCIAL INTERACTION&lt;/td&gt;
+&lt;td&gt;1,016&lt;/td&gt;
+&lt;td&gt;1.896&lt;/td&gt;
+&lt;td&gt;0.003010&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;18&lt;/td&gt;
+&lt;td&gt;SCIENCE  COMMUNICATION&lt;/td&gt;
+&lt;td&gt;968&lt;/td&gt;
+&lt;td&gt;1.852&lt;/td&gt;
+&lt;td&gt;0.001640&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;19&lt;/td&gt;
+&lt;td&gt;COMMUNICATION  MONOGRAPHS&lt;/td&gt;
+&lt;td&gt;2,134&lt;/td&gt;
+&lt;td&gt;1.738&lt;/td&gt;
+&lt;td&gt;0.001150&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;20&lt;/td&gt;
+&lt;td&gt;Journal  of Public Relations Research&lt;/td&gt;
+&lt;td&gt;961&lt;/td&gt;
+&lt;td&gt;1.720&lt;/td&gt;
+&lt;td&gt;0.001000&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;21&lt;/td&gt;
+&lt;td&gt;JOURNAL  OF HEALTH COMMUNICATION&lt;/td&gt;
+&lt;td&gt;3,233&lt;/td&gt;
+&lt;td&gt;1.614&lt;/td&gt;
+&lt;td&gt;0.007080&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;22&lt;/td&gt;
+&lt;td&gt;HUMAN  COMMUNICATION RESEARCH&lt;/td&gt;
+&lt;td&gt;2,836&lt;/td&gt;
+&lt;td&gt;1.549&lt;/td&gt;
+&lt;td&gt;0.001950&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;23&lt;/td&gt;
+&lt;td&gt;TELECOMMUNICATIONS  POLICY&lt;/td&gt;
+&lt;td&gt;1,509&lt;/td&gt;
+&lt;td&gt;1.526&lt;/td&gt;
+&lt;td&gt;0.002270&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;24&lt;/td&gt;
+&lt;td&gt;International  Journal of Press-Politics&lt;/td&gt;
+&lt;td&gt;546&lt;/td&gt;
+&lt;td&gt;1.523&lt;/td&gt;
+&lt;td&gt;0.002120&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;25&lt;/td&gt;
+&lt;td&gt;International  Journal of Communication&lt;/td&gt;
+&lt;td&gt;1,277&lt;/td&gt;
+&lt;td&gt;1.498&lt;/td&gt;
+&lt;td&gt;0.005030&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;26&lt;/td&gt;
+&lt;td&gt;HEALTH  COMMUNICATION&lt;/td&gt;
+&lt;td&gt;2,207&lt;/td&gt;
+&lt;td&gt;1.487&lt;/td&gt;
+&lt;td&gt;0.004080&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;27&lt;/td&gt;
+&lt;td&gt;Journalism&lt;/td&gt;
+&lt;td&gt;1,204&lt;/td&gt;
+&lt;td&gt;1.484&lt;/td&gt;
+&lt;td&gt;0.003890&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;28&lt;/td&gt;
+&lt;td&gt;JOURNAL  OF SOCIAL AND PERSONAL RELATIONSHIPS&lt;/td&gt;
+&lt;td&gt;2,675&lt;/td&gt;
+&lt;td&gt;1.425&lt;/td&gt;
+&lt;td&gt;0.003050&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;29&lt;/td&gt;
+&lt;td&gt;Environmental  Communication-A Journal of Nature and Culture&lt;/td&gt;
+&lt;td&gt;371&lt;/td&gt;
+&lt;td&gt;1.414&lt;/td&gt;
+&lt;td&gt;0.000820&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;30&lt;/td&gt;
+&lt;td&gt;EUROPEAN  JOURNAL OF COMMUNICATION&lt;/td&gt;
+&lt;td&gt;885&lt;/td&gt;
+&lt;td&gt;1.408&lt;/td&gt;
+&lt;td&gt;0.001570&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;31&lt;/td&gt;
+&lt;td&gt;PUBLIC  OPINION QUARTERLY&lt;/td&gt;
+&lt;td&gt;4,893&lt;/td&gt;
+&lt;td&gt;1.386&lt;/td&gt;
+&lt;td&gt;0.005970&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;32&lt;/td&gt;
+&lt;td&gt;Television  &amp;amp; New Media&lt;/td&gt;
+&lt;td&gt;417&lt;/td&gt;
+&lt;td&gt;1.365&lt;/td&gt;
+&lt;td&gt;0.001080&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;33&lt;/td&gt;
+&lt;td&gt;JOURNAL  OF BROADCASTING &amp;amp; ELECTRONIC MEDIA&lt;/td&gt;
+&lt;td&gt;1,874&lt;/td&gt;
+&lt;td&gt;1.311&lt;/td&gt;
+&lt;td&gt;0.002040&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;33&lt;/td&gt;
+&lt;td&gt;PUBLIC  RELATIONS REVIEW&lt;/td&gt;
+&lt;td&gt;2,704&lt;/td&gt;
+&lt;td&gt;1.311&lt;/td&gt;
+&lt;td&gt;0.003070&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;35&lt;/td&gt;
+&lt;td&gt;Mass  Communication and Society&lt;/td&gt;
+&lt;td&gt;984&lt;/td&gt;
+&lt;td&gt;1.308&lt;/td&gt;
+&lt;td&gt;0.001660&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;36&lt;/td&gt;
+&lt;td&gt;JOURNALISM  &amp;amp; MASS COMMUNICATION QUARTERLY&lt;/td&gt;
+&lt;td&gt;1,574&lt;/td&gt;
+&lt;td&gt;1.301&lt;/td&gt;
+&lt;td&gt;0.001620&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;37&lt;/td&gt;
+&lt;td&gt;JOURNAL  OF LANGUAGE AND SOCIAL PSYCHOLOGY&lt;/td&gt;
+&lt;td&gt;1,011&lt;/td&gt;
+&lt;td&gt;1.272&lt;/td&gt;
+&lt;td&gt;0.000910&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;38&lt;/td&gt;
+&lt;td&gt;INTERNATIONAL  JOURNAL OF PUBLIC OPINION RESEARCH&lt;/td&gt;
+&lt;td&gt;851&lt;/td&gt;
+&lt;td&gt;1.254&lt;/td&gt;
+&lt;td&gt;0.001770&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;39&lt;/td&gt;
+&lt;td&gt;WRITTEN  COMMUNICATION&lt;/td&gt;
+&lt;td&gt;669&lt;/td&gt;
+&lt;td&gt;1.200&lt;/td&gt;
+&lt;td&gt;0.000850&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;40&lt;/td&gt;
+&lt;td&gt;MEDIA  CULTURE &amp;amp; SOCIETY&lt;/td&gt;
+&lt;td&gt;1,533&lt;/td&gt;
+&lt;td&gt;1.128&lt;/td&gt;
+&lt;td&gt;0.003180&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;41&lt;/td&gt;
+&lt;td&gt;Games  and Culture&lt;/td&gt;
+&lt;td&gt;436&lt;/td&gt;
+&lt;td&gt;1.109&lt;/td&gt;
+&lt;td&gt;0.000410&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;42&lt;/td&gt;
+&lt;td&gt;Management  Communication Quarterly&lt;/td&gt;
+&lt;td&gt;995&lt;/td&gt;
+&lt;td&gt;1.091&lt;/td&gt;
+&lt;td&gt;0.001130&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;43&lt;/td&gt;
+&lt;td&gt;Discourse  &amp;amp; Communication&lt;/td&gt;
+&lt;td&gt;326&lt;/td&gt;
+&lt;td&gt;1.085&lt;/td&gt;
+&lt;td&gt;0.000850&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;44&lt;/td&gt;
+&lt;td&gt;JOURNAL  OF BUSINESS AND TECHNICAL COMMUNICATION&lt;/td&gt;
+&lt;td&gt;243&lt;/td&gt;
+&lt;td&gt;1.062&lt;/td&gt;
+&lt;td&gt;0.000260&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;45&lt;/td&gt;
+&lt;td&gt;Journal  of Media Psychology-Theories Methods and Applications&lt;/td&gt;
+&lt;td&gt;292&lt;/td&gt;
+&lt;td&gt;1.057&lt;/td&gt;
+&lt;td&gt;0.000680&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;46&lt;/td&gt;
+&lt;td&gt;Ecquid  Novi-African Journalism Studies&lt;/td&gt;
+&lt;td&gt;153&lt;/td&gt;
+&lt;td&gt;1.056&lt;/td&gt;
+&lt;td&gt;0.000450&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;47&lt;/td&gt;
+&lt;td&gt;DISCOURSE  &amp;amp; SOCIETY&lt;/td&gt;
+&lt;td&gt;1,354&lt;/td&gt;
+&lt;td&gt;1.029&lt;/td&gt;
+&lt;td&gt;0.001420&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;48&lt;/td&gt;
+&lt;td&gt;Discourse  Context &amp;amp; Media&lt;/td&gt;
+&lt;td&gt;89&lt;/td&gt;
+&lt;td&gt;1.000&lt;/td&gt;
+&lt;td&gt;0.000590&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;49&lt;/td&gt;
+&lt;td&gt;Interaction  Studies&lt;/td&gt;
+&lt;td&gt;370&lt;/td&gt;
+&lt;td&gt;0.958&lt;/td&gt;
+&lt;td&gt;0.000660&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;50&lt;/td&gt;
+&lt;td&gt;Convergence-The  International Journal of Research into New Media Technologies&lt;/td&gt;
+&lt;td&gt;455&lt;/td&gt;
+&lt;td&gt;0.950&lt;/td&gt;
+&lt;td&gt;0.000870&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;51&lt;/td&gt;
+&lt;td&gt;Communications-European  Journal of Communication Research&lt;/td&gt;
+&lt;td&gt;340&lt;/td&gt;
+&lt;td&gt;0.933&lt;/td&gt;
+&lt;td&gt;0.000460&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;52&lt;/td&gt;
+&lt;td&gt;Critical  Discourse Studies&lt;/td&gt;
+&lt;td&gt;308&lt;/td&gt;
+&lt;td&gt;0.882&lt;/td&gt;
+&lt;td&gt;0.001090&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;53&lt;/td&gt;
+&lt;td&gt;CRITICAL  STUDIES IN MEDIA COMMUNICATION&lt;/td&gt;
+&lt;td&gt;448&lt;/td&gt;
+&lt;td&gt;0.881&lt;/td&gt;
+&lt;td&gt;0.000560&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;54&lt;/td&gt;
+&lt;td&gt;DISCOURSE  STUDIES&lt;/td&gt;
+&lt;td&gt;1,046&lt;/td&gt;
+&lt;td&gt;0.833&lt;/td&gt;
+&lt;td&gt;0.001650&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;55&lt;/td&gt;
+&lt;td&gt;LANGUAGE  &amp;amp; COMMUNICATION&lt;/td&gt;
+&lt;td&gt;848&lt;/td&gt;
+&lt;td&gt;0.793&lt;/td&gt;
+&lt;td&gt;0.001080&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;56&lt;/td&gt;
+&lt;td&gt;INTERNATIONAL  JOURNAL OF CONFLICT MANAGEMENT&lt;/td&gt;
+&lt;td&gt;652&lt;/td&gt;
+&lt;td&gt;0.786&lt;/td&gt;
+&lt;td&gt;0.000290&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;57&lt;/td&gt;
+&lt;td&gt;Communication  and Critical-Cultural Studies&lt;/td&gt;
+&lt;td&gt;249&lt;/td&gt;
+&lt;td&gt;0.767&lt;/td&gt;
+&lt;td&gt;0.000670&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;58&lt;/td&gt;
+&lt;td&gt;PERSONAL  RELATIONSHIPS&lt;/td&gt;
+&lt;td&gt;1,856&lt;/td&gt;
+&lt;td&gt;0.739&lt;/td&gt;
+&lt;td&gt;0.002100&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;59&lt;/td&gt;
+&lt;td&gt;Argumentation&lt;/td&gt;
+&lt;td&gt;324&lt;/td&gt;
+&lt;td&gt;0.689&lt;/td&gt;
+&lt;td&gt;0.000310&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;59&lt;/td&gt;
+&lt;td&gt;Visual  Communication&lt;/td&gt;
+&lt;td&gt;353&lt;/td&gt;
+&lt;td&gt;0.689&lt;/td&gt;
+&lt;td&gt;0.000760&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;61&lt;/td&gt;
+&lt;td&gt;Translator&lt;/td&gt;
+&lt;td&gt;236&lt;/td&gt;
+&lt;td&gt;0.686&lt;/td&gt;
+&lt;td&gt;0.000280&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;62&lt;/td&gt;
+&lt;td&gt;Asian  Journal of Communication&lt;/td&gt;
+&lt;td&gt;347&lt;/td&gt;
+&lt;td&gt;0.638&lt;/td&gt;
+&lt;td&gt;0.000570&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;63&lt;/td&gt;
+&lt;td&gt;International  Communication Gazette&lt;/td&gt;
+&lt;td&gt;486&lt;/td&gt;
+&lt;td&gt;0.622&lt;/td&gt;
+&lt;td&gt;0.001030&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;64&lt;/td&gt;
+&lt;td&gt;Chinese  Journal of Communication&lt;/td&gt;
+&lt;td&gt;129&lt;/td&gt;
+&lt;td&gt;0.562&lt;/td&gt;
+&lt;td&gt;0.000430&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;65&lt;/td&gt;
+&lt;td&gt;Social  Semiotics&lt;/td&gt;
+&lt;td&gt;344&lt;/td&gt;
+&lt;td&gt;0.484&lt;/td&gt;
+&lt;td&gt;0.000720&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;66&lt;/td&gt;
+&lt;td&gt;Continuum-Journal  of Media &amp;amp; Cultural Studies&lt;/td&gt;
+&lt;td&gt;496&lt;/td&gt;
+&lt;td&gt;0.468&lt;/td&gt;
+&lt;td&gt;0.000910&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;67&lt;/td&gt;
+&lt;td&gt;QUARTERLY  JOURNAL OF SPEECH&lt;/td&gt;
+&lt;td&gt;737&lt;/td&gt;
+&lt;td&gt;0.460&lt;/td&gt;
+&lt;td&gt;0.000270&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;68&lt;/td&gt;
+&lt;td&gt;Communication  Culture &amp;amp; Critique&lt;/td&gt;
+&lt;td&gt;209&lt;/td&gt;
+&lt;td&gt;0.448&lt;/td&gt;
+&lt;td&gt;0.000710&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;68&lt;/td&gt;
+&lt;td&gt;Text  &amp;amp; Talk&lt;/td&gt;
+&lt;td&gt;297&lt;/td&gt;
+&lt;td&gt;0.448&lt;/td&gt;
+&lt;td&gt;0.000830&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;70&lt;/td&gt;
+&lt;td&gt;Journal  of Mass Media Ethics&lt;/td&gt;
+&lt;td&gt;243&lt;/td&gt;
+&lt;td&gt;0.419&lt;/td&gt;
+&lt;td&gt;0.000370&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;71&lt;/td&gt;
+&lt;td&gt;JAVNOST-THE  PUBLIC&lt;/td&gt;
+&lt;td&gt;191&lt;/td&gt;
+&lt;td&gt;0.413&lt;/td&gt;
+&lt;td&gt;0.000330&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;72&lt;/td&gt;
+&lt;td&gt;Media  International Australia&lt;/td&gt;
+&lt;td&gt;264&lt;/td&gt;
+&lt;td&gt;0.346&lt;/td&gt;
+&lt;td&gt;0.000680&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;73&lt;/td&gt;
+&lt;td&gt;Rhetoric  Society Quarterly&lt;/td&gt;
+&lt;td&gt;204&lt;/td&gt;
+&lt;td&gt;0.333&lt;/td&gt;
+&lt;td&gt;0.000300&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;74&lt;/td&gt;
+&lt;td&gt;NARRATIVE  INQUIRY&lt;/td&gt;
+&lt;td&gt;379&lt;/td&gt;
+&lt;td&gt;0.317&lt;/td&gt;
+&lt;td&gt;0.000430&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;75&lt;/td&gt;
+&lt;td&gt;JOURNAL  OF APPLIED COMMUNICATION RESEARCH&lt;/td&gt;
+&lt;td&gt;692&lt;/td&gt;
+&lt;td&gt;0.308&lt;/td&gt;
+&lt;td&gt;0.000720&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;76&lt;/td&gt;
+&lt;td&gt;JOURNAL  OF MEDIA ECONOMICS&lt;/td&gt;
+&lt;td&gt;187&lt;/td&gt;
+&lt;td&gt;0.217&lt;/td&gt;
+&lt;td&gt;0.000170&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;77&lt;/td&gt;
+&lt;td&gt;African  Journalism Studies&lt;/td&gt;
+&lt;td&gt;12&lt;/td&gt;
+&lt;td&gt;0.171&lt;/td&gt;
+&lt;td&gt;0.000020&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;77&lt;/td&gt;
+&lt;td&gt;Tijdschrift  voor Communicatiewetenschap&lt;/td&gt;
+&lt;td&gt;42&lt;/td&gt;
+&lt;td&gt;0.171&lt;/td&gt;
+&lt;td&gt;0.000070&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;79&lt;/td&gt;
+&lt;td&gt;Journal  of African Media Studies&lt;/td&gt;
+&lt;td&gt;66&lt;/td&gt;
+&lt;td&gt;0.154&lt;/td&gt;
+&lt;td&gt;0.000180&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>集智俱乐部暑期研读营</title>
+      <link>https://chengjunwang.com/zh/cn/swarma-summer-camp.zh/</link>
+      <pubDate>Tue, 18 Jul 2017 14:32:07 +0800</pubDate>
+      <guid>https://chengjunwang.com/zh/cn/swarma-summer-camp.zh/</guid>
+      <description>
+
+&lt;p&gt;&lt;img src=&#34;https://chengjunwang.com/img/qiniu/night.png&#34; alt=&#34;evening7.17&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;今年的研读营主要由吴令飞和尤亦庄负责。吴令飞主张研读营应该解决只有研读营才能做的事情。最初大家想分组搞一些研究项目，但考虑到大家因为项目的压力，每一个人都想得是一个可以deliver的东西。虫洞和weak tie有什么关联？boltzmann machine与社会计算？ising model与图灵机：一个社会系统在做计算。就人员组成而言，主要分成了社会科学组合物理学组两大阵营。&lt;/p&gt;
+
+&lt;h1 id=&#34;社科与物理两大阵营是否可以理解对方的工作&#34;&gt;社科与物理两大阵营是否可以理解对方的工作？&lt;/h1&gt;
+
+&lt;p&gt;社科和物理两大阵营作为两个组，每个组提议五对文献，任意一对论文有一篇好的，一篇是相对差的。于是两组分别出了一套题目，仅仅给出标题和摘要。&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;http://wiki.swarma.net/images/4/48/Group-social-papers.pdf&#34; target=&#34;_blank&#34;&gt;社会科学组出的题目&lt;/a&gt;&lt;br /&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://wiki.swarma.net/images/7/7d/Group-physics-papers.pdf&#34; target=&#34;_blank&#34;&gt;物理组出的题目&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;过程如下：首先，每个人选出自己认为正确的选项；然后，汇总并公示组内结果，每个人发表意见；最后，小组决议，投票决定。最终的结果如下图所示，社科组错了一个，物理组错了三个。&lt;/p&gt;
+
+&lt;p&gt;这个结果略微让人吃惊，因为一般人认为物理组比较难，社科的人难以理解。结果却是对于那些发表出来的文章而言，物理组更搞不清楚社科的难度（“水”）有多深。当然，第二种解读就是，社会科学太软、太水，需要太多的口耳相传的训练，仅仅习得表面的功夫就只能做表面文章。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://chengjunwang.com/img/qiniu/bd53c2608f5ec559393a88dd7dba0ea2.png&#34; alt=&#34;社科与物理两大阵营是否可以理解对方的工作&#34; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;玻尔兹曼机&#34;&gt;玻尔兹曼机&lt;/h2&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://chengjunwang.com/img/qiniu/36eda36920ae58ce5a77995d72cef623.png&#34; alt=&#34;boltzman-machine-graph&#34; /&gt;&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;A graphical representation of an example Boltzmann machine. Each undirected edge represents dependency. In this example there are 3 hidden units and 4 visible units. This is not a restricted Boltzmann machine.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;They are named after the &lt;strong&gt;Boltzmann distribution&lt;/strong&gt; in statistical mechanics, which is used in their sampling function. It was invented by &lt;code&gt;Geoffrey Hinton&lt;/code&gt; and Terry Sejnowski in 1985.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;unsupervised&lt;/strong&gt; machine learning
+
+&lt;ul&gt;
+&lt;li&gt;unsupervised learning需要记住所有的东西&lt;/li&gt;
+&lt;li&gt;supervised learning是建立mapping&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;ising model
+
+&lt;ul&gt;
+&lt;li&gt;graph as the background geometric structure&lt;/li&gt;
+&lt;li&gt;node
+
+&lt;ul&gt;
+&lt;li&gt;there is a binary &lt;strong&gt;spin&lt;/strong&gt; on each node&lt;/li&gt;
+&lt;li&gt;$\sigma_v = 1 \; or -1$&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;edge
+
+&lt;ul&gt;
+&lt;li&gt;hamiltonian (energy)&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;$$E = -\left(\sum&lt;em&gt;{i&amp;lt;j} w&lt;/em&gt;{ij} \, s_i \, s_j + \sum_i \theta_i \, s_i \right)$$&lt;/p&gt;
+
+&lt;p&gt;Where:
+* $w_{ij}$ is the connection strength between unit $j$ and unit $i$.
+* $s_i$ is the state, $s_i \in {0,1}$, of unit $i$.
+* $\theta_i$ is the bias of unit $i$ in the global energy function. ($-\theta_i$ is the activation threshold for the unit.)&lt;/p&gt;
+
+&lt;p&gt;Often the weights are represented as a symmetric matrix $W$, with zeros along the diagonal.&lt;/p&gt;
+
+&lt;p&gt;Newmann &lt;strong&gt;q modularity&lt;/strong&gt; hamiltonian on the network&lt;/p&gt;
+
+&lt;p&gt;sbm stochastic block model&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;deepwalk &lt;a href=&#34;http://www.perozzi.net/publications/14_kdd_deepwalk.pdf&#34; target=&#34;_blank&#34;&gt;http://www.perozzi.net/publications/14_kdd_deepwalk.pdf&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;node2vector &lt;a href=&#34;http://snap.stanford.edu/node2vec/&#34; target=&#34;_blank&#34;&gt;http://snap.stanford.edu/node2vec/&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;闭上眼猜测，睁开眼观察，比较二者的差别。&lt;/p&gt;
+
+&lt;h2 id=&#34;袁行远介绍雾霾预报&#34;&gt;袁行远介绍雾霾预报&lt;/h2&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://chengjunwang.com/img/qiniu/fee8f8445f3dbf217887e078ed18ac81.png&#34; alt=&#34;雾霾&#34; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;肖达介绍rnn原理&#34;&gt;肖达介绍RNN原理&lt;/h2&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://chengjunwang.com/img/qiniu/a94dd5e7b694f5bcb5ae680122ba5c9d.png&#34; alt=&#34;rnn&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://chengjunwang.com/img/qiniu/3b4701e0d6860abbb78959216c3b1d2d.png&#34; alt=&#34;xiaoda&#34; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;word2vec&#34;&gt;word2vec&lt;/h2&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://www.tensorflow.org/tutorials/word2vec&#34; target=&#34;_blank&#34;&gt;https://www.tensorflow.org/tutorials/word2vec&lt;/a&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;为什么深度学习有效&#34;&gt;为什么深度学习有效?&lt;/h2&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://chengjunwang.com/img/qiniu/c577e1dc974990e2d7b7893293d15ea6.png&#34; alt=&#34;为什么深度学习有效&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;The humans working behind the ai curtain&lt;/p&gt;
+
+&lt;h2 id=&#34;董磊介绍城市研究&#34;&gt;董磊介绍城市研究&lt;/h2&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://chengjunwang.com/img/qiniu/90ef9b65b37fc877336c25e72113f1f4.png&#34; alt=&#34;董磊&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://chengjunwang.com/img/qiniu/ba1cceabb662ea98c1c629363f3c6736.png&#34; alt=&#34;制造业&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;制造业的衰落&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://chengjunwang.com/img/qiniu/74c1ad741f419d67ca138f463f2b4dc1.png&#34; alt=&#34;poverty&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;贫穷&lt;/p&gt;
+
+&lt;h1 id=&#34;回到北京&#34;&gt;回到北京&lt;/h1&gt;
+
+&lt;p&gt;结束了四天古北水镇的研读营，来到清华参加集智年会。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://chengjunwang.com/img/qiniu/e7d31bd4fcfe761a74e217a8e7e9b07a.png&#34; alt=&#34;红杉假日酒店&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://chengjunwang.com/img/qiniu/15856c7ae7e5f065630ba2d673495ce1.png&#34; alt=&#34;yinyian&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://chengjunwang.com/img/qiniu/bb3f2ecdbbd34e663ea4e8fd07b20882.png&#34; alt=&#34;james&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://chengjunwang.com/img/qiniu/18eaee1d9c2c9c48cd0895ba502d06a4.png&#34; alt=&#34;substitutions&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://chengjunwang.com/img/qiniu/d65fa3234c4acc2d6ff49a6a8e492260.png&#34; alt=&#34;dashun&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://chengjunwang.com/img/qiniu/1636c0143f9fd911f1407c92ba936b44.png&#34; alt=&#34;dashun2&#34; /&gt;&lt;/p&gt;
+
+&lt;h1 id=&#34;浮光掠影&#34;&gt;浮光掠影&lt;/h1&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://chengjunwang.com/img/qiniu/05ec192dccf36de80f11b36ccc7fc38d.png&#34; alt=&#34;戚家牛杂&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;参加了夜游长城的活动。&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Data Tech2017大赛</title>
+      <link>https://chengjunwang.com/zh/cn/zjmobile.zh/</link>
+      <pubDate>Sun, 16 Jul 2017 14:32:07 +0800</pubDate>
+      <guid>https://chengjunwang.com/zh/cn/zjmobile.zh/</guid>
+      <description>
+
+&lt;p&gt;Data Tech2017大赛由中国移动浙江公司与浙江大数据交易中心联合主办，大赛以“数据众智美好未来”为主题，解锁运营商数据，整合气象、交通、空间等数据， 以“开放、互联”的精神激发全社会创新能量，共创美好未来。&lt;/p&gt;
+
+&lt;p&gt;数据改变了人类的生活方式，从衣、食、住、行到生产生活都离不开数据的支撑。数据，让一切有迹可循，让一切有源可溯。为了挖掘数据价值、实践数据赋能，推动大众创业、万众创新，由浙江省经济和信息化委员会指导，中国移动浙江公司和浙江大数据交易中心主办的Data Tech 2017浙江大数据建模与创新应用大赛即将拉开序幕。&lt;/p&gt;
+
+&lt;p&gt;本次Data Tech 2017浙江大数据建模与创新应用大赛以”数据众智美好未来”为主题，分为“模型挑战赛”和“众智创新赛”，并面向全社会开放，高等院校、科研单位、互联网企业、创客团队等人员均可报名参赛。数据集由中国移动浙江公司和浙江大数据交易中心会员单位授权提供，所有数据均以经过脱敏处理，切实保障数据安全。参赛者们利用数据分析方法，挖掘数据价值，探索数据应用，寻找真实业务问题和社会问题的解决方案。&lt;/p&gt;
+
+&lt;p&gt;同时为了推动参赛者创业与就业，大赛组委会联合中国通信信息研究院、数据中心联盟等行业权威研究机构和重点联盟，浙江大学计算机学院、浙江大学管理学院、浙江省计算机学会等学术机构，发动创新工场、百分点等知名企业参与，为参赛选手提供资深的技术支持和创业辅导。此外，本次大赛还将汇集Preangle十维资本、星路资本、银杏谷资本等多家投资机构，为参赛者优秀成果的展示与孵化提供更多的机会，打造技术、产业、资本相融合的良性发展环境。&lt;/p&gt;
+
+&lt;p&gt;大赛启动日期2017年7月15日，初赛截止日期2017年9月2日。报名及查看详细信息请登录大赛官网，网址：&lt;a href=&#34;http://datatech.zjdex.com。&#34; target=&#34;_blank&#34;&gt;http://datatech.zjdex.com。&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;初赛阶段提供7000个用户的完整行为数据。决赛阶段提供20万用户的完整行为数据。&lt;/p&gt;
+
+&lt;h1 id=&#34;模型挑战赛初赛数据&#34;&gt;模型挑战赛初赛数据&lt;/h1&gt;
+
+&lt;p&gt;获取方式：&lt;/p&gt;
+
+&lt;h3 id=&#34;选题一-用户旅游出行意向和类型预测&#34;&gt;选题一 用户旅游出行意向和类型预测&lt;/h3&gt;
+
+&lt;p&gt;选题一（数据包大小97.5M）下载链接：
+&lt;a href=&#34;http://caiyun.feixin.10086.cn/sh/tHlKp3-XYvfebUgC&#34; target=&#34;_blank&#34;&gt;http://caiyun.feixin.10086.cn/sh/tHlKp3-XYvfebUgC&lt;/a&gt;&lt;/p&gt;
+
+&lt;h3 id=&#34;选题二用户购买意向预测&#34;&gt;选题二用户购买意向预测&lt;/h3&gt;
+
+&lt;p&gt;选题二（数据包大小1.56M）下载链接：
+&lt;a href=&#34;http://caiyun.feixin.10086.cn/sh/YlpDClB0h6vIqeRr&#34; target=&#34;_blank&#34;&gt;http://caiyun.feixin.10086.cn/sh/YlpDClB0h6vIqeRr&lt;/a&gt;&lt;/p&gt;
+
+&lt;h3 id=&#34;选题三通信信用风险评估&#34;&gt;选题三通信信用风险评估&lt;/h3&gt;
+
+&lt;p&gt;选题三（数据包大小24K）下载链接：
+&lt;a href=&#34;http://caiyun.feixin.10086.cn/sh/xllHu0ExJAZhdmuc&#34; target=&#34;_blank&#34;&gt;http://caiyun.feixin.10086.cn/sh/xllHu0ExJAZhdmuc&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;公共数据集（大小210.7M），下载链接：
+&lt;a href=&#34;http://caiyun.feixin.10086.cn/sh/UMtCD38q-V2FoIHn&#34; target=&#34;_blank&#34;&gt;http://caiyun.feixin.10086.cn/sh/UMtCD38q-V2FoIHn&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;模型挑战赛决赛数据获取方式&lt;/p&gt;
+
+&lt;p&gt;模型挑战赛决赛参赛队伍将会通过邮件收到浙江大数据开放平台提供的用户名及密码，可进入中国移动浙江公司大数据开放平台使用海量真实数据。&lt;/p&gt;
+
+&lt;h1 id=&#34;众智创新赛数据&#34;&gt;众智创新赛数据&lt;/h1&gt;
+
+&lt;p&gt;获取方式：&lt;/p&gt;
+
+&lt;p&gt;移动_基础信息数据包（大小193.7K），下载链接：
+&lt;a href=&#34;http://caiyun.feixin.10086.cn/sh/2R9GuE4S1BhmyUIR&#34; target=&#34;_blank&#34;&gt;http://caiyun.feixin.10086.cn/sh/2R9GuE4S1BhmyUIR&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;移动_通话信息数据包（大小972.9K），下载链接：
+&lt;a href=&#34;http://caiyun.feixin.10086.cn/sh/OvRMzW7hoe8cHZM1&#34; target=&#34;_blank&#34;&gt;http://caiyun.feixin.10086.cn/sh/OvRMzW7hoe8cHZM1&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;移动_轨迹信息数据包（大小4.2M），下载链接：
+&lt;a href=&#34;http://caiyun.feixin.10086.cn/sh/fAZG6k9UU-hdj0eZ&#34; target=&#34;_blank&#34;&gt;http://caiyun.feixin.10086.cn/sh/fAZG6k9UU-hdj0eZ&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;移动_上网信息数据包（大小886.4M），下载链接：
+&lt;a href=&#34;http://caiyun.feixin.10086.cn/sh/aKdAJmlM3Ga1Rv2J&#34; target=&#34;_blank&#34;&gt;http://caiyun.feixin.10086.cn/sh/aKdAJmlM3Ga1Rv2J&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;四维_地理空间数据包（大小55.2M），下载链接：
+&lt;a href=&#34;http://caiyun.feixin.10086.cn/sh/BlVCEFUO-RT-Phfy&#34; target=&#34;_blank&#34;&gt;http://caiyun.feixin.10086.cn/sh/BlVCEFUO-RT-Phfy&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;四维_交通数据包（大小145.5M），下载链接：
+&lt;a href=&#34;http://caiyun.feixin.10086.cn/sh/rQFBaFwZhx7atZOO&#34; target=&#34;_blank&#34;&gt;http://caiyun.feixin.10086.cn/sh/rQFBaFwZhx7atZOO&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;四维_气象数据包part1（大小911.9M），下载链接：
+&lt;a href=&#34;http://caiyun.feixin.10086.cn/sh/d65GTWEvzAuMF8BF&#34; target=&#34;_blank&#34;&gt;http://caiyun.feixin.10086.cn/sh/d65GTWEvzAuMF8BF&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;四维_气象数据包part2（大小1.3G），下载链接：
+&lt;a href=&#34;http://caiyun.feixin.10086.cn/sh/2zFL6Hj_3OowNiCq&#34; target=&#34;_blank&#34;&gt;http://caiyun.feixin.10086.cn/sh/2zFL6Hj_3OowNiCq&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;其他数据获取方式：&lt;/p&gt;
+
+&lt;p&gt;参赛选手在参赛过程中，如有获取聚合数据平台的数据需求，可以邮件形式（需包含及个人姓名、团队名称、数据需求清单）将需求发送至zhaoyu@zjdex.com，参赛选手的数据需求经审核通过后，会有专门的工作人员与参赛选手联系，为参赛选手提供聚合数据平台数据使用账号。&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>王成军参与组织数字人文大会</title>
+      <link>https://chengjunwang.com/zh/cn/2017-07-01-digital-humanities.zh/</link>
+      <pubDate>Sat, 01 Jul 2017 00:00:00 +0000</pubDate>
+      <guid>https://chengjunwang.com/zh/cn/2017-07-01-digital-humanities.zh/</guid>
+      <description>&lt;p&gt;2017年7月1日—2日南京大学数字人文大会在仙林校区国际会议中心召开。此次大会主题为“数字人文：大数据时代学术前沿与探索”。“数字人文”是目前国际最具潜力的新兴学科和前沿研究领域，具有创新性强、多学科交叉、研究者年轻化的特点。近十多年来，越来越多独立的“数字人文中心（系）”在北美和欧洲开设，比如美国的斯坦福大学、弗吉尼亚大学、加州大学，英国的国王学院，加拿大的阿尔伯特大学等等。这些机构不仅拥有专职研究人员和技术工程师，同时还开展了很多跨学科项目，涉及历史、考古、艺术史、文学、建筑等多个学术领域，并开始招收、培养硕士和博士研究生。&lt;/p&gt;
+
+&lt;p&gt;视频回放，&lt;a href=&#34;http://zb.shixiutv.com/Play.aspx?pid=hy516044&amp;amp;code=011LXDxQ0TtXeb2df7wQ0ADHxQ0LXDxi&amp;amp;state=1&#34; target=&#34;_blank&#34;&gt;链接&lt;/a&gt;， 密码5954&lt;/p&gt;
+
+&lt;p&gt;中国学界自2010年前后开始关注“数字人文”领域，武汉大学2011年成立了中国内地高校中的第一个数字人文中心。台湾大学及台湾中央研究院自2009年起每年举办“数位人文/数位典藏”的国际研讨会，北京大学与清华大学在2016年1月共同组织了主题大会，上海大学在2015年12月，南开大学在2016年11月都召开了相关的国际研讨会，受到了学界的广泛关注和学者们的积极参与，影响巨大。&lt;/p&gt;
+
+&lt;p&gt;“数字人文：大数据时代学术前沿与探索”学术研讨会正是在此学界浪潮下应运而生，旨在聚集国内外学者探讨数字人文的前沿思想与主要议题，从而使得国内学者、学生了解数字人文国际前沿动态和主要焦点，并促进学者们的相互交流，提升数字人文在国内学术界的认知度，促进数字人文跨学科发展。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://chengjunwang.com/img/2017/dh2017.jpg&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;会议议题主要包括，但不限于以下课题：&lt;/p&gt;
+
+&lt;p&gt;· 图像分析与艺术、数字博物馆  （召集人：陈静、殷曼楟）
+  · 文本挖掘与文学研究 （召集人：但汉松）
+  · 数字史学的方法与案例 （召集人：王涛）
+  · 数据分析及社交网络 （召集人：陈静、王成军）
+  · 历史地理信息系统（HGIS）（召集人：陈刚）
+  · 数字人文与空间 （召集人：鲁安东）
+  · 数字人文前沿问题 （召集人：邓柯）&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;会议召开时间为2017年7月1日—2日，6月30日报到。&lt;/li&gt;
+&lt;li&gt;会议地点：南京大学仙林校区（具体地点待定）。&lt;/li&gt;
+&lt;li&gt;会务联系方式：digitalhumanities@163.com.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;南京大学“数字人文：大数据时代学术前沿与探索”会务组
+2017年4月6日&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>气候变迁研究：数据、调查、视角</title>
+      <link>https://chengjunwang.com/zh/cn/climate-change.zh/</link>
+      <pubDate>Thu, 29 Jun 2017 14:32:07 +0800</pubDate>
+      <guid>https://chengjunwang.com/zh/cn/climate-change.zh/</guid>
+      <description>
+
+&lt;h2 id=&#34;data-for-climate-change&#34;&gt;Data for Climate Change&lt;/h2&gt;
+
+&lt;p&gt;Big data has big potential for applications to climate change adaptation. PNAS 2016
+&lt;a href=&#34;http://www.dataforclimateaction.org/home/data/&#34; target=&#34;_blank&#34;&gt;http://www.dataforclimateaction.org/home/data/&lt;/a&gt;&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;Anonymized records of cell-phone use could in principle enable the large-scale tracing of people’s movements in the wake of a climate change-related disaster. Image courtesy of Shutterstock/Athi Aachawaradt.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;ul&gt;
+&lt;li&gt;GlobeScan&lt;/li&gt;
+&lt;li&gt;pew&lt;/li&gt;
+&lt;li&gt;马里兰大学世界公共舆论 WPO &lt;a href=&#34;http://worldpublicopinion.net&#34; target=&#34;_blank&#34;&gt;http://worldpublicopinion.net&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;PIPA&lt;/li&gt;
+&lt;li&gt;世界银行&lt;/li&gt;
+&lt;li&gt;盖洛普&lt;/li&gt;
+&lt;li&gt;BBC&lt;/li&gt;
+&lt;li&gt;NSEE&lt;/li&gt;
+&lt;li&gt;欧盟民意委员会&lt;/li&gt;
+&lt;li&gt;美国气候地图&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;人口迁移、极端气候、青藏高原、西北地区&lt;/p&gt;
+
+&lt;h3 id=&#34;中国气候指数&#34;&gt;中国气候指数&lt;/h3&gt;
+
+&lt;p&gt;中国气候指数系列分为年度和月度指数,包括雨涝、干旱、台风、高温、低温冰冻五类指数,以及在此基础上合成的中国气候风险指数。以中国气候风险指数为例,风险等级从低至高分为0到10。1981年至2016年,中国气候风险指数平均值为4.19。对比1999年前后的平均值就可明显看出,风险指数从3.69上升为4.69,气候风险呈逐步增加趋势。 &lt;a href=&#34;http://news.sciencenet.cn/htmlnews/2017/3/370039.shtm&#34; target=&#34;_blank&#34;&gt;http://news.sciencenet.cn/htmlnews/2017/3/370039.shtm&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;环保部
+- 工作简报内容分析&lt;/p&gt;
+
+&lt;h3 id=&#34;国内调查数据&#34;&gt;国内调查数据&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;CGSS&lt;/li&gt;
+&lt;li&gt;中国国家调查数据库CNSDA&lt;/li&gt;
+&lt;li&gt;环保部&lt;/li&gt;
+&lt;li&gt;中国气候传播项目中心&lt;/li&gt;
+&lt;li&gt;零点&lt;/li&gt;
+&lt;li&gt;汇丰银行。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&#34;内隐联想测试-iat&#34;&gt;内隐联想测试 IAT&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;概念词和属性词， e.g. 花&amp;amp;好的，蜘蛛&amp;amp;不好的，不一类的时候反应时间长&lt;/li&gt;
+&lt;li&gt;The candidate IAT, 有两个候选人，一个候选人支持气候变化保护，另一个没有强调，判断这两个人与一些好的品质之间的配对，看反应时间长度。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;对气候变化的信念、心理问题、政策支持、迫切性、好坏&lt;/p&gt;
+
+&lt;p&gt;气候变化建构出来的社会事实，态度和行为存在鸿沟，心理学可以发挥优势进行行为干预；社科领域的研究还比较少，15%，多数社会科学；中外差异明显，国内关注度低，环境问题排不到前十，主要关注雾霾和环境污染；在手段在技术层面。知识、教育、收入、价值观、党派，但心理因素可以干预。人类中心主义vs自然关联性，正念（mindful）干预，一类以冥想为主，另一类以认知和信息加工。经过干预之后，看待自然更加敏感了，更加相信和支持气候变化。&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>社会行为研究在线实验平台</title>
+      <link>https://chengjunwang.com/zh/cn/2017-6-24-turk.zh/</link>
+      <pubDate>Sat, 24 Jun 2017 00:00:00 +0000</pubDate>
+      <guid>https://chengjunwang.com/zh/cn/2017-6-24-turk.zh/</guid>
+      <description>
+
+&lt;h1 id=&#34;实验法&#34;&gt;实验法&lt;/h1&gt;
+
+&lt;p&gt;实验研究方法是由伽利略所发明的一种研究方法，成为了自然科学和社会科学研究最为重要的工具。自然科学取得了辉煌的研究成果，以物理学为例，主要的实证研究成果都来自于实验研究方法。社会科学的发展仅仅经历了不到三百年，最初主要模仿物理学的发展路径，例如，孔德最初将社会学命名为社会物理学，他认为人类社会是自然界的一个部分，人为的社会秩序通常可以看作自然秩序的延伸。然而，社会科学研究的研究对象&amp;ndash;人类具有意识、通过社会互动相互关联，构成了一种复杂系统，其复杂度远远超过自然科学，被邓肯-瓦茨称之为“二十一世纪的科学”。社会科学的实验往往局限于实验室内部，只能针对有限的人群（多为高校学生）开展实验研究，其外部效度有限，难以帮助研究者理解真实的社会和人类行为。&lt;/p&gt;
+
+&lt;h1 id=&#34;问题&#34;&gt;问题&lt;/h1&gt;
+
+&lt;p&gt;伴随着数据科学、网络科学的发展，采用计算方法为主的计算社会科学蓬勃发展。计算社会科学采用互联网大数据、网络科学等计算方法研究重要的社会科学问题。然而，既有的数据虽然规模巨大，但往往在很多维度上缺失，不能很好的回答因果关系、缺少控制，依然存在局限。如何针对大量的个体及其互动进行实验研究构成了互联网公司的产品经理、高校研究者共同的问题。&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;问题&lt;/strong&gt;：如何针对大量的个体及其互动进行实验研究？&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;http://oaf2qt3yk.bkt.clouddn.com/da38e18664ffdc32018e1a96f84a1099.png&#34; alt=&#34;mechanic turk&#34; /&gt;&lt;/p&gt;
+
+&lt;h1 id=&#34;思路&#34;&gt;思路&lt;/h1&gt;
+
+&lt;p&gt;基于众包的人类计算搭建“行为实验室”为解决这一问题提出了崭新的思路。通过互联网平台招募实验参与者，通过智能的程序匹配实验者、实验对象，允许实验对象在虚拟的网络环境内进行互动共同完成一个实验任务，允许实验者进行灵活的实验控制，可以较低的价格吸引更多的实验设计者和参与者。采用这一思路最成功的案例来自于亚马逊的&lt;a href=&#34;https://www.mturk.com/mturk/welcome&#34; target=&#34;_blank&#34;&gt;Mechanic Turk&lt;/a&gt;（机械驱动的土耳其人）平台。&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;机械驱动的土耳其人（Mechanical Turk）原指18世纪一个打扮成土耳其人的机器人，曾巡回欧洲各国打败不少西洋棋高手，甚至跟名人如拿破仑或富兰克林都下过棋，后来被揭露为其实是里头藏着人的骗局。亚马逊借用这个典故，隐喻所提供的服务是一种外表提供机械性功能可是背后却是有人类智能支持。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;img src=&#34;http://oaf2qt3yk.bkt.clouddn.com/144732ecfc771f5c53b0722cf09476cc.png&#34; alt=&#34;vitual labs&#34; /&gt;
+来源：turkserver&lt;sup class=&#34;footnote-ref&#34; id=&#34;fnref:turkserver&#34;&gt;&lt;a href=&#34;#fn:turkserver&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
+
+&lt;p&gt;互联网产品经理和高校研究者可以基于Mechanical Turk平台搭建虚拟实验室开展大规模的人类行为实验。虚拟实验室以这个互联网作为实验室，与传统的实验室相比，具有很多优点：&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;可以获取大规模的数据和互动关系&lt;/li&gt;
+&lt;li&gt;持续时间可以较长、对于地理位置的约束更小&lt;/li&gt;
+&lt;li&gt;可以让实验参与者开展更为现实而非抽象的简单的任务&lt;/li&gt;
+&lt;li&gt;可以实现更为精准的记录。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;微软研究员科学家邓肯-瓦茨及其合作者一直致力于发展线上虚拟实验室（virtual lab），例如他们之前曾搭建&lt;a href=&#34;http://www.princeton.edu/~mjs3/musiclab.shtml&#34; target=&#34;_blank&#34;&gt;music lab&lt;/a&gt;网站研究音乐的流行度。最近，他们借助于Mechanical Turk平台搭建了&lt;a href=&#34;http://turkserver.readthedocs.io/en/latest/examples/tutorial.html&#34; target=&#34;_blank&#34;&gt;turkserver&lt;/a&gt;，研究发表了两篇论文，分别研究了&lt;a href=&#34;https://www.nature.com/articles/ncomms13800&#34; target=&#34;_blank&#34;&gt;囚徒困境&lt;/a&gt; 和灾难救助过程中的&lt;a href=&#34;http://journals.plos.org/plosone/article?id=10.1371/journal.pone.0153048&#34; target=&#34;_blank&#34;&gt;团队合作及其绩效&lt;/a&gt; 。&lt;/p&gt;
+
+&lt;p&gt;Mechanic Turk与turkserver相互配合的思路为实现大量的个体及其互动进行实验研究铺平了道路。但是目前在中国的互联网产业中，还缺乏提供类似Mechanic Turk的服务，而turkserver目前也缺少进一步的开发，这是提出本研究项目的主要目标。&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;目标&lt;/strong&gt;：搭建一个简单的turkserver的扩展版，搭建一个社会行为研究在线实验平台。&lt;/p&gt;
+
+&lt;h1 id=&#34;参考文献&#34;&gt;参考文献&lt;/h1&gt;
+&lt;div class=&#34;footnotes&#34;&gt;
+
+&lt;hr /&gt;
+
+&lt;ol&gt;
+&lt;li id=&#34;fn:turkserver&#34;&gt;turkserver &lt;a href=&#34;http://turkserver.readthedocs.io/en/latest/examples/tutorial.html&#34; target=&#34;_blank&#34;&gt;http://turkserver.readthedocs.io/en/latest/examples/tutorial.html&lt;/a&gt;, 基于amazon的mechanic turk建设virtual lab
+ &lt;a class=&#34;footnote-return&#34; href=&#34;#fnref:turkserver&#34;&gt;&lt;sup&gt;^&lt;/sup&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;
 </description>
     </item>
     

@@ -5,12 +5,14 @@ slug= "cv"
 widget = "blank"  # See https://sourcethemes.com/academic/docs/page-builder/
 disable_comments = true
 [header]
-#image = "headers/chengjunwang4.png"
+#image = "undraw_not.svg"
 #caption = "Image credit: [**Heng Lu**](https://github.com/gcushen/hugo-academic/)"
 +++
 
 
-![Cheng-Jun Wang](/img/headers/chengjunwang2.png)
+<img align="middle" src="/img/headers/party.svg" width = 800px/>
+
+
 
 Cheng-Jun Wang is currently an associate professor in the School of Journalism and Communication, Nanjing University. He is also the director of Computational Communication Collaboratory. His research on computational communication appears in both SSCI and SCI indexed journals, such as Scientific Reports, PloS ONE, Physica A, Cyberpsychology, and Journal of Social and Personal Relationships.
 
@@ -18,7 +20,7 @@ Cheng-Jun Wang is currently an associate professor in the School of Journalism a
 # Contact Information
 - Computational Communication Collaboratory, School of Journalism and Communication, Nanjing University.
 - 307 Zijin Building, Nanjing University (Xianlin Campus), 163 Xianlin Road, Qixia District, Nanjing, Jiangsu, China (210023).
-- Email: wangchj04 at gmail.com
+- Email: wangchj04 at 126.com
 - ORCID: [0000-0002-9507-2888](http://orcid.org/0000-0002-9507-2888)
 
 # Education
@@ -68,25 +70,26 @@ Cheng-Jun Wang is currently an associate professor in the School of Journalism a
 
 
 # Conference Papers
-1. Zhi-Cong Chen, Lingfei Wu, Naipeng Chao, **Cheng-Jun Wang** * (2018) The Poor Read for Entertainment and the Rich Read for Education: Poverty, Fragmentation, and Knowledge Homogeneity. Poster to be presented at The 4th Annual International Conference on Computational Social Science (ic2s2), July 12–15, 2018. Evanston, Illinois, United States.
-1. Hui-Min Xu, Zhi-Cong Chen, **Cheng-Jun Wang** * (2018) Social Classes Shapes Our Trajectories in Both Online and Offline Space. Paper To be presented at The 4th Annual International Conference on Computational Social Science (ic2s2), July 12–15, 2018. Evanston, Illinois, United States.
+1. Xuefei Yan, **Cheng-Jun Wang** * (2020) With Greater Popularity Comes Less Responsibility? The Popularity Fallacy of Big Vs' Public Participation on Sina Weibo. The 70th Annual ICA Conference. 21-25 May 2020. Gold Coast, Australia.
+1. Zhi-Cong Chen, Lingfei Wu, Naipeng Chao, **Cheng-Jun Wang** * (2018) The Poor Read for Entertainment and the Rich Read for Education: Poverty, Fragmentation, and Knowledge Homogeneity. The 4th Annual International Conference on Computational Social Science (ic2s2), July 12–15, 2018. Evanston, Illinois, United States.
+1. Hui-Min Xu, Zhi-Cong Chen, **Cheng-Jun Wang** * (2018) Social Classes Shapes Our Trajectories in Both Online and Offline Space. The 4th Annual International Conference on Computational Social Science (ic2s2), July 12–15, 2018. Evanston, Illinois, United States.
 1. Wang, C.J. (2017) [networkdiffusion](https://github.com/chengjun/networkdiffusion): Simulating and Visualizing Network Diffusion Using R. The 10th China R Conference. Beijing, May 20-21. [Slides](http://chengjunwang.com/network-diffusion/#/).
 1. Wang, C.J. Zhang, X. (2017) [Analyzing Mobile Phone Data With Network Science](http://tinyurl.com/jlac4lw). The 67th Annual Conference of International Communication Association (ICA), San Diego, USA, May 27, 2017.
 1. Wang, C.J. (2015). Information diffusion on Microblogs: Testing the threshold hypothesis of interpersonal effects. Conference on Complex System (CCS'15), Tempe, Arizona, USA. Sep 28-Oct 2.
-1. Wang, C.J., Chen, H.X., Zhang, X.(2015) [The Landscape of Information Diffusion on Sina Weibo: Investigating the Rich-Club Effect](http://tinyurl.com/msfdgm2). Paper to be presented to the 65th Annual Conference of International Communication Association (ICA), San Juan, Puerto Rico, 21-25 May 2015.
+1. Wang, C.J., Chen, H.X., Zhang, X.(2015) [The Landscape of Information Diffusion on Sina Weibo: Investigating the Rich-Club Effect](http://tinyurl.com/msfdgm2). The 65th Annual Conference of International Communication Association (ICA), San Juan, Puerto Rico, 21-25 May 2015.
 1. Lingfei Wu, Jiang Zhang, Marco Janssen, Cheng-Jun Wang, Min Zhao (2014). Attention Balls. The 6th International Conference on Social Informatics. Barcelona, 10-13 November 2014.
-1. Wang, C.J. (2014). The Origin of Bursts in Public Attention: The Temporality Hypothesis for the Diffusion of YouTube Videos. Paper to be presented to the 64th Annual Conference of International Communication Association (ICA), Seattle, Washington, USA. May 22-26.
-1. Wang, C.J, Chen, H.X (2013). Social selection or social influence: Network analysis of information flow within the Rich-club of Sina Weibo. Paper to be presented to the annual conference of International Association for Media and Communication Research (IAMCR), Dublin, Ireland, June 25-29.
-1. Wang, C.J, Liu, J. (2013). Looking for the signposts on the web: Clickstream analysis of the flow of public attention. Paper to be presented to the 63rd Annual Conference of International Communication Association (ICA), London, UK, June 17-21.
-1. Wang, P.P, Wang, C.J (2013). Rational information sharing or emotional expression in the online discussion: How does leadership spark conversations and trigger feedbacks. Paper to be presented to the 63rd Annual Conference of International Communication Association (ICA), London, UK, June 17-21.
-1. Wang, C.J. (2012). The origin of Bursts in public attention: Peak fraction, popularity, diffusion channels, and categories of YouTube videos. Paper presented at Honours Symposium for Asian Ph.D Students in Communication Research, Seoul, Korea, Oct 27-28.
-1. Wang, C.J., Wang, P.P (2012). Discussing Occupying Wall Street on Twitter: Longitudinal network analysis of equality, emotion, and stability. Paper to be presented to the 65th Annual Conference of World Association for Public Opinion Research (WAPOR), Hong Kong, June 14-16.
-1. Wang, C.J., Peng, T.Q (2012). Evaluating public discussion of Occupying Wall Street on Twitter: Linking Twitter streams with search quires, opinion polls, media coverage, and stock market index. Paper to be presented to the 65th Annual Conference of World Association for Public Opinion Research (WAPOR), Hong Kong, June 14-16.
-1. Wang, C.J. (2012). Jumping over the network threshold: How widespread could news diffuse on news sharing websites? Paper to be presented to the 62nd Annual Conference of International Communication Association (ICA), Phonix, Arizona, May 24-28.
-1. Wang, C.J., Wang, P.P (2012). Does the unkown information matter for online daters. Paper to be presented to the 62nd Annual Conference of International Communication Association (ICA), Phonix, Arizona, May 24-28.
-1. Wu, L.F., Wang,C.J. (2011). Heterogeneity and allometric growth of human collaborative tagging behavior. Poster session presented at The 7th Chinese Conference of Complex Networks (CCCN’11), Chengdu, China, October 21-24.
-1. Wang, C.J.(2011).The emergence of spiral of silence from individual behaviors: Agent-based modeling of the spiral of silence. Paper presented at The 64th Annual Conference of the World Association for Public Opinion Research (WAPOR), Amsterdam, The Netherlands, September 21-23.
-1. Wang, C.J.(2011).Surfing mobile Internet motivated by fashion attentiveness: An empirical study of China mobile Internet use. Paper presented at International Telecommunications Society Asia-Pacific Regional Conference (ITS), Taibei, Taiwan, June 26-29.
+1. Wang, C.J. (2014). The Origin of Bursts in Public Attention: The Temporality Hypothesis for the Diffusion of YouTube Videos. The 64th Annual Conference of International Communication Association (ICA), Seattle, Washington, USA. May 22-26.
+1. Wang, C.J, Chen, H.X (2013). Social selection or social influence: Network analysis of information flow within the Rich-club of Sina Weibo. The annual conference of International Association for Media and Communication Research (IAMCR), Dublin, Ireland, June 25-29.
+1. Wang, C.J, Liu, J. (2013). Looking for the signposts on the web: Clickstream analysis of the flow of public attention. The 63rd Annual Conference of International Communication Association (ICA), London, UK, June 17-21.
+1. Wang, P.P, Wang, C.J (2013). Rational information sharing or emotional expression in the online discussion: How does leadership spark conversations and trigger feedbacks. The 63rd Annual Conference of International Communication Association (ICA), London, UK, June 17-21.
+1. Wang, C.J. (2012). The origin of Bursts in public attention: Peak fraction, popularity, diffusion channels, and categories of YouTube videos. Honours Symposium for Asian Ph.D Students in Communication Research, Seoul, Korea, Oct 27-28.
+1. Wang, C.J., Wang, P.P (2012). Discussing Occupying Wall Street on Twitter: Longitudinal network analysis of equality, emotion, and stability. The 65th Annual Conference of World Association for Public Opinion Research (WAPOR), Hong Kong, June 14-16.
+1. Wang, C.J., Peng, T.Q (2012). Evaluating public discussion of Occupying Wall Street on Twitter: Linking Twitter streams with search quires, opinion polls, media coverage, and stock market index. The 65th Annual Conference of World Association for Public Opinion Research (WAPOR), Hong Kong, June 14-16.
+1. Wang, C.J. (2012). Jumping over the network threshold: How widespread could news diffuse on news sharing websites? The 62nd Annual Conference of International Communication Association (ICA), Phonix, Arizona, May 24-28.
+1. Wang, C.J., Wang, P.P (2012). Does the unkown information matter for online daters. The 62nd Annual Conference of International Communication Association (ICA), Phonix, Arizona, May 24-28.
+1. Wu, L.F., Wang,C.J. (2011). Heterogeneity and allometric growth of human collaborative tagging behavior. The 7th Chinese Conference of Complex Networks (CCCN’11), Chengdu, China, October 21-24.
+1. Wang, C.J.(2011).The emergence of spiral of silence from individual behaviors: Agent-based modeling of the spiral of silence. The 64th Annual Conference of the World Association for Public Opinion Research (WAPOR), Amsterdam, The Netherlands, September 21-23.
+1. Wang, C.J.(2011).Surfing mobile Internet motivated by fashion attentiveness: An empirical study of China mobile Internet use. International Telecommunications Society Asia-Pacific Regional Conference (ITS), Taibei, Taiwan, June 26-29.
 
 # Workshops
 1. Wang, C.J.(2014) Web Data Analysis. City University of Hong Kong, Department of Media and Communication. The Web Mining Workshop. 4.22-4.25
@@ -155,3 +158,6 @@ My professional affiliations include:
 # Visualizations
 1. [News Map of China](http://chengjun.github.io/newsmap/#edu/2011) using D3.js.
 1. [Global Terrorism](http://chengjun.github.io/datajournalism/vis/terrorism/) using googleVis.
+
+
+<img align="middle" src="/img/undraw_news.svg" width = 400px/>

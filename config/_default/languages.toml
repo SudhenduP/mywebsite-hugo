@@ -3,35 +3,35 @@
 #   Refer to https://sourcethemes.com/academic/docs/language/
 
 # Configure the English version of the site.
-[en]
-  languageCode = "en-us"
-  #contentDir = "content/en"  # Uncomment for multi-lingual sites, and move English content into `en` sub-folder.
+# [en]
+#   languageCode = "en-us"
+#   contentDir = "content"  # Uncomment for multi-lingual sites, and move English content into `en` sub-folder.
 
 # Uncomment the lines below to configure your website in a second language.
-[zh]
- languageCode = "zh-Hans"
- contentDir = "content/zh"
- title = "王成军"
- [zh.params]
-   description = "Site description in Chinese..."
-   # For country_code, use the 2-letter ISO code (see https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2 )
-   address = {street = "仙林大道163号", city = "南京市", region = "江苏省", postcode = "210093", country = "中国", country_code = "CN"}
-
-   # Geographic coordinates
-   # To get your coordinates, right-click on Google Maps and choose "What's here?". The coords will show up at the bottom.
-   coordinates = {latitude = "32.12191", longitude = "118.9544"}
-   # Directions for visitors to locate you.
-   directions = "南京大学（仙林校区）新闻传播学院450"
-
- [[zh.menu.main]]
-   name = "简介"
-   url = "#about"
-   weight = 1
-
- [[zh.menu.main]]
-   name = "联系"
-   url = "#contact"
-   weight = 2
+# [zh]
+#  languageCode = "zh-Hans"
+#  contentDir = "content/zh"
+#  title = "王成军"
+#  [zh.params]
+#    description = "Site description in Chinese..."
+#    # For country_code, use the 2-letter ISO code (see https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2 )
+#    address = {street = "仙林大道163号", city = "南京市", region = "江苏省", postcode = "210093", country = "中国", country_code = "CN"}
+#
+#    # Geographic coordinates
+#    # To get your coordinates, right-click on Google Maps and choose "What's here?". The coords will show up at the bottom.
+#    coordinates = {latitude = "32.12191", longitude = "118.9544"}
+#    # Directions for visitors to locate you.
+#    directions = "南京大学（仙林校区）新闻传播学院450"
+#
+#  [[zh.menu.main]]
+#    name = "简介"
+#    url = "#about"
+#    weight = 1
+#
+#  [[zh.menu.main]]
+#    name = "联系"
+#    url = "#contact"
+#    weight = 2
 
 
 # Uncomment the lines below to configure your website in a second language.

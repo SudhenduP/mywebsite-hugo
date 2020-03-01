@@ -13,8 +13,8 @@ cd ..
 
 cd chengjun.github.io
 
-ssh-add ~/.ssh/id_rsa
-git remote set-url origin git@github.com:chengjun/chengjun.github.io.git
+# ssh-add ~/.ssh/id_rsa
+# git remote set-url origin git@github.com:chengjun/chengjun.github.io.git
 
 # rm -rf en
 # rm -rf zh
